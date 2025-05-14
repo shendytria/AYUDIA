@@ -1,0 +1,3015 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayudia - Kebaya Modern</title>
+    <meta name="description"
+        content="Temukan desain kebaya elegan dan modern di Ayudia. Belanja koleksi terbaru dan nikmati keindahan abadi.">
+    <meta name="robots" content="all,follow">
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Gaya Dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: #2D2D2D;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Tipografi */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Header & Navigasi */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            height: 80px;
+        }
+
+        header.scrolled {
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            color: #5e1616;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .logo-tagline {
+            font-size: 12px;
+            color: #A11234;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled .logo h1 {
+            font-size: 24px;
+        }
+
+        header.scrolled .logo-tagline {
+            opacity: 0;
+            height: 0;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            padding-right: 24px;
+            width: calc(100% - 200px);
+            justify-content: flex-end;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            margin-right: 20px;
+        }
+
+        .nav-links li {
+            position: relative;
+            margin: 0;
+        }
+
+        .nav-links a {
+            font-size: 16px;
+            font-weight: 500;
+            color: #5e1616;
+            display: block;
+            padding: 0.8rem 1.2rem;
+            position: relative;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #A11234;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #A11234;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 70%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle i {
+            font-size: 12px;
+            margin-left: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 16px;
+            color: #5e1616;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 14px;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f9f1f1;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Search */
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container {
+            position: relative;
+            margin-left: 100px;
+        }
+
+        .search-input {
+            border: none;
+            border-bottom: 1px solid #E5E5E5;
+            padding: 4px 24px 4px 4px;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 100px;
+            font-size: 16px;
+        }
+
+        .search-input:focus {
+            border-color: #5e1616;
+            width: 160px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+            font-size: 18px;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            width: 250px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 100;
+            opacity: 0;
+        }
+
+        .search-results.show {
+            max-height: 300px;
+            opacity: 1;
+            padding: 8px 0;
+            margin-top: 8px;
+        }
+
+        .search-results a {
+            display: block;
+            padding: 8px 12px;
+            color: #5e1616;
+            font-size: 14px;
+            border-bottom: 1px solid #f5f5f5;
+            transition: all 0.2s;
+        }
+
+        .search-results a:hover {
+            background-color: #f9f1f1;
+        }
+
+        /* Icon containers */
+        .icon-container {
+            position: relative;
+            margin-left: 16px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .icon-container:hover {
+            background-color: #f9f1f1;
+            transform: translateY(-2px);
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons i {
+            font-size: 22px;
+            margin-left: 20px;
+            cursor: pointer;
+            color: #5e1616;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons i:hover {
+            color: #A11234;
+        }
+
+        .icon-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background-color: #A11234;
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* User dropdown */
+        .user-icon-container {
+            position: relative;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .user-icon-container:hover .user-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 10px 16px;
+            color: #5e1616;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f9f1f1;
+            color: #A11234;
+        }
+
+        .user-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #5e1616;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background-color: white;
+            overflow: hidden;
+            transition: height 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .mobile-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-links li {
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .mobile-links a {
+            display: block;
+            padding: 16px 24px;
+            color: #5e1616;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-links a:hover {
+            background-color: #f9f1f1;
+            color: #A11234;
+        }
+
+        .mobile-dropdown-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: #f9f5f5;
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-dropdown.active .mobile-dropdown-menu {
+            max-height: 400px;
+        }
+
+        .mobile-dropdown-menu li a {
+            padding-left: 40px;
+            font-size: 15px;
+        }
+
+        .mobile-search {
+            padding: 16px 24px;
+            border-bottom: 1px solid #f1f1f1;
+            position: relative;
+        }
+
+        .mobile-search input {
+            width: 100%;
+            padding: 10px 40px 10px 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .mobile-search i {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #5e1616;
+        }
+
+        .mobile-user-links {
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .mobile-user-links a {
+            display: block;
+            padding: 10px 20px;
+            color: #5e1616;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e5e5;
+            border-radius: 25px;
+            width: 45%;
+            text-align: center;
+        }
+
+        .mobile-user-links a:hover {
+            background-color: #5e1616;
+            color: white;
+            border-color: #5e1616;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1200px) {
+            nav {
+                width: calc(100% - 180px);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .search-container {
+                margin-right: 10px;
+            }
+
+            .search-input {
+                width: 100px;
+            }
+
+            .search-input:focus {
+                width: 150px;
+            }
+
+            .icon-container {
+                margin-left: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 0 16px;
+            }
+
+            .logo {
+                padding-left: 0;
+            }
+
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            nav {
+                padding-right: 0;
+            }
+
+            .search-container {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .icon-container {
+                width: 32px;
+                height: 32px;
+                margin-left: 8px;
+            }
+
+            .nav-icons i {
+                font-size: 14px;
+            }
+
+            .icon-badge {
+                width: 16px;
+                height: 16px;
+                font-size: 9px;
+            }
+        }
+
+        /* Bagian Hero */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(255, 255, 255, 0.604), rgba(255, 255, 255, 0.905)), url('https://i.pinimg.com/736x/5e/66/5e/5e665e9bd946276719a42b10a2261520.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            manhattans: 700px;
+            padding: 0 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #5e1616;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #6B6B6B;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            padding: 10px 26px;
+            background-color: #5e1616;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(125, 12, 35, 0.3);
+        }
+
+        /* Koleksi Unggulan */
+        .featured {
+            padding: 64px 0;
+            background-color: #F9F9F9;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #5e1616;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: #5e1616;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .product-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-img {
+            height: 280px;
+            background-color: #F9F9F9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            max-width: 100%;
+            max-height: 100%;
+            transition: all 0.5s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.08);
+        }
+
+        .product-actions {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 8px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .product-actions {
+            bottom: 0;
+        }
+
+        .product-actions button {
+            border: none;
+            background-color: transparent;
+            font-size: 16px;
+            cursor: pointer;
+            color: #5e1616;
+            transition: all 0.3s ease;
+        }
+
+        .product-actions button:hover {
+            color: #A11234;
+        }
+
+        .product-info {
+            padding: 16px;
+            text-align: center;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #2D2D2D;
+        }
+
+        .product-price {
+            font-size: 15px;
+            color: #5e1616;
+            font-weight: 600;
+        }
+
+        /* Bagian Tentang */
+        .about {
+            padding: 64px 0;
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-img {
+            flex: 1;
+            padding: 0 16px;
+        }
+
+        .about-img img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            flex: 1;
+            padding: 0 16px;
+        }
+
+        .about-title {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: #5e1616;
+        }
+
+        .about-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #6B6B6B;
+            margin-bottom: 24px;
+        }
+
+        .about-btn {
+            padding: 8px 20px;
+            background-color: transparent;
+            color: #5e1616;
+            border: 2px solid #5e1616;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .about-btn:hover {
+            background-color: #5e1616;
+            color: #FFFFFF;
+        }
+
+        /* Testimoni */
+        .testimonials {
+            padding: 40px 20px;
+            background-color: #f9f5f0;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .testimonial-container {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px 0;
+            justify-content: center;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        .testimonial {
+            min-width: 280px;
+            max-width: 320px;
+            flex: 0 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+
+        .testimonial-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .testimonial-image {
+            margin-bottom: 15px;
+        }
+
+        .rounded-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e6c9a8;
+        }
+
+        .testimonial-info {
+            width: 100%;
+        }
+
+        .stars {
+            color: #5e1616;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #5a3921;
+            margin-top: 5px;
+        }
+
+        /* Bagian Artikel */
+        .articles {
+            padding: 64px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 0 16px;
+        }
+
+        .article-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-img {
+            height: 180px;
+            background-color: #F9F9F9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .article-card:hover .article-img img {
+            transform: scale(1.08);
+        }
+
+        .article-date {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: #5e1616;
+            color: #FFFFFF;
+            padding: 4px 8px;
+            font-size: 11px;
+            border-radius: 4px;
+        }
+
+        .article-info {
+            padding: 16px;
+        }
+
+        .article-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2D2D2D;
+        }
+
+        .article-excerpt {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #6B6B6B;
+            margin-bottom: 12px;
+        }
+
+        .read-more {
+            font-size: 13px;
+            color: #5e1616;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .read-more i {
+            margin-left: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Style Kebaya Encim */
+        .encim-style {
+            padding: 60px 0;
+            background-color: #5e1616;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .encim-style .section-title {
+            margin-bottom: 16px;
+            color: #ffffff;
+            font-size: 32px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .encim-subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #cccbcb;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .encim-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-auto-rows: minmax(280px, auto);
+            gap: 30px;
+            position: relative;
+        }
+
+        .encim-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            height: 100%;
+            transform-origin: center;
+        }
+
+        .encim-card:nth-child(1) {
+            grid-column: span 1;
+            grid-row: span 1;
+            z-index: 1;
+            margin-top: -20px;
+        }
+
+        .encim-card:nth-child(2) {
+            grid-column: span 1;
+            grid-row: span 1;
+            z-index: 2;
+        }
+
+        .encim-card:nth-child(3) {
+            grid-column: span 1;
+            grid-row: span 1;
+            z-index: 1;
+            margin-top: -20px;
+        }
+
+        .encim-card:nth-child(4) {
+            grid-column: span 1;
+            grid-row: span 1;
+            z-index: 1;
+        }
+
+        .encim-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .encim-card:hover {
+            transform: scale(1.03) rotate(0deg) !important;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .encim-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .encim-card-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 20px 15px;
+            color: white;
+            text-align: left;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .encim-card:hover .encim-card-caption {
+            transform: translateY(0);
+        }
+
+        .encim-card-caption h3 {
+            margin: 0 0 5px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .encim-card-caption p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .encim-ornament {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+            background: url('https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') center/contain no-repeat;
+        }
+
+        .encim-ornament-1 {
+            top: 20px;
+            left: 20px;
+            width: 150px;
+            height: 150px;
+            transform: rotate(20deg);
+        }
+
+        .encim-ornament-2 {
+            bottom: 20px;
+            right: 20px;
+            width: 180px;
+            height: 180px;
+            transform: rotate(-20deg);
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInAnimation 0.8s forwards;
+        }
+
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .encim-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 15px;
+            }
+
+            .encim-card:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+        }
+
+        /* Kontak */
+        .contact {
+            padding: 64px 0;
+            background-color: #F9F9F9;
+        }
+
+        .contact-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .contact-info {
+            flex: 1;
+            padding: 0 16px;
+        }
+
+        .contact-title {
+            font-size: 22px;
+            margin-bottom: 16px;
+            color: #5e1616;
+        }
+
+        .contact-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #6B6B6B;
+            margin-bottom: 24px;
+        }
+
+        .contact-details {
+            list-style: none;
+        }
+
+        .contact-details li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-details i {
+            font-size: 18px;
+            color: #5e1616;
+            margin-right: 12px;
+            width: 18px;
+        }
+
+        .contact-form {
+            flex: 1;
+            padding: 0 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            border-color: #5e1616;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            padding: 10px 24px;
+            background-color: #5e1616;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            background-color: #A11234;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #5e1616;
+            padding: 48px 0 24px;
+            color: #FFFFFF;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo img {
+            height: 36px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-logo h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-left: 8px;
+            color: #FFFFFF;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-about p {
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: #A11234;
+        }
+
+        .footer-title {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #FFFFFF;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: #D3D3D3;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFFFFF;
+            padding-left: 4px;
+        }
+
+        .footer-contact li {
+            display: flex;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #D3D3D3;
+        }
+
+        .footer-contact i {
+            font-size: 14px;
+            color: #FFFFFF;
+            margin-right: 8px;
+            width: 16px;
+        }
+
+        .newsletter-form {
+            position: relative;
+            margin-top: 12px;
+        }
+
+        .newsletter-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .newsletter-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            padding: 0 16px;
+            background-color: #A11234;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #5e1616;
+        }
+
+        .copyright {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 13px;
+            color: #D3D3D3;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /*Modal detail produk*/
+        .quick-view-content {
+            display: flex;
+            gap: 24px;
+            padding: 16px;
+        }
+
+        .quick-view-img {
+            flex: 1;
+            max-width: 50%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .quick-view-img img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .quick-view-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .quick-view-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quick-view-title {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: #5e1616;
+        }
+
+        .quick-view-price {
+            font-size: 18px;
+            color: #5e1616;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .quick-view-description {
+            margin-bottom: 16px;
+            line-height: 1.6;
+            font-size: 14px;
+            color: #6B6B6B;
+        }
+
+        .quick-view-category {
+            font-size: 13px;
+            color: #6B6B6B;
+            margin-bottom: 16px;
+        }
+
+        .quick-view-sizes {
+            margin-bottom: 16px;
+        }
+
+        .quick-view-sizes label {
+            font-size: 14px;
+            color: #5e1616;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            padding: 8px 12px;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .size-btn:hover,
+        .size-btn.selected {
+            background-color: #5e1616;
+            color: #FFFFFF;
+            border-color: #5e1616;
+        }
+
+        .quick-view-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .quick-view-actions .hero-btn,
+        .quick-view-actions .about-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            flex: 1;
+            text-align: center;
+        }
+
+        @media (max-width: 767px) {
+            .quick-view-content {
+                flex-direction: column;
+            }
+
+            .quick-view-img {
+                max-width: 100%;
+                max-height: 300px;
+            }
+
+            .quick-view-actions {
+                flex-direction: column;
+            }
+
+            .quick-view-actions .hero-btn,
+            .quick-view-actions .about-btn {
+                width: 100%;
+            }
+        }
+
+        /* Sidebar Keranjang */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -360px;
+            width: 360px;
+            height: 100vh;
+            background-color: #FFFFFF;
+            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+            z-index: 2000;
+            transition: all 0.5s ease;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid #E5E5E5;
+        }
+
+        .cart-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #5e1616;
+        }
+
+        .close-cart {
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s ease;
+        }
+
+        .close-cart:hover {
+            color: #5e1616;
+        }
+
+        .cart-items {
+            padding: 16px;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E5E5E5;
+        }
+
+        .cart-item-size {
+            font-size: 12px;
+            color: #6B6B6B;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-img {
+            width: 70px;
+            height: 70px;
+            background-color: #F9F9F9;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 12px;
+        }
+
+        .cart-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #2D2D2D;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-price {
+            font-size: 13px;
+            color: #5e1616;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .qty-btn {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #F9F9F9;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background-color: #E5E5E5;
+        }
+
+        .qty-input {
+            width: 36px;
+            height: 22px;
+            text-align: center;
+            border: 1px solid #E5E5E5;
+            margin: 0 4px;
+            font-size: 13px;
+        }
+
+        .remove-item {
+            font-size: 18px;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: auto;
+        }
+
+        .remove-item:hover {
+            color: #5e1616;
+        }
+
+        .cart-footer {
+            padding: 16px;
+            border-top: 1px solid #E5E5E5;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #5e1616;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #5e1616;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #A11234;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1500;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Modal Login */
+        .login-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 360px;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .login-modal.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #5e1616;
+        }
+
+        .close-modal {
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #5e1616;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 16px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #5e1616;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .login-btn:hover {
+            background-color: #A11234;
+        }
+
+        .register-link {
+            text-align: center;
+            font-size: 13px;
+            color: #6B6B6B;
+        }
+
+        .register-link a {
+            color: #5e1616;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsif */
+        @media (max-width: 991px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .about {
+                flex-direction: column;
+            }
+
+            .about-img,
+            .about-content {
+                width: 100%;
+                padding: 16px;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .contact-info,
+            .contact-form {
+                width: 100%;
+                padding: 16px;
+            }
+
+            .cart-sidebar {
+                width: 300px;
+            }
+
+            .encim-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .encim-card {
+                grid-column: auto !important;
+                grid-row: auto !important;
+                transform: rotate(0deg) !important;
+                margin-top: 0 !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .product-grid,
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-sidebar {
+                width: 260px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .testimonial-container {
+                padding-left: 20px;
+                padding-right: 20px;
+                justify-content: flex-start;
+            }
+
+            .testimonial {
+                min-width: 260px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .login-modal {
+                width: 90%;
+            }
+        }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        /* Ornamen Batik */
+        .batik-ornament {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .batik-ornament-1 {
+            top: 80px;
+            left: 40px;
+            width: 120px;
+            height: 120px;
+            background: url('https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80') center/contain no-repeat;
+            transform: rotate(30deg);
+        }
+
+        .batik-ornament-2 {
+            bottom: 80px;
+            right: 40px;
+            width: 160px;
+            height: 160px;
+            background: url('https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=160&q=80') center/contain no-repeat;
+            transform: rotate(-30deg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigasi -->
+    <header>
+        <div class="logo">
+            <h1>AYUDIA</h1>
+            <span class="logo-tagline">Kebaya Encim</span>
+        </div>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="ayudia.html">Beranda</a></li>
+                <li class="dropdown">
+                    <a href="#koleksi" class="dropdown-toggle">Koleksi <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="koleksiencim.html">Kebaya Encim</a>
+                        <a href="koleksimodern.html">Kebaya Modern</a>
+                        <a href="koleksikutubaru.html">Kebaya Kutubaru</a>
+                    </div>
+                </li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Cari...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <i class="fas fa-heart wishlist-icon" id="wishlist-icon"></i>
+                <i class="fas fa-shopping-cart cart-icon" id="cart-icon"></i>
+                <i class="fas fa-user login-icon" id="login-icon"></i>
+            </div>
+
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <!-- Bagian Hero -->
+    <section class="hero" id="beranda">
+        <div class="decor-circle decor-circle-1"></div>
+        <div class="decor-circle decor-circle-2"></div>
+        <div class="decor-line decor-line-1"></div>
+        <div class="decor-line decor-line-2"></div>
+        <div class="batik-ornament batik-ornament-1"></div>
+        <div class="batik-ornament batik-ornament-2"></div>
+
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">AYUDIA</h1>
+            <p class="hero-subtitle">Anggun dalam Tradisi, Cantik dalam Gaya.</p>
+            <a href="#tentang" class="hero-btn">Belanja Sekarang</a>
+        </div>
+    </section>
+
+    <!-- Bagian Tentang -->
+    <section class="about" id="tentang">
+        <div class="about-img">
+            <img src="https://i.pinimg.com/736x/80/dc/af/80dcafb851e1375edf46bd65879410d3.jpg" alt="Tentang Ayudia" />
+        </div>
+
+        <div class="about-content fade-in">
+            <h2 class="about-title">Tentang Ayudia</h2>
+            <p class="about-text">Ayudia hadir untuk menjaga kebaya tetap ikonik dengan sentuhan modern. Kami terobsesi
+                untuk memadukan warisan budaya Indonesia dengan gaya Gen Z yang trendi.</p>
+            <p class="about-text">Setiap kebaya dibuat dengan kualitas premium dan perhatian pada detail. Ini bukan
+                sekadar fashion—ini adalah suasana, pernyataan, dan gaya hidup. Bergabunglah untuk tampil memukau!</p>
+            <a href="tentang.html" class="about-btn">Kenali Kami</a>
+        </div>
+    </section>
+
+    <!-- Koleksi Unggulan -->
+    <section class="featured" id="toko">
+        <h2 class="section-title">Produk Favorit </h2>
+
+        <div class="product-grid">
+            <!-- Produk 1 -->
+            <div class="product-card fade-in" data-id="1">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/82/2d/61/822d619f556c0baeef92b29b4109876e.jpg"
+                        alt="Kebaya Putih Mutiara" />
+                    <div class="product-actions">
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="add-to-wishlist"><i class="fas fa-heart"></i></button>
+                        <button class="quick-view"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Putih Mutiara</h3>
+                    <p class="product-price">Rp 1.599.000</p>
+                </div>
+            </div>
+
+            <!-- Produk 2 -->
+            <div class="product-card fade-in" data-id="2">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/d1/d6/1f/d1d61fcd20c9950d83a6240de5d9d677.jpg"
+                        alt="Kebaya Hijau Sage" />
+                    <div class="product-actions">
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="add-to-wishlist"><i class="fas fa-heart"></i></button>
+                        <button class="quick-view"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Hijau Sage</h3>
+                    <p class="product-price">Rp 1.799.000</p>
+                </div>
+            </div>
+
+            <!-- Produk 3 -->
+            <div class="product-card fade-in" data-id="3">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/4b/14/04/4b1404f1c761fa49ec27ba3d664b1c49.jpg"
+                        alt="Kebaya Aksen Emas" />
+                    <div class="product-actions">
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="add-to-wishlist"><i class="fas fa-heart"></i></button>
+                        <button class="quick-view"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Aksen Emas</h3>
+                    <p class="product-price">Rp 2.199.000</p>
+                </div>
+            </div>
+
+            <!-- Produk 4 -->
+            <div class="product-card fade-in" data-id="4">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/a8/e7/30/a8e730aa177f1679d516ac7c61a2c817.jpg"
+                        alt="Kebaya Merah Mawar" />
+                    <div class="product-actions">
+                        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        <button class="add-to-wishlist"><i class="fas fa-heart"></i></button>
+                        <button class="quick-view"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Merah Mawar</h3>
+                    <p class="product-price">Rp 1.899.000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimoni -->
+    <section class="testimonials">
+        <h2 class="section-title">Teman Ayudia</h2>
+
+        <div class="testimonial-slider">
+            <div class="testimonial-container">
+                <!-- Testimoni 1 -->
+                <div class="testimonial fade-in">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="https://i.pinimg.com/736x/86/6b/f5/866bf5b8c969f24a4e1d84cd5e04869f.jpg"
+                                alt="Nisa Z." class="rounded-image">
+                        </div>
+                        <div class="testimonial-info">
+                            <div class="stars">★★★★★</div>
+                            <p class="testimonial-text">"Suka banget sama kebaya Ayudia! Pakai di pernikahan sahabat dan
+                                semua orang memuji. Gayanya modern tapi tetap budaya. Perfect!"</p>
+                            <p class="testimonial-author">- Nisa Z.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimoni 2 -->
+                <div class="testimonial fade-in">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="https://i.pinimg.com/736x/0b/2b/cc/0b2bccd0d013197d851102a87be4ef48.jpg"
+                                alt="Rina D." class="rounded-image">
+                        </div>
+                        <div class="testimonial-info">
+                            <div class="stars">★★★★★</div>
+                            <p class="testimonial-text">"Kualitas jahitannya rapi dan nyaman dipakai seharian.
+                                Pelayanannya juga ramah, konsultasi sampai selesai. Puas!"</p>
+                            <p class="testimonial-author">- Rina D.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimoni 3 -->
+                <div class="testimonial fade-in">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="https://i.pinimg.com/736x/eb/7e/67/eb7e67edf736320e883208c2d985dc64.jpg"
+                                alt="Budi S." class="rounded-image">
+                        </div>
+                        <div class="testimonial-info">
+                            <div class="stars">★★★★★</div>
+                            <p class="testimonial-text">"Belikan untuk istri sebagai hadiah anniversary. Dia sangat suka
+                                modelnya yang elegan. Terima kasih Ayudia Kebaya!"</p>
+                            <p class="testimonial-author">- Budi S.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Style Kebaya Encim -->
+    <section class="encim-style">
+        <div class="encim-ornament encim-ornament-1"></div>
+        <div class="encim-ornament encim-ornament-2"></div>
+        <h2 class="section-title">Inspirasi Gaya</h2>
+        <p class="encim-subtitle">Inspirasi gaya Kebaya Encim dengan sentuhan klasik Peranakan yang elegan, dipadukan
+            dengan vibe modern yang chic.</p>
+        <div class="encim-grid">
+            <div class="encim-card fade-in" data-rotate="-8">
+                <img src="https://i.pinimg.com/736x/50/b5/5a/50b55aea99cfb6868c5a1c90230a761e.jpg"
+                    alt="Kebaya Encim Floral" />
+                <div class="encim-card-caption">
+                    <h3>Floral Elegance</h3>
+                    <p>Inspirasi kebaya dengan motif bunga klasik</p>
+                </div>
+            </div>
+            <div class="encim-card fade-in" data-rotate="5">
+                <img src="https://i.pinimg.com/736x/b5/1d/20/b51d20095b1b2faa81b25f62a5d25d1d.jpg"
+                    alt="Kebaya Encim Pastel" />
+                <div class="encim-card-caption">
+                    <h3>Pastel Charm</h3>
+                    <p>Nuansa lembut untuk acara santai</p>
+                </div>
+            </div>
+            <div class="encim-card fade-in" data-rotate="10">
+                <img src="https://i.pinimg.com/736x/1b/8b/c7/1b8bc731037139fc1a2716b2c025a413.jpg"
+                    alt="Kebaya Encim Bordir" />
+                <div class="encim-card-caption">
+                    <h3>Bordir Mewah</h3>
+                    <p>Detail bordir halus nan memukau</p>
+                </div>
+            </div>
+            <div class="encim-card fade-in" data-rotate="-10">
+                <img src="https://i.pinimg.com/736x/50/b5/5a/50b55aea99cfb6868c5a1c90230a761e.jpg"
+                    alt="Kebaya Encim Klasik" />
+                <div class="encim-card-caption">
+                    <h3>Klasik Abadi</h3>
+                    <p>Desain timeless yang selalu elegan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Artikel -->
+    <section class="articles" id="artikel">
+        <h2 class="section-title">Artikel Menarik</h2>
+
+        <div class="article-grid">
+            <!-- Artikel 1 -->
+            <div class="article-card fade-in">
+                <div class="article-img">
+                    <img src="https://i.pinimg.com/736x/b4/ab/89/b4ab894c129860d3d94cea2ee3d307b9.jpg"
+                        alt="Evolusi Kebaya" />
+                    <div class="article-date">3 Mei 2025</div>
+                </div>
+                <div class="article-info">
+                    <h3 class="article-title">Perjalanan Kebaya yang Ikonik</h3>
+                    <p class="article-excerpt">Jelajahi bagaimana kebaya bertransformasi dari klasik menjadi simbol gaya
+                        Indonesia.</p>
+                    <a href="artikel.html" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Artikel 2 -->
+            <div class="article-card fade-in">
+                <div class="article-img">
+                    <img src="https://i.pinimg.com/736x/2c/e6/06/2ce6068cc6f19e13a36aa8351019a15b.jpg"
+                        alt="Styling Kebaya" />
+                    <div class="article-date">29 April 2025</div>
+                </div>
+                <div class="article-info">
+                    <h3 class="article-title">5 Cara Styling Kebaya</h3>
+                    <p class="article-excerpt">Dari acara santai sampai pertunangan, ini cara bikin kebaya kamu
+                        standout.</p>
+                    <a href="artikel.html" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Artikel 3 -->
+            <div class="article-card fade-in">
+                <div class="article-img">
+                    <img src="https://i.pinimg.com/736x/6f/fe/87/6ffe8798a6624efeed617cd6a4087355.jpg"
+                        alt="Merawat Kebaya" />
+                    <div class="article-date">22 April 2025</div>
+                </div>
+                <div class="article-info">
+                    <h3 class="article-title">Jaga Kebaya Tetap Slay</h3>
+                    <p class="article-excerpt">Tips merawat kebaya agar tetap cantik dan tahan lama.</p>
+                    <a href="artikel.html" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <h1>AYUDIA</h1>
+                </div>
+                <p>Ayudia hadir untuk menjaga kebaya tetap ikonik dengan desain modern yang disukai Gen Z, penuh gaya
+                    dan budaya.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Tautan Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="ayudia.html">Beranda</a></li>
+                    <li><a href="koleksiencim.html">Koleksi</a></li>
+                    <li><a href="tentang.html#artikel">Artikel</a></li>
+                    <li><a href="tentang.html">Tentang Kami</a></li>
+                    <li><a href="kontak.html">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Kategori</h3>
+                <ul class="footer-links">
+                    <li><a href="koleksiencim.html">Kebaya Encim</a></li>
+                    <li><a href="koleksimodern.html">Kebaya Modern</a></li>
+                    <li><a href="koleksikutubaru.html">Kebaya Kutu Baru</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter">
+                <h3 class="footer-title">Tetap Terhubung</h3>
+                <p>Dapatkan info terbaru tentang koleksi baru, promo eksklusif, dan tips styling.</p>
+
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Email Kamu">
+                    <button class="newsletter-btn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2025 AYUDIA. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Sidebar Keranjang -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Keranjang Belanja</h3>
+            <span class="close-cart" id="close-cart"><i class="fas fa-times"></i></span>
+        </div>
+
+        <div class="cart-items">
+            <!-- Contoh Item Keranjang -->
+            <div class="cart-item" data-id="1">
+                <div class="cart-item-img">
+                    <img src="https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&q=80"
+                        alt="Kebaya Putih Mutiara" />
+                </div>
+                <div class="cart-item-info">
+                    <h4 class="cart-item-title">Kebaya Putih Mutiara</h4>
+                    <p class="cart-item-price">Rp 1.599.000</p>
+                    <div class="cart-item-quantity">
+                        <button class="qty-btn minus">-</button>
+                        <input type="text" class="qty-input" value="1" readonly>
+                        <button class="qty-btn plus">+</button>
+                    </div>
+                </div>
+                <span class="remove-item"><i class="fas fa-trash-alt"></i></span>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span>Rp 1.599.000</span>
+            </div>
+            <button class="checkout-btn">Lanjutkan Pembayaran</button>
+        </div>
+    </div>
+
+    <!-- Modal Login -->
+    <div class="login-modal" id="login-modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Masuk</h3>
+            <span class="close-modal" id="close-modal"><i class="fas fa-times"></i></span>
+        </div>
+
+        <form class="login-form">
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Alamat Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Kata Sandi" required>
+            </div>
+            <button type="submit" class="login-btn">Masuk</button>
+            <p class="register-link">Belum punya akun? <a href="#">Daftar</a></p>
+        </form>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Fungsi untuk pindah ke halaman wishlist
+        document.getElementById('wishlist-icon').addEventListener('click', function () {
+            window.location.href = 'wishlist.html'; // Pindah ke halaman wishlist.html
+        });
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sidebar Keranjang
+            const cartIcon = document.getElementById('cart-icon');
+            const closeCart = document.getElementById('close-cart');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('overlay');
+
+            // Modal Login
+            const loginIcon = document.getElementById('login-icon');
+            const closeModal = document.getElementById('close-modal');
+            const loginModal = document.getElementById('login-modal');
+
+            // Menu Mobile
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            // Data Produk
+            const products = [
+                {
+                    id: 1,
+                    name: 'Kebaya Putih Mutiara',
+                    price: 1599000,
+                    image: 'https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=280&q=80',
+                    description: 'Kebaya putih mutiara elegan dengan bordir rumit dan siluet modern.',
+                    category: 'Kebaya Modern'
+                },
+                {
+                    id: 2,
+                    name: 'Kebaya Hijau Sage',
+                    price: 1799000,
+                    image: 'https://images.unsplash.com/photo-1595437089953-4e08f9c231c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=280&q=80',
+                    description: 'Kebaya hijau sage cantik dengan detail renda halus dan desain kontemporer.',
+                    category: 'Kebaya Modern'
+                },
+                {
+                    id: 3,
+                    name: 'Kebaya Aksen Emas',
+                    price: 2199000,
+                    image: 'https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=280&q=80',
+                    description: 'Kebaya fusion memukau dengan aksen emas elegan dan potongan modern.',
+                    category: 'Kebaya Modern'
+                },
+                {
+                    id: 4,
+                    name: 'Kebaya Merah Mawar',
+                    price: 1899000,
+                    image: 'https://images.unsplash.com/photo-1595437089953-4e08f9c231c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=280&q=80',
+                    description: 'Kebaya merah mawar sophisticated dengan detail manik dan gaya kontemporer.',
+                    category: 'Kebaya Modern'
+                }
+            ];
+
+            // Data Keranjang
+            let cart = {
+                items: [],
+                total: 0
+            };
+
+            // Data Wishlist
+            let wishlist = [];
+
+            // Fungsi Keranjang
+            cartIcon.addEventListener('click', function () {
+                cartSidebar.classList.add('active');
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeCart.addEventListener('click', function () {
+                cartSidebar.classList.remove('active');
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Fungsi Login
+            loginIcon.addEventListener('click', function () {
+                loginModal.classList.add('active');
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeModal.addEventListener('click', function () {
+                loginModal.classList.remove('active');
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Tutup saat overlay diklik
+            overlay.addEventListener('click', function () {
+                cartSidebar.classList.remove('active');
+                loginModal.classList.remove('active');
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Toggle Menu Mobile
+            hamburger.addEventListener('click', function () {
+                navLinks.classList.toggle('show');
+                this.innerHTML = navLinks.classList.contains('show') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+
+            // Tangani resize window
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 991 && navLinks.classList.contains('show')) {
+                    navLinks.classList.remove('show');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+
+            // Tambah CSS untuk menu mobile
+            const style = document.createElement('style');
+            style.textContent = `
+                @media (max-width: 991px) {
+                    .nav-links.show {
+                        display: flex;
+                        flex-direction: column;
+                        position: absolute;
+                        top: 60px;
+                        left: 0;
+                        width: 100%;
+                        background-color: #FFFFFF;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                        padding: 16px;
+                        z-index: 1000;
+                    }
+                    
+                    .nav-links.show li {
+                        margin: 8px 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Tombol Kuantitas
+            document.addEventListener('click', function (e) {
+                // Tombol Minus
+                if (e.target.classList.contains('minus')) {
+                    const input = e.target.nextElementSibling;
+                    let value = parseInt(input.value);
+                    if (value > 1) {
+                        value--;
+                        input.value = value;
+
+                        const cartItem = e.target.closest('.cart-item');
+                        if (cartItem) {
+                            const productId = cartItem.dataset.id;
+                            updateCartItemQuantity(parseInt(productId), value);
+                        }
+                    }
+                }
+
+                // Tombol Plus
+                if (e.target.classList.contains('plus')) {
+                    const input = e.target.previousElementSibling;
+                    let value = parseInt(input.value);
+                    value++;
+                    input.value = value;
+
+                    const cartItem = e.target.closest('.cart-item');
+                    if (cartItem) {
+                        const productId = cartItem.dataset.id;
+                        updateCartItemQuantity(parseInt(productId), value);
+                    }
+                }
+
+                // Hapus Item
+                if (e.target.classList.contains('remove-item') || e.target.parentElement.classList.contains('remove-item')) {
+                    const cartItem = e.target.closest('.cart-item');
+                    if (cartItem) {
+                        const productId = cartItem.dataset.id;
+                        removeFromCart(parseInt(productId));
+                        cartItem.remove();
+                    }
+                }
+
+                // Tambah ke Keranjang
+                if (e.target.classList.contains('add-to-cart') || e.target.parentElement.classList.contains('add-to-cart')) {
+                    const productCard = e.target.closest('.product-card');
+                    if (productCard) {
+                        const productId = productCard.dataset.id;
+                        const product = products.find(p => p.id === parseInt(productId));
+                        if (product) {
+                            addToCart(product);
+                        }
+                    }
+                }
+
+                // Tambah ke Wishlist
+                if (e.target.classList.contains('add-to-wishlist') || e.target.parentElement.classList.contains('add-to-wishlist')) {
+                    const productCard = e.target.closest('.product-card');
+                    if (productCard) {
+                        const productId = productCard.dataset.id;
+                        const product = products.find(p => p.id === parseInt(productId));
+                        if (product) {
+                            toggleWishlist(product);
+                        }
+                    }
+                }
+
+                // Lihat Cepat
+                if (e.target.classList.contains('quick-view') || e.target.parentElement.classList.contains('quick-view')) {
+                    const productCard = e.target.closest('.product-card');
+                    if (productCard) {
+                        const productId = productCard.dataset.id;
+                        const product = products.find(p => p.id === parseInt(productId));
+                        if (product) {
+                            showQuickView(product);
+                        }
+                    }
+                }
+            });
+
+            // Inisialisasi kartu produk dengan atribut data
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach((card, index) => {
+                card.dataset.id = products[index].id;
+            });
+
+            // Fungsi Tambah ke Keranjang
+            function addToCart(product) {
+                const existingItem = cart.items.find(item => item.id === product.id && item.size === product.size);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.items.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1,
+                        size: product.size || 'N/A'
+                    });
+                }
+
+                updateCartUI();
+                showNotification(`${product.name} (Ukuran: ${product.size || 'N/A'}) ditambahkan ke keranjang!`);
+                cartSidebar.classList.add('active');
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Fungsi Hapus dari Keranjang
+            function removeFromCart(productId) {
+                cart.items = cart.items.filter(item => item.id !== productId);
+                updateCartUI();
+            }
+
+            // Perbarui Kuantitas Item Keranjang
+            function updateCartItemQuantity(productId, quantity) {
+                const item = cart.items.find(item => item.id === productId);
+                if (item) {
+                    item.quantity = quantity;
+                    updateCartUI();
+                }
+            }
+
+            // Hitung Total Keranjang
+            function calculateCartTotal() {
+                return cart.items.reduce((total, item) => {
+                    return total + (item.price * item.quantity);
+                }, 0);
+            }
+
+            // Perbarui UI Keranjang
+            function updateCartUI() {
+                const cartItemsContainer = document.querySelector('.cart-items');
+                const cartTotalElement = document.querySelector('.cart-total span:last-child');
+
+                cartItemsContainer.innerHTML = '';
+
+                if (cart.items.length === 0) {
+                    cartItemsContainer.innerHTML = '<p class="empty-cart">Keranjang kamu kosong.</p>';
+                } else {
+                    cart.items.forEach(item => {
+                        const cartItemHTML = `
+                <div class="cart-item" data-id="${item.id}">
+                    <div class="cart-item-img">
+                        <img src="${item.image}" alt="${item.name}" />
+                    </div>
+                    <div class="cart-item-info">
+                        <h4 class="cart-item-title">${item.name}</h4>
+                        <p class="cart-item-price">Rp ${formatPrice(item.price)}</p>
+                        <p class="cart-item-size">Ukuran: ${item.size}</p>
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn minus">-</button>
+                            <input type="text" class="qty-input" value="${item.quantity}" readonly>
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                    </div>
+                    <span class="remove-item"><i class="fas fa-trash-alt"></i></span>
+                </div>
+            `;
+                        cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHTML);
+                    });
+                }
+
+                cart.total = calculateCartTotal();
+                cartTotalElement.textContent = `Rp ${formatPrice(cart.total)}`;
+
+                updateCartIndicator();
+            }
+
+            // Perbarui Indikator Keranjang
+            function updateCartIndicator() {
+                const cartCount = cart.items.reduce((count, item) => count + item.quantity, 0);
+
+                let cartIndicator = document.querySelector('.cart-indicator');
+                if (!cartIndicator && cartCount > 0) {
+                    const cartIcon = document.getElementById('cart-icon');
+                    cartIndicator = document.createElement('span');
+                    cartIndicator.className = 'cart-indicator';
+                    cartIcon.style.position = 'relative';
+                    cartIndicator.style.position = 'absolute';
+                    cartIndicator.style.top = '-6px';
+                    cartIndicator.style.right = '-6px';
+                    cartIndicator.style.backgroundColor = '#4A2C2A';
+                    cartIndicator.style.color = '#FFFFFF';
+                    cartIndicator.style.borderRadius = '50%';
+                    cartIndicator.style.width = '14px';
+                    cartIndicator.style.height = '14px';
+                    cartIndicator.style.fontSize = '9px';
+                    cartIndicator.style.display = 'flex';
+                    cartIndicator.style.alignItems = 'center';
+                    cartIndicator.style.justifyContent = 'center';
+                    cartIcon.appendChild(cartIndicator);
+                }
+
+                if (cartIndicator) {
+                    if (cartCount > 0) {
+                        cartIndicator.textContent = cartCount;
+                    } else {
+                        cartIndicator.remove();
+                    }
+                }
+            }
+
+            // Toggle Wishlist
+            function toggleWishlist(product) {
+                const index = wishlist.findIndex(item => item.id === product.id);
+                if (index === -1) {
+                    wishlist.push(product);
+                    showNotification(`${product.name} ditambahkan ke wishlist!`);
+                } else {
+                    wishlist.splice(index, 1);
+                    showNotification(`${product.name} dihapus dari wishlist!`);
+                }
+
+                updateWishlistIndicator();
+            }
+
+            // Perbarui Indikator Wishlist
+            function updateWishlistIndicator() {
+                const wishlistIcon = document.querySelector('.wishlist-icon');
+
+                let wishlistIndicator = document.querySelector('.wishlist-indicator');
+                if (!wishlistIndicator && wishlist.length > 0) {
+                    wishlistIndicator = document.createElement('span');
+                    wishlistIndicator.className = 'wishlist-indicator';
+                    wishlistIcon.style.position = 'relative';
+                    wishlistIndicator.style.position = 'absolute';
+                    wishlistIndicator.style.top = '-6px';
+                    wishlistIndicator.style.right = '-6px';
+                    wishlistIndicator.style.backgroundColor = '#4A2C2A';
+                    wishlistIndicator.style.color = '#FFFFFF';
+                    wishlistIndicator.style.borderRadius = '50%';
+                    wishlistIndicator.style.width = '14px';
+                    wishlistIndicator.style.height = '14px';
+                    wishlistIndicator.style.fontSize = '9px';
+                    wishlistIndicator.style.display = 'flex';
+                    wishlistIndicator.style.alignItems = 'center';
+                    wishlistIndicator.style.justifyContent = 'center';
+                    wishlistIcon.appendChild(wishlistIndicator);
+                }
+
+                if (wishlistIndicator) {
+                    if (wishlist.length > 0) {
+                        wishlistIndicator.textContent = wishlist.length;
+                    } else {
+                        wishlistIndicator.remove();
+                    }
+                }
+            }
+
+            // Tampilkan Modal Lihat Cepat
+            function showQuickView(product) {
+                let quickViewModal = document.getElementById('quick-view-modal');
+                if (!quickViewModal) {
+                    quickViewModal = document.createElement('div');
+                    quickViewModal.id = 'quick-view-modal';
+                    quickViewModal.className = 'login-modal';
+                    quickViewModal.style.maxWidth = '720px';
+                    quickViewModal.style.width = '90%';
+                    document.body.appendChild(quickViewModal);
+                }
+
+                quickViewModal.innerHTML = `
+        <div class="modal-header">
+            <h3 class="modal-title">Detail Produk</h3>
+            <span class="close-modal" id="close-quick-view"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="quick-view-content">
+            <div class="quick-view-img">
+                <img src="${product.image}" alt="${product.name}" />
+            </div>
+            <div class="quick-view-info">
+                <h3 class="quick-view-title">${product.name}</h3>
+                <p class="quick-view-price">Rp ${formatPrice(product.price)}</p>
+                <p class="quick-view-description">${product.description}</p>
+                <p class="quick-view-category">Kategori: ${product.category}</p>
+                <div class="quick-view-sizes">
+                    <label>Pilih Ukuran:</label>
+                    <div class="size-options">
+                        <button class="size-btn" data-size="XS">XS</button>
+                        <button class="size-btn" data-size="S">S</button>
+                        <button class="size-btn" data-size="M">M</button>
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="XL">XL</button>
+                    </div>
+                </div>
+                <div class="quick-view-actions">
+                    <button class="hero-btn add-to-cart-quick" data-id="${product.id}">Tambah ke Keranjang</button>
+                    <button class="about-btn add-to-wishlist-quick" data-id="${product.id}">Tambah ke Wishlist</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+                quickViewModal.classList.add('active');
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+
+                // Size selection logic
+                const sizeButtons = quickViewModal.querySelectorAll('.size-btn');
+                let selectedSize = null;
+
+                sizeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        sizeButtons.forEach(btn => btn.classList.remove('selected'));
+                        this.classList.add('selected');
+                        selectedSize = this.dataset.size;
+                    });
+                });
+
+                // Close modal
+                document.getElementById('close-quick-view').addEventListener('click', function () {
+                    quickViewModal.classList.remove('active');
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+
+                // Add to cart
+                document.querySelector('.add-to-cart-quick').addEventListener('click', function () {
+                    if (!selectedSize) {
+                        showNotification('Silakan pilih ukuran terlebih dahulu!');
+                        return;
+                    }
+                    const productId = parseInt(this.dataset.id);
+                    const product = products.find(p => p.id === productId);
+                    if (product) {
+                        const cartItem = {
+                            ...product,
+                            size: selectedSize
+                        };
+                        addToCart(cartItem);
+                        quickViewModal.classList.remove('active');
+                        overlay.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+
+                // Add to wishlist
+                document.querySelector('.add-to-wishlist-quick').addEventListener('click', function () {
+                    const productId = parseInt(this.dataset.id);
+                    const product = products.find(p => p.id === productId);
+                    if (product) {
+                        toggleWishlist(product);
+                    }
+                });
+            }
+
+            // Tampilkan Notifikasi
+            function showNotification(message) {
+                let notificationContainer = document.querySelector('.notification-container');
+                if (!notificationContainer) {
+                    notificationContainer = document.createElement('div');
+                    notificationContainer.className = 'notification-container';
+                    notificationContainer.style.position = 'fixed';
+                    notificationContainer.style.bottom = '16px';
+                    notificationContainer.style.right = '16px';
+                    notificationContainer.style.zIndex = '9999';
+                    document.body.appendChild(notificationContainer);
+                }
+
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.style.backgroundColor = 'rgba(74, 44, 42, 0.95)';
+                notification.style.color = '#FFFFFF';
+                notification.style.padding = '10px 16px';
+                notification.style.borderRadius = '4px';
+                notification.style.marginTop = '8px';
+                notification.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+                notification.style.transform = 'translateY(16px)';
+                notification.style.opacity = '0';
+                notification.style.transition = 'all 0.3s ease';
+                notification.textContent = message;
+
+                notificationContainer.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.transform = 'translateY(0)';
+                    notification.style.opacity = '1';
+                }, 10);
+
+                setTimeout(() => {
+                    notification.style.transform = 'translateY(-16px)';
+                    notification.style.opacity = '0';
+
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 2500);
+            }
+
+            // Validasi Formulir
+            const contactForm = document.querySelector('.contact-form form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const name = this.querySelector('input[placeholder="Nama Kamu"]').value;
+                    const email = this.querySelector('input[placeholder="Email Kamu"]').value;
+
+                    if (name && email) {
+                        showNotification('Pesan kamu telah terkirim! Kami akan segera menghubungi.');
+                        this.reset();
+                    }
+                });
+            }
+
+            const loginForm = document.querySelector('.login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const email = this.querySelector('input[type="email"]').value;
+                    const password = this.querySelector('input[type="password"]').value;
+
+                    if (email && password) {
+                        showNotification('Berhasil masuk!');
+                        loginModal.classList.remove('active');
+                        overlay.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        this.reset();
+                    }
+                });
+            }
+
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const email = this.querySelector('.newsletter-input').value;
+
+                    if (email) {
+                        showNotification('Terima kasih telah berlangganan!');
+                        this.reset();
+                    }
+                });
+            }
+
+            // Animasi Scroll
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            const fadeInOnScroll = () => {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementBottom = element.getBoundingClientRect().bottom;
+
+                    if (elementTop < window.innerHeight - 80 && elementBottom > 0) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+
+            fadeInOnScroll();
+
+            window.addEventListener('scroll', fadeInOnScroll);
+
+            // Scroll Halus
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    if (navLinks.classList.contains('show')) {
+                        navLinks.classList.remove('show');
+                        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 60,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Format price with thousand separator
+            function formatPrice(price) {
+                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+
+            // Sticky Header
+            const header = document.querySelector('header');
+            let lastScrollTop = 0;
+
+            window.addEventListener('scroll', function () {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > 80) {
+                    header.style.padding = '8px 24px';
+                    header.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.padding = '12px 24px';
+                    header.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
+                }
+
+                lastScrollTop = scrollTop;
+            });
+
+            // Initialize
+            updateCartUI();
+            updateWishlistIndicator();
+        });
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all encim cards
+            const cards = document.querySelectorAll('.encim-card');
+
+            // Apply initial rotation based on data-rotate attribute
+            cards.forEach(card => {
+                const rotation = card.getAttribute('data-rotate');
+                if (rotation) {
+                    card.style.transform = `rotate(${rotation}deg)`;
+                }
+
+                // Add delay to each card for staggered fade-in effect
+                const index = Array.from(cards).indexOf(card);
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Add scroll animation for cards
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Parallax effect on hover
+            const section = document.querySelector('.encim-style');
+
+            section.addEventListener('mousemove', (e) => {
+                const { left, top, width, height } = section.getBoundingClientRect();
+                const x = (e.clientX - left) / width - 0.5;
+                const y = (e.clientY - top) / height - 0.5;
+
+                cards.forEach(card => {
+                    const depth = parseFloat(card.getAttribute('data-rotate')) / 10 || 1;
+                    const moveX = x * depth * 10;
+                    const moveY = y * depth * 10;
+                    card.style.transform = `rotate(${card.getAttribute('data-rotate')}deg) translate(${moveX}px, ${moveY}px)`;
+                });
+            });
+
+            section.addEventListener('mouseleave', () => {
+                cards.forEach(card => {
+                    card.style.transform = `rotate(${card.getAttribute('data-rotate')}deg)`;
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
