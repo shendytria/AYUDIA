@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayudia - Pembayaran</title>
+    <meta name="description" content="Lengkapi pembayaran Anda untuk koleksi Kebaya elegan dari Ayudia.">
+    <meta name="robots" content="all,follow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/pembayaran.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1>AYUDIA</h1>
+            <span class="logo-tagline">Toko Kebaya</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="koleksi.html">Koleksi</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Cari...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <i class="fas fa-shopping-cart cart-icon" id="cart-icon"></i>
+                <i class="fas fa-user login-icon" id="login-icon"></i>
+            </div>
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <section class="checkout-section">
+        <h2 class="section-title">Pembayaran</h2>
+        <div class="checkout-container">
+            <div class="checkout-form">
+                <h3>Detail Pengiriman</h3>
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label for="full-name">Nama Lengkap</label>
+                        <input type="text" id="full-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Alamat Pengiriman</label>
+                        <input type="text" id="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Nomor Telepon</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-method">Metode Pembayaran</label>
+                        <select id="payment-method" required>
+                            <option value="">Pilih Metode</option>
+                            <option value="bank-transfer">bank-transfer</option>
+                            <option value="credit-card">credit-card</option>
+                            <option value="e-wallet">e-wallet</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="checkout-items">
+                <h3>Ringkasan Pesanan</h3>
+                <div class="cart-items"></div>
+                <div class="checkout-total">
+                    <span>Total:</span>
+                    <span id="checkout-total">Rp 0</span>
+                </div>
+                <button class="confirm-btn" id="confirm-btn">Konfirmasi Pembayaran</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <h1>AYUDIA</h1>
+                </div>
+                <p>Ayudia hadir untuk menjaga kebaya tetap ikonik dengan desain modern yang penuh gaya
+                    dan budaya.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Tautan Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="koleksiencim.html">Koleksi</a></li>
+                    <li><a href="tentang.html#artikel">Artikel</a></li>
+                    <li><a href="tentang.html">Tentang Kami</a></li>
+                    <li><a href="kontak.html">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Kategori</h3>
+                <ul class="footer-links">
+                    <li><a href="koleksihtml">Kebaya Encim</a></li>
+                    <li><a href="koleksi.html">Kebaya Kutu Baru</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter">
+                <h3 class="footer-title">Tetap Terhubung</h3>
+                <p>Dapatkan info terbaru tentang koleksi baru, promo eksklusif, dan tips styling.</p>
+
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Email Kamu">
+                    <button class="newsletter-btn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2025 AYUDIA. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script src="js/pembayaran.js"></script>
+</body>
+
+</html>

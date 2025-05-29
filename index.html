@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayudia - Kebaya Modern</title>
+    <meta name="description"
+        content="Temukan desain kebaya elegan dan modern di Ayudia. Belanja koleksi terbaru dan nikmati keindahan abadi.">
+    <meta name="robots" content="all,follow">
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Header & Navigasi -->
+    <header>
+        <div class="logo">
+            <h1>AYUDIA</h1>
+            <span class="logo-tagline">Toko Kebaya</span>
+        </div>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="koleksi.html">Koleksi</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Cari...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <i class="fas fa-shopping-cart cart-icon" id="cart-icon"></i>
+                <i class="fas fa-user login-icon" id="login-icon"></i>
+            </div>
+
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <!-- Bagian Hero -->
+    <section class="hero" id="beranda">
+        <div class="decor-circle decor-circle-1"></div>
+        <div class="decor-circle decor-circle-2"></div>
+        <div class="decor-line decor-line-1"></div>
+        <div class="decor-line decor-line-2"></div>
+        <div class="batik-ornament batik-ornament-1"></div>
+        <div class="batik-ornament batik-ornament-2"></div>
+
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">AYUDIA</h1>
+            <p class="hero-subtitle">Anggun dalam Tradisi, Cantik dalam Gaya.</p>
+            <a href="#tentang" class="hero-btn">Jelajahi Sekarang</a>
+        </div>
+    </section>
+
+    <!-- Bagian Tentang -->
+    <section class="about" id="tentang">
+        <div class="about-img">
+            <img src="https://i.pinimg.com/736x/23/f9/11/23f9115015aecdd1168e399201592529.jpg" alt="Tentang Ayudia" />
+        </div>
+
+        <div class="about-content fade-in">
+            <h2 class="about-title">Tentang Ayudia</h2>
+            <p class="about-text">Ayudia hadir untuk menjaga kebaya tetap ikonik dengan sentuhan modern. Kami terobsesi
+                untuk memadukan warisan budaya Indonesia dengan gaya trendi.</p>
+            <p class="about-text">Setiap kebaya dibuat dengan kualitas premium dan perhatian pada detail. Ini bukan
+                sekadar fashion—ini adalah suasana, pernyataan, dan gaya hidup. Bergabunglah untuk tampil memukau!</p>
+            <a href="tentang.html" class="about-btn">Kenali Kami</a>
+        </div>
+    </section>
+
+    <!-- Koleksi Unggulan -->
+    <section class="featured" id="toko">
+        <h2 class="section-title">Produk Favorit </h2>
+
+        <div class="product-grid">
+            <!-- Produk 1 -->
+            <div class="product-card fade-in" data-id="1">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/c9/8b/1f/c98b1f5028067956a8723ed444fbe024.jpg"
+                        alt="Kebaya Coklat Semu" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Coklat Semu</h3>
+                    <p class="product-price">Rp 599.000</p>
+                </div>
+            </div>
+
+            <!-- Produk 2 -->
+            <div class="product-card fade-in" data-id="2">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/17/d1/19/17d1193b4d574803a8878cef83c3317c.jpg"
+                        alt="Kebaya Biru" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Biru</h3>
+                    <p class="product-price">Rp 759.000</p>
+                </div>
+            </div>
+
+            <!-- Produk 3 -->
+            <div class="product-card fade-in" data-id="3">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/b7/d0/9b/b7d09b15e212a5f9b21cd01249706d32.jpg"
+                        alt="Kebaya Hijau Semu" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Hijau Semu</h3>
+                    <p class="product-price">Rp 589.000</p>
+                </div>
+            </div>
+
+            <!-- Produk 4 -->
+            <div class="product-card fade-in" data-id="4">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/55/6a/85/556a85935d020ed9cb809f2a8cc8c58a.jpg"
+                        alt="Kebaya Orange" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Orange</h3>
+                    <p class="product-price">Rp 899.000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimoni -->
+    <section class="testimonials">
+        <h2 class="section-title">Teman Ayudia</h2>
+
+        <div class="testimonial-slider">
+            <div class="testimonial-container">
+                <!-- Testimoni 1 -->
+                <div class="testimonial fade-in">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="https://i.pinimg.com/736x/86/6b/f5/866bf5b8c969f24a4e1d84cd5e04869f.jpg"
+                                alt="Nisa Z." class="rounded-image">
+                        </div>
+                        <div class="testimonial-info">
+                            <div class="stars">★★★★★</div>
+                            <p class="testimonial-text">"Suka banget sama kebaya Ayudia! Pakai di pernikahan sahabat dan
+                                semua orang memuji. Gayanya modern tapi tetap budaya. Perfect!"</p>
+                            <p class="testimonial-author">- Nisa Z.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimoni 2 -->
+                <div class="testimonial fade-in">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="https://i.pinimg.com/736x/0b/2b/cc/0b2bccd0d013197d851102a87be4ef48.jpg"
+                                alt="Rina D." class="rounded-image">
+                        </div>
+                        <div class="testimonial-info">
+                            <div class="stars">★★★★★</div>
+                            <p class="testimonial-text">"Kualitas jahitannya rapi dan nyaman dipakai seharian.
+                                Pelayanannya juga ramah, konsultasi sampai selesai. Puas!"</p>
+                            <p class="testimonial-author">- Rina D.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimoni 3 -->
+                <div class="testimonial fade-in">
+                    <div class="testimonial-content">
+                        <div class="testimonial-image">
+                            <img src="https://i.pinimg.com/736x/eb/7e/67/eb7e67edf736320e883208c2d985dc64.jpg"
+                                alt="Budi S." class="rounded-image">
+                        </div>
+                        <div class="testimonial-info">
+                            <div class="stars">★★★★★</div>
+                            <p class="testimonial-text">"Belikan untuk istri sebagai hadiah anniversary. Dia sangat suka
+                                modelnya yang elegan. Terima kasih Ayudia Kebaya!"</p>
+                            <p class="testimonial-author">- Budi S.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Style Kebaya Encim -->
+    <section class="encim-style">
+        <div class="encim-ornament encim-ornament-1"></div>
+        <div class="encim-ornament encim-ornament-2"></div>
+        <h2 class="section-title">Inspirasi Gaya</h2>
+        <p class="encim-subtitle">Inspirasi gaya Kebaya dengan sentuhan klasik yang elegan, dipadukan
+            dengan vibe modern yang chic.</p>
+        <div class="encim-grid">
+            <div class="encim-card fade-in" data-rotate="-8">
+                <img src="https://i.pinimg.com/736x/f9/b8/b6/f9b8b672a06da0507fdebae502baecc8.jpg" />
+                <div class="encim-card-caption">
+                    <h3>Floral Elegance</h3>
+                    <p>Inspirasi kebaya dengan motif bunga klasik</p>
+                </div>
+            </div>
+            <div class="encim-card fade-in" data-rotate="5">
+                <img src="https://i.pinimg.com/736x/43/0b/70/430b70f92473cfc19cbfdda1cead6715.jpg" />
+                <div class="encim-card-caption">
+                    <h3>Pastel Charm</h3>
+                    <p>Nuansa lembut untuk acara santai</p>
+                </div>
+            </div>
+            <div class="encim-card fade-in" data-rotate="10">
+                <img src="https://i.pinimg.com/736x/ff/c3/d0/ffc3d0b07fab7e8ab4ed40b92dc87690.jpg"/>
+                <div class="encim-card-caption">
+                    <h3>Bordir Mewah</h3>
+                    <p>Detail bordir halus nan memukau</p>
+                </div>
+            </div>
+            <div class="encim-card fade-in" data-rotate="-10">
+                <img src="https://i.pinimg.com/736x/3b/40/5a/3b405a209ceffe9af2df6de5caea0ef7.jpg" />
+                <div class="encim-card-caption">
+                    <h3>Klasik Abadi</h3>
+                    <p>Desain timeless yang selalu elegan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Artikel -->
+    <section class="articles" id="artikel">
+        <h2 class="section-title">Artikel Menarik</h2>
+
+        <div class="article-grid">
+            <!-- Artikel 1 -->
+            <div class="article-card fade-in">
+                <div class="article-img">
+                    <img src="https://i.pinimg.com/736x/b4/ab/89/b4ab894c129860d3d94cea2ee3d307b9.jpg"
+                        alt="Evolusi Kebaya" />
+                    <div class="article-date">3 Mei 2025</div>
+                </div>
+                <div class="article-info">
+                    <h3 class="article-title">Perjalanan Kebaya yang Ikonik</h3>
+                    <p class="article-excerpt">Jelajahi bagaimana kebaya bertransformasi dari klasik menjadi simbol gaya
+                        Indonesia.</p>
+                    <a href="artikel1.html" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Artikel 2 -->
+            <div class="article-card fade-in">
+                <div class="article-img">
+                    <img src="https://i.pinimg.com/736x/2c/e6/06/2ce6068cc6f19e13a36aa8351019a15b.jpg"
+                        alt="Styling Kebaya" />
+                    <div class="article-date">29 April 2025</div>
+                </div>
+                <div class="article-info">
+                    <h3 class="article-title">5 Cara Styling Kebaya</h3>
+                    <p class="article-excerpt">Dari acara santai sampai pertunangan, ini cara bikin kebaya kamu
+                        standout.</p>
+                    <a href="artikel2.html" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Artikel 3 -->
+            <div class="article-card fade-in">
+                <div class="article-img">
+                    <img src="https://i.pinimg.com/736x/6f/fe/87/6ffe8798a6624efeed617cd6a4087355.jpg"
+                        alt="Merawat Kebaya" />
+                    <div class="article-date">22 April 2025</div>
+                </div>
+                <div class="article-info">
+                    <h3 class="article-title">Jaga Kebaya Tetap Slay</h3>
+                    <p class="article-excerpt">Tips merawat kebaya agar tetap cantik dan tahan lama.</p>
+                    <a href="artikel3.html" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <h1>AYUDIA</h1>
+                </div>
+                <p>Ayudia hadir untuk menjaga kebaya tetap ikonik dengan desain modern yang penuh gaya
+                    dan budaya.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Tautan Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="koleksiencim.html">Koleksi</a></li>
+                    <li><a href="tentang.html#artikel">Artikel</a></li>
+                    <li><a href="tentang.html">Tentang Kami</a></li>
+                    <li><a href="kontak.html">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Kategori</h3>
+                <ul class="footer-links">
+                    <li><a href="koleksihtml">Kebaya Encim</a></li>
+                    <li><a href="koleksi.html">Kebaya Kutu Baru</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter">
+                <h3 class="footer-title">Tetap Terhubung</h3>
+                <p>Dapatkan info terbaru tentang koleksi baru, promo eksklusif, dan tips styling.</p>
+
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Email Kamu">
+                    <button class="newsletter-btn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2025 AYUDIA. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Sidebar Keranjang -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Keranjang Belanja</h3>
+            <span class="close-cart" id="close-cart"><i class="fas fa-times"></i></span>
+        </div>
+
+        <div class="cart-items">
+            <!-- Contoh Item Keranjang -->
+            <div class="cart-item" data-id="1">
+                <div class="cart-item-img">
+                    <img src="https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&q=80"
+                        alt="Kebaya Putih Mutiara" />
+                </div>
+                <div class="cart-item-info">
+                    <h4 class="cart-item-title">Kebaya Putih Mutiara</h4>
+                    <p class="cart-item-price">Rp 1.599.000</p>
+                    <div class="cart-item-quantity">
+                        <button class="qty-btn minus">-</button>
+                        <input type="text" class="qty-input" value="1" readonly>
+                        <button class="qty-btn plus">+</button>
+                    </div>
+                </div>
+                <span class="remove-item"><i class="fas fa-trash-alt"></i></span>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span>Rp 1.599.000</span>
+            </div>
+            <button class="checkout-btn" onclick="window.location.href='pembayaran.html'">Lanjutkan Pembayaran</button>
+            <button class="history-btn" onclick="window.location.href='historitransaksi.html'">Histori Transaksi</button>
+        </div>
+    </div>
+
+    <!-- Modal Login -->
+    <div class="login-modal" id="login-modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Masuk</h3>
+            <span class="close-modal" id="close-modal"><i class="fas fa-times"></i></span>
+        </div>
+
+        <form class="login-form">
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Alamat Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Kata Sandi" required>
+            </div>
+            <button type="submit" class="login-btn">Masuk</button>
+            <p class="register-link">Belum punya akun? <a href="#">Daftar</a></p>
+        </form>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>

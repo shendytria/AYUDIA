@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayudia - Histori Transaksi</title>
+    <meta name="description" content="Lihat riwayat pembelian dan transaksi Anda di Ayudia.">
+    <meta name="robots" content="all,follow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/historitransaksi.css">
+</head>
+
+<body>
+    <!-- Header & Navigasi -->
+    <header>
+        <div class="logo">
+            <h1>AYUDIA</h1>
+            <span class="logo-tagline">Toko Kebaya</span>
+        </div>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="koleksi.html">Koleksi</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Cari...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <i class="fas fa-shopping-cart cart-icon" id="cart-icon"></i>
+                <i class="fas fa-user login-icon" id="login-icon"></i>
+            </div>
+
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <section class="history-section">
+        <h2 class="section-title">Histori Transaksi</h2>
+        <p class="section-subtitle">Pantau semua pembelian dan transaksi Anda dengan mudah</p>
+
+        <div class="filter-section">
+            <div class="filter-controls">
+                <div class="form-group">
+                    <label for="date-from"><i class="fas fa-calendar-alt"></i>Dari Tanggal</label>
+                    <input type="date" id="date-from">
+                </div>
+                <div class="form-group">
+                    <label for="date-to"><i class="fas fa-calendar-alt"></i>Sampai Tanggal</label>
+                    <input type="date" id="date-to">
+                </div>
+                <div class="form-group">
+                    <label for="status-filter"><i class="fas fa-filter"></i>Status</label>
+                    <select id="status-filter">
+                        <option value="">Semua Status</option>
+                        <option value="success">Berhasil</option>
+                        <option value="pending">Menunggu</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="filter-btn" id="apply-filter">
+                        <i class="fas fa-search"></i>Terapkan Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="transactions-container" id="transactions-container">
+            <!-- Transactions will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <h1>AYUDIA</h1>
+                </div>
+                <p>Ayudia hadir untuk menjaga kebaya tetap ikonik dengan desain modern yang penuh gaya
+                    dan budaya.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Tautan Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="koleksiencim.html">Koleksi</a></li>
+                    <li><a href="tentang.html#artikel">Artikel</a></li>
+                    <li><a href="tentang.html">Tentang Kami</a></li>
+                    <li><a href="kontak.html">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Kategori</h3>
+                <ul class="footer-links">
+                    <li><a href="koleksi.html">Kebaya Encim</a></li>
+                    <li><a href="koleksi.html">Kebaya Kutu Baru</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter">
+                <h3 class="footer-title">Tetap Terhubung</h3>
+                <p>Dapatkan info terbaru tentang koleksi baru, promo eksklusif, dan tips styling.</p>
+
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Email Kamu">
+                    <button class="newsletter-btn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2025 AYUDIA. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script src="js/historitransaksi.js"></script>
+</body>
+
+</html>

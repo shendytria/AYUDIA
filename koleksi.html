@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayudia - Koleksi Kebaya</title>
+    <meta name="description" content="Jelajahi koleksi Kebaya elegan dari Ayudia dengan sentuhan klasik dan modern.">
+    <meta name="robots" content="all,follow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/koleksi.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1>AYUDIA</h1>
+            <span class="logo-tagline">Toko Kebaya</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="koleksi.html">Koleksi</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Cari...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <i class="fas fa-shopping-cart cart-icon" id="cart-icon"></i>
+                <i class="fas fa-user login-icon" id="login-icon"></i>
+            </div>
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <section class="encim-collection">
+        <h2 class="section-title">Koleksi Kebaya</h2>
+        <div class="category-buttons">
+            <button class="category-btn active" data-category="all">Semua</button>
+            <button class="category-btn" data-category="Kebaya Encim">Kebaya Encim</button>
+            <button class="category-btn" data-category="Kebaya Kutu Baru">Kebaya Kutu Baru</button>
+        </div>
+        <div class="product-grid">
+            <!-- Kebaya Encim -->
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="1">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/4b/14/04/4b1404f1c761fa49ec27ba3d664b1c49.jpg"
+                        alt="Kebaya Encim Floral" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Floral</h3>
+                    <p class="product-price">Rp 1.499.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="2">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/b5/1d/20/b51d20095b1b2faa81b25f62a5d25d1d.jpg"
+                        alt="Kebaya Encim Pastel" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Pastel</h3>
+                    <p class="product-price">Rp 1.599.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="7">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/5a/2b/3c/5a2b3c4d5e9f1b2c4d5e9f1b2c4d5e9f.jpg"
+                        alt="Kebaya Encim Emas" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Emas</h3>
+                    <p class="product-price">Rp 1.699.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="14">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/1a/2b/3c/1a2b3c4d5e9f1b2c4d5e9f1b2c4d5e9f.jpg"
+                        alt="Kebaya Encim Biru" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Biru</h3>
+                    <p class="product-price">Rp 1.549.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="15">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/2b/3c/4d/2b3c4d5e9f1b2c4d5e9f1b2c4d5e9f1b.jpg"
+                        alt="Kebaya Encim Merah" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Merah</h3>
+                    <p class="product-price">Rp 1.599.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="16">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/3c/4d/5e/3c4d5e9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Hijau" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Hijau</h3>
+                    <p class="product-price">Rp 1.649.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="17">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/4d/5e/6f/4d5e6f9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Ungu" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Ungu</h3>
+                    <p class="product-price">Rp 1.579.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="18">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/5e/6f/7a/5e6f7a9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Pink" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Pink</h3>
+                    <p class="product-price">Rp 1.629.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="19">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/6f/7a/8b/6f7a8b9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Putih" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Putih</h3>
+                    <p class="product-price">Rp 1.679.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="20">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/7a/8b/9c/7a8b9c9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Kuning" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Kuning</h3>
+                    <p class="product-price">Rp 1.559.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="21">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/8b/9c/0d/8b9c0d9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Abu-abu" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Abu-abu</h3>
+                    <p class="product-price">Rp 1.589.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="22">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/9c/0d/1e/9c0d1e9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Maroon" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Maroon</h3>
+                    <p class="product-price">Rp 1.619.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="23">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/0d/1e/2f/0d1e2f9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Tosca" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Tosca</h3>
+                    <p class="product-price">Rp 1.649.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="24">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/1e/2f/3a/1e2f3a9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Cokelat" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Cokelat</h3>
+                    <p class="product-price">Rp 1.569.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Encim" data-id="25">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/2f/3a/4b/2f3a4b9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Encim Hitam" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Encim Hitam</h3>
+                    <p class="product-price">Rp 1.699.000</p>
+                </div>
+            </div>
+
+            <!-- Kebaya Kutu Baru -->
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="5">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/2a/3c/4d/2a3c4d5e8f9b6e4f8a9b6e4f8a9b6e4f.jpg"
+                        alt="Kebaya Kutu Baru Klasik" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Klasik</h3>
+                    <p class="product-price">Rp 1.599.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="6">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/3b/5d/7e/3b5d7e9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Modern" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Modern</h3>
+                    <p class="product-price">Rp 1.699.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="9">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/7d/9e/1a/7d9e1a2b3c4d5e9f1b2c4d5e9f1b2c4d.jpg"
+                        alt="Kebaya Kutu Baru Vintage" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Vintage</h3>
+                    <p class="product-price">Rp 1.749.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="38">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/5a/6b/7c/5a6b7c9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Putih" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Putih</h3>
+                    <p class="product-price">Rp 1.649.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="39">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/6b/7c/8d/6b7c8d9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Emas" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Emas</h3>
+                    <p class="product-price">Rp 1.799.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="40">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/7c/8d/9e/7c8d9e9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Merah" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Merah</h3>
+                    <p class="product-price">Rp 1.679.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="41">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/8d/9e/0f/8d9e0f9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Hijau" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Hijau</h3>
+                    <p class="product-price">Rp 1.719.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="42">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/9e/0f/1a/9e0f1a9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Ungu" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Ungu</h3>
+                    <p class="product-price">Rp 1.759.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="43">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/0f/1a/2b/0f1a2b9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Pink" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Pink</h3>
+                    <p class="product-price">Rp 1.689.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="44">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/1a/2b/3c/1a2b3c9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Kuning" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Kuning</h3>
+                    <p class="product-price">Rp 1.729.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="45">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/2b/3c/4d/2b3c4d9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Abu-abu" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Abu-abu</h3>
+                    <p class="product-price">Rp 1.699.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="46">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/3c/4d/5e/3c4d5e9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Maroon" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Maroon</h3>
+                    <p class="product-price">Rp 1.739.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="47">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/4d/5e/6f/4d5e6f9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Tosca" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Tosca</h3>
+                    <p class="product-price">Rp 1.779.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="48">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/5e/6f/7a/5e6f7a9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Cokelat" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Cokelat</h3>
+                    <p class="product-price">Rp 1.719.000</p>
+                </div>
+            </div>
+            <div class="product-card fade-in" data-category="Kebaya Kutu Baru" data-id="49">
+                <div class="product-img">
+                    <img src="https://i.pinimg.com/736x/6f/7a/8b/6f7a8b9f1b2c4d5e9f1b2c4d5e9f1b2c.jpg"
+                        alt="Kebaya Kutu Baru Hitam" />
+                    <div class="product-actions">
+                        <button class="quick-view"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Kebaya Kutu Baru Hitam</h3>
+                    <p class="product-price">Rp 1.799.000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <h1>AYUDIA</h1>
+                </div>
+                <p>Ayudia hadir untuk menjaga kebaya tetap ikonik dengan desain modern yang penuh gaya
+                    dan budaya.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Tautan Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="koleksiencim.html">Koleksi</a></li>
+                    <li><a href="tentang.html#artikel">Artikel</a></li>
+                    <li><a href="tentang.html">Tentang Kami</a></li>
+                    <li><a href="kontak.html">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-title">Kategori</h3>
+                <ul class="footer-links">
+                    <li><a href="koleksihtml">Kebaya Encim</a></li>
+                    <li><a href="koleksi.html">Kebaya Kutu Baru</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter">
+                <h3 class="footer-title">Tetap Terhubung</h3>
+                <p>Dapatkan info terbaru tentang koleksi baru, promo eksklusif, dan tips styling.</p>
+
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Email Kamu">
+                    <button class="newsletter-btn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2025 AYUDIA. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Keranjang Belanja</h3>
+            <span class="close-cart" id="close-cart"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span>Rp 0</span>
+            </div>
+            <button class="checkout-btn" onclick="window.location.href='pembayaran.html'">Lanjutkan Pembayaran</button>
+            <button class="history-btn" onclick="window.location.href='historitransaksi.html'">Histori Transaksi</button>
+        </div>
+    </div>
+
+    <div class="login-modal" id="login-modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Masuk</h3>
+            <span class="close-modal" id="close-modal"><i class="fas fa-times"></i></span>
+        </div>
+        <form class="login-form">
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Alamat Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Kata Sandi" required>
+            </div>
+            <button type="submit" class="login-btn">Masuk</button>
+            <p class="register-link">Belum punya akun? <a href="#">Daftar</a></p>
+        </form>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script src="js/koleksi.js"></script>
+</body>
+
+</html>
