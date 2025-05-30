@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Ayudia Kebaya</title>
+    <meta name="description"
+        content="Daftar untuk membuat akun dan nikmati pengalaman belanja yang lebih personal di Ayudia Kebaya.">
+    <meta name="robots" content="all,follow">
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/register.css">
+</head>
+
+<body>
+    <!-- Header & Navigasi -->
+    <header>
+        <div class="logo">
+            <h1>AYUDIA</h1>
+            <span class="logo-tagline">Toko Kebaya</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="koleksi.html">Koleksi</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Cari...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <i class="fas fa-shopping-cart cart-icon" id="cart-icon"></i>
+                <i class="fas fa-user login-icon" id="login-icon"></i>
+            </div>
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <!-- Sidebar Keranjang -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Keranjang Belanja</h3>
+            <span class="close-cart" id="close-cart"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="cart-items">
+            <!-- Item keranjang akan diisi secara dinamis oleh JavaScript -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span>Rp 0</span>
+            </div>
+            <button class="checkout-btn" onclick="window.location.href='pembayaran.html'">Lanjutkan Pembayaran</button>
+            <button class="history-btn" onclick="window.location.href='historitransaksi.html'">Histori Transaksi</button>
+        </div>
+    </div>
+
+    <!-- Register Section -->
+    <section class="register-section">
+        <div class="register-container">
+            <div class="register-image">
+                <div class="register-image-overlay">
+                    <h2 class="fade-in">Bergabung dengan AYUDIA</h2>
+                    <p class="fade-in">Daftar untuk menikmati koleksi kebaya eksklusif kami.</p>
+                </div>
+            </div>
+            <div class="register-form-container">
+                <h2 class="register-title fade-in">Daftar</h2>
+                <form class="register-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nama Lengkap" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email Kamu" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Kata Sandi" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Konfirmasi Kata Sandi" required>
+                    </div>
+                    <button type="submit" class="register-btn">Daftar</button>
+                    <div class="login-link">
+                        Sudah punya akun? <a href="login.html">Masuk di sini</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <script src="js/register.js"></script>
+</body>
+
+</html>

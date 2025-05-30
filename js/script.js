@@ -5,11 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const cartSidebar = document.getElementById('cart-sidebar');
     const overlay = document.getElementById('overlay');
 
-    // Modal Login
-    const loginIcon = document.getElementById('login-icon');
-    const closeModal = document.getElementById('close-modal');
-    const loginModal = document.getElementById('login-modal');
-
     // Menu Mobile
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
@@ -53,12 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Data Keranjang
     let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
 
-    // Kredensial Admin
-    const adminCredentials = {
-        email: "admin@gmail.com",
-        password: "admin123"
-    };
-
     // Fungsi Keranjang
     if (cartIcon && cartSidebar && closeCart && overlay) {
         cartIcon.addEventListener('click', function () {
@@ -75,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         overlay.addEventListener('click', function () {
             cartSidebar.classList.remove('active');
-            if (loginModal) loginModal.classList.remove('active');
             const quickViewModal = document.getElementById('quick-view-modal');
             if (quickViewModal) quickViewModal.classList.remove('active');
             overlay.style.display = 'none';
@@ -83,23 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     } else {
         console.error('Cart elements not found:', { cartIcon, cartSidebar, closeCart, overlay });
-    }
-
-    // Fungsi Login
-    if (loginIcon && loginModal && closeModal && overlay) {
-        loginIcon.addEventListener('click', function () {
-            loginModal.classList.add('active');
-            overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
-
-        closeModal.addEventListener('click', function () {
-            loginModal.classList.remove('active');
-            overlay.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-    } else {
-        console.error('Login elements not found:', { loginIcon, loginModal, closeModal, overlay });
     }
 
     // Toggle Menu Mobile
@@ -553,35 +524,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 2500);
     }
 
-    // Validasi Formulir Login
-    const loginForm = document.querySelector('.login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const email = this.querySelector('input[type="email"]').value;
-            const password = this.querySelector('input[type="password"]').value;
-
-            if (email && password) {
-                if (email === adminCredentials.email && password === adminCredentials.password) {
-                    showNotification('Berhasil masuk sebagai Admin!');
-                    loginModal.classList.remove('active');
-                    if (overlay) {
-                        overlay.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }
-                    this.reset();
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1000);
-                } else {
-                    showNotification('Email atau kata sandi salah. Silakan coba lagi.');
-                }
-            } else {
-                showNotification('Harap isi email dan kata sandi.');
-            }
-        });
-    }
-
     // Validasi Formulir Kontak
     const contactForm = document.querySelector('.contact-form form');
     if (contactForm) {
@@ -717,4 +659,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+    document.getElementById("login-icon").addEventListener("click", function () {
+        window.location.href = "login.html";
+    });
 });

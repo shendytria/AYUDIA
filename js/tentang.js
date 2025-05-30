@@ -4,21 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeCart = document.getElementById('close-cart');
     const cartSidebar = document.getElementById('cart-sidebar');
     const overlay = document.getElementById('overlay');
-    const loginIcon = document.getElementById('login-icon');
-    const closeModal = document.getElementById('close-modal');
-    const loginModal = document.getElementById('login-modal');
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
     const categoryButtons = document.querySelectorAll('.category-btn');
 
     // Inisialisasi keranjang dari localStorage
     let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
-
-    // Kredensial Admin
-    const adminCredentials = {
-        email: "admin@gmail.com",
-        password: "admin123"
-    };
 
     // Daftar Produk
     const products = [
@@ -71,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         overlay.addEventListener('click', function () {
             cartSidebar.classList.remove('active');
-            if (loginModal) loginModal.classList.remove('active');
             const quickViewModal = document.getElementById('quick-view-modal');
             if (quickViewModal) quickViewModal.classList.remove('active');
             overlay.style.display = 'none';
@@ -79,23 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     } else {
         console.error('Cart elements not found:', { cartIcon, cartSidebar, closeCart, overlay });
-    }
-
-    // Pasang Event Listener untuk Login
-    if (loginIcon && loginModal && closeModal && overlay) {
-        loginIcon.addEventListener('click', function () {
-            loginModal.classList.add('active');
-            overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
-
-        closeModal.addEventListener('click', function () {
-            loginModal.classList.remove('active');
-            overlay.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-    } else {
-        console.error('Login elements not found:', { loginIcon, loginModal, closeModal, overlay });
     }
 
     // Toggle Menu Mobile
@@ -114,6 +87,103 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         console.error('Mobile menu elements not found:', { hamburger, navLinks });
     }
+
+    // Tambah CSS untuk menu mobile dan modal quick view
+    const style = document.createElement('style');
+    style.textContent = `
+        @media (max-width: 991px) {
+            .nav-links.show {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #FFFFFF;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                padding: 16px;
+                z-index: 1000;
+            }
+            .nav-links.show li { margin: 8px 0; }
+        }
+        .size-btn {
+            padding: 6px 12px;
+            margin: 4px;
+            border: 1px solid #D3D3D3;
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .size-btn.selected {
+            background-color: #9B7E46;
+            color: #FFFFFF;
+            border-color: #9B7E46;
+        }
+        .quick-view-content {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+        }
+        .quick-view-img img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+        }
+        .quick-view-info {
+            flex: 1;
+        }
+        .quick-view-title {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .quick-view-price {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2B2B2B;
+            margin-bottom: 8px;
+        }
+        .quick-view-description {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .quick-view-category {
+            font-size: 14px;
+            color: #6B6B6B;
+            margin-bottom: 12px;
+        }
+        .quick-view-sizes label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .size-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .quick-view-actions {
+            margin-top: 16px;
+        }
+        .add-to-cart-quick {
+            width: 100%;
+            padding: 12px;
+            background-color: #2B2B2B;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .add-to-cart-quick:hover {
+            background-color: #9B7E46;
+        }
+    `;
+    document.head.appendChild(style);
 
     // Tampilkan Notifikasi
     function showNotification(message) {
@@ -486,35 +556,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Validasi Formulir Login
-    const loginForm = document.querySelector('.login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const email = this.querySelector('input[type="email"]').value;
-            const password = this.querySelector('input[type="password"]').value;
-
-            if (email && password) {
-                if (email === adminCredentials.email && password === adminCredentials.password) {
-                    showNotification('Berhasil masuk sebagai Admin!');
-                    loginModal.classList.remove('active');
-                    if (overlay) {
-                        overlay.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }
-                    this.reset();
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1000);
-                } else {
-                    showNotification('Email atau kata sandi salah. Silakan coba lagi.');
-                }
-            } else {
-                showNotification('Harap isi email dan kata sandi.');
-            }
-        });
-    }
-
     // Validasi Formulir Kontak
     const contactForm = document.querySelector('.contact-form form');
     if (contactForm) {
@@ -578,5 +619,31 @@ document.addEventListener('DOMContentLoaded', function () {
             cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
             updateCartUI();
         }
+    });
+});
+document.getElementById("login-icon").addEventListener("click", function () {
+    window.location.href = "login.html";
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.category-btn');
+    const articles = document.querySelectorAll('.article-card');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+
+            const filter = button.getAttribute('data-filter');
+
+            articles.forEach(article => {
+                if (filter === 'all' || article.getAttribute('data-category') === filter) {
+                    article.classList.remove('hidden');
+                } else {
+                    article.classList.add('hidden');
+                }
+            });
+        });
     });
 });

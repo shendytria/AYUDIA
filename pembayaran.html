@@ -28,6 +28,7 @@
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="koleksi.html">Koleksi</a></li>
                 <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
                 <li><a href="kontak.html">Kontak</a></li>
             </ul>
             <div class="nav-icons">
@@ -104,8 +105,8 @@
                 <ul class="footer-links">
                     <li><a href="index.html">Beranda</a></li>
                     <li><a href="koleksiencim.html">Koleksi</a></li>
-                    <li><a href="tentang.html#artikel">Artikel</a></li>
-                    <li><a href="tentang.html">Tentang Kami</a></li>
+                    <li><a href="tentang.html">Tentang</a></li>
+                    <li><a href="artikel.html">Artikel</a></li>
                     <li><a href="kontak.html">Kontak</a></li>
                 </ul>
             </div>
@@ -133,6 +134,47 @@
             <p>© 2025 AYUDIA. Hak Cipta Dilindungi.</p>
         </div>
     </footer>
+
+    <!-- Sidebar Keranjang -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Keranjang Belanja</h3>
+            <span class="close-cart" id="close-cart"><i class="fas fa-times"></i></span>
+        </div>
+
+        <div class="cart-items">
+            <!-- Contoh Item Keranjang -->
+            <div class="cart-item" data-id="1">
+                <div class="cart-item-img">
+                    <img src="https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&q=80"
+                        alt="Kebaya Putih Mutiara" />
+                </div>
+                <div class="cart-item-info">
+                    <h4 class="cart-item-title">Kebaya Putih Mutiara</h4>
+                    <p class="cart-item-price">Rp 1.599.000</p>
+                    <div class="cart-item-quantity">
+                        <button class="qty-btn minus">-</button>
+                        <input type="text" class="qty-input" value="1" readonly>
+                        <button class="qty-btn plus">+</button>
+                    </div>
+                </div>
+                <span class="remove-item"><i class="fas fa-trash-alt"></i></span>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span>Rp 1.599.000</span>
+            </div>
+            <button class="checkout-btn" onclick="window.location.href='pembayaran.html'">Lanjutkan Pembayaran</button>
+            <button class="history-btn" onclick="window.location.href='historitransaksi.html'">Histori
+                Transaksi</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
 
     <script src="js/pembayaran.js"></script>
 </body>

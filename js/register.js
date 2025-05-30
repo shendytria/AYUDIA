@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     // Menu Mobile
     const hamburger = document.querySelector('.hamburger');
@@ -12,16 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inisialisasi keranjang dari localStorage
     let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
 
-    // FAQ Toggle
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            const isActive = question.classList.contains('active');
-            question.classList.toggle('active', !isActive);
-            answer.classList.toggle('show', !isActive);
-        });
-    });
+    // Pastikan data di localStorage valid
+    if (!Array.isArray(cart.items)) {
+        cart = { items: [], total: 0 };
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
 
     // Event Listener untuk Keranjang
     if (cartIcon && cartSidebar && closeCart && overlay) {
@@ -40,8 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         overlay.addEventListener('click', function () {
             cartSidebar.classList.remove('active');
-            const quickViewModal = document.getElementById('quick-view-modal');
-            if (quickViewModal) quickViewModal.classList.remove('active');
             overlay.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
@@ -186,6 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // Perbarui total dan simpan ke localStorage
+        cart.total = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+        localStorage.setItem('cart', JSON.stringify(cart));
         updateCartUI();
         showNotification(`${product.name} (Ukuran: ${size}) ditambahkan ke keranjang!`);
         cartSidebar.classList.add('active');
@@ -196,6 +193,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fungsi Hapus dari Keranjang
     function removeFromCart(productId, size) {
         cart.items = cart.items.filter(item => !(item.id === productId && item.size === size));
+        // Perbarui total dan simpan ke localStorage
+        cart.total = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+        localStorage.setItem('cart', JSON.stringify(cart));
         updateCartUI();
         showNotification('Item dihapus dari keranjang!');
     }
@@ -203,8 +203,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Perbarui Kuantitas Item Keranjang
     function updateCartItemQuantity(productId, size, quantity) {
         const item = cart.items.find(item => item.id === productId && item.size === size);
-        if (item) {
+        if (item && quantity >= 1) {
             item.quantity = quantity;
+            // Perbarui total dan simpan ke localStorage
+            cart.total = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+            localStorage.setItem('cart', JSON.stringify(cart));
             updateCartUI();
         }
     }
@@ -225,23 +228,23 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             cart.items.forEach(item => {
                 cartItemsContainer.innerHTML += `
-                    <div class="cart-item" data-id="${item.id}" data-size="${item.size}">
-                        <div class="cart-item-img">
-                            <img src="${item.image}" alt="${item.name}" />
-                        </div>
-                        <div class="cart-item-info">
-                            <h4 class="cart-item-title">${item.name}</h4>
-                            <p class="cart-item-price">Rp ${formatPrice(item.price)}</p>
-                            <p class="cart-item-size">Ukuran: ${item.size}</p>
-                            <div class="cart-item-quantity">
-                                <button class="qty-btn minus">-</button>
-                                <input type="text" class="qty-input" value="${item.quantity}" readonly>
-                                <button class="qty-btn plus">+</button>
+                            <div class="cart-item" data-id="${item.id}" data-size="${item.size}">
+                                <div class="cart-item-img">
+                                    <img src="${item.image}" alt="${item.name}" />
+                                </div>
+                                <div class="cart-item-info">
+                                    <h4 class="cart-item-title">${item.name}</h4>
+                                    <p class="cart-item-price">Rp ${formatPrice(item.price)}</p>
+                                    <p class="cart-item-size">Ukuran: ${item.size}</p>
+                                    <div class="cart-item-quantity">
+                                        <button class="qty-btn minus">-</button>
+                                        <input type="text" class="qty-input" value="${item.quantity}" readonly>
+                                        <button class="qty-btn plus">+</button>
+                                    </div>
+                                </div>
+                                <span class="remove-item"><i class="fas fa-trash-alt"></i></span>
                             </div>
-                        </div>
-                        <span class="remove-item"><i class="fas fa-trash-alt"></i></span>
-                    </div>
-                `;
+                        `;
             });
         }
         cartTotalElement.textContent = `Rp ${formatPrice(cart.total)}`;
@@ -257,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!cartIndicator && cartCount > 0 && cartIcon) {
             cartIndicator = document.createElement('span');
             cartIndicator.className = 'cart-indicator';
-            cartIcon.style.position = 'relative';
             cartIndicator.style.position = 'absolute';
             cartIndicator.style.top = '-6px';
             cartIndicator.style.right = '-6px';
@@ -270,6 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cartIndicator.style.display = 'flex';
             cartIndicator.style.alignItems = 'center';
             cartIndicator.style.justifyContent = 'center';
+            cartIcon.style.position = 'relative';
             cartIcon.appendChild(cartIndicator);
         }
         if (cartIndicator) {
@@ -310,102 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-    }
-
-    // Tampilkan Modal Lihat Cepat
-    function showQuickView(product) {
-        let quickViewModal = document.getElementById('quick-view-modal');
-        if (!quickViewModal) {
-            quickViewModal = document.createElement('div');
-            quickViewModal.id = 'quick-view-modal';
-            quickViewModal.className = 'quick-view-modal';
-            quickViewModal.style.maxWidth = '720px';
-            quickViewModal.style.width = '90%';
-            document.body.appendChild(quickViewModal);
-        }
-
-        quickViewModal.innerHTML = `
-            <div class="modal-header">
-                <h3 class="modal-title">Detail Produk</h3>
-                <span class="close-modal" id="close-quick-view"><i class="fas fa-times"></i></span>
-            </div>
-            <div class="quick-view-content">
-                <div class="quick-view-img">
-                    <img src="${product.image}" alt="${product.name}" />
-                </div>
-                <div class="quick-view-info">
-                    <h3 class="quick-view-title">${product.name}</h3>
-                    <p class="quick-view-price">Rp ${formatPrice(product.price)}</p>
-                    <p class="quick-view-description">${product.description}</p>
-                    <p class="quick-view-category">Kategori: ${product.category}</p>
-                    <div class="quick-view-sizes">
-                        <label>Pilih Ukuran:</label>
-                        <div class="size-options">
-                            <button class="size-btn" data-size="XS">XS</button>
-                            <button class="size-btn" data-size="S">S</button>
-                            <button class="size-btn" data-size="M">M</button>
-                            <button class="size-btn" data-size="L">L</button>
-                            <button class="size-btn" data-size="XL">XL</button>
-                        </div>
-                    </div>
-                    <div class="quick-view-actions">
-                        <button class="add-to-cart-quick" data-id="${product.id}">Tambah ke Keranjang</button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        quickViewModal.classList.add('active');
-        if (overlay) {
-            overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        const sizeButtons = quickViewModal.querySelectorAll('.size-btn');
-        let selectedSize = null;
-        sizeButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                sizeButtons.forEach(btn => btn.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedSize = this.dataset.size;
-            });
-        });
-
-        const closeQuickView = quickViewModal.querySelector('#close-quick-view');
-        if (closeQuickView) {
-            closeQuickView.addEventListener('click', function () {
-                quickViewModal.classList.remove('active');
-                if (overlay) {
-                    overlay.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
-
-        const addToCartQuick = quickViewModal.querySelector('.add-to-cart-quick');
-        if (addToCartQuick) {
-            addToCartQuick.addEventListener('click', function () {
-                if (!selectedSize) {
-                    showNotification('Silakan pilih ukuran terlebih dahulu!');
-                    return;
-                }
-                const productId = parseInt(this.dataset.id);
-                const product = products.find(p => p.id === productId);
-                if (product) {
-                    const cartItem = {
-                        ...product,
-                        size: selectedSize,
-                        quantity: 1
-                    };
-                    addToCart(cartItem);
-                    quickViewModal.classList.remove('active');
-                    if (overlay) {
-                        overlay.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }
-                }
-            });
-        }
     }
 
     // Tampilkan Notifikasi
@@ -450,38 +357,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2500);
     }
 
-    // Validasi Formulir Kontak
-    const contactForm = document.querySelector('.contact-form form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+    // Validasi Formulir Register
+    const registerForm = document.querySelector('.register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            const name = this.querySelector('input[placeholder="Nama Kamu"]').value;
-            const email = this.querySelector('input[placeholder="Email Kamu"]').value;
+            const name = this.querySelector('input[placeholder="Nama Lengkap"]').value.trim();
+            const email = this.querySelector('input[placeholder="Email Kamu"]').value.trim();
+            const password = this.querySelector('input[placeholder="Kata Sandi"]').value;
+            const confirmPassword = this.querySelector('input[placeholder="Konfirmasi Kata Sandi"]').value;
 
-            if (name && email) {
-                showNotification('Pesan kamu telah terkirim! Kami akan segera menghubungi.');
-                this.reset();
+            // Validasi input
+            if (!name || !email || !password || !confirmPassword) {
+                showNotification('Harap isi semua kolom.');
+                return;
             }
-        });
-    }
 
-    // Validasi Formulir Newsletter
-    const newsletterForm = document.querySelector('.newsletter-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const email = this.querySelector('.newsletter-input').value;
-
-            if (email) {
-                showNotification('Terima kasih telah berlangganan!');
-                this.reset();
+            // Validasi format email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showNotification('Harap masukkan email yang valid.');
+                return;
             }
+
+            // Validasi panjang kata sandi
+            if (password.length < 6) {
+                showNotification('Kata sandi harus minimal 6 karakter.');
+                return;
+            }
+
+            // Validasi konfirmasi kata sandi
+            if (password !== confirmPassword) {
+                showNotification('Kata sandi dan konfirmasi kata sandi tidak cocok.');
+                return;
+            }
+
+            // Simulasi pendaftaran berhasil
+            showNotification('Pendaftaran berhasil! Silakan masuk untuk melanjutkan.');
+            this.reset();
         });
     }
 
     // Inisialisasi UI Keranjang
     updateCartUI();
-});
-document.getElementById("login-icon").addEventListener("click", function () {
-    window.location.href = "login.html";
+
+    // Login Icon Redirect
+    const loginIcon = document.getElementById('login-icon');
+    if (loginIcon) {
+        loginIcon.addEventListener('click', function () {
+            window.location.href = 'login.html';
+        });
+    }
 });

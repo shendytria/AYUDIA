@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Produk - AYUDIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar fixed inset-y-0 left-0 w-64 text-white p-4 md:transform-none z-50 bg-[#2B2B2B]">
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center">
+                <i class="fas fa-shopping-bag text-2xl text-white mr-2"></i>
+                <h2 class="text-xl font-bold">AYUDIA</h2>
+            </div>
+            <button id="close-sidebar" class="md:hidden text-white hover:text-gray-300 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="mb-6">
+            <div class="flex items-center mb-4">
+                <img id="sidebar-profile-image" src="https://cdn-icons-png.flaticon.com/512/9703/9703596.png" alt="Admin" class="w-10 h-10 rounded-full mr-3">
+                <div>
+                    <p id="sidebar-profile-name" class="font-medium">Admin AYUDIA</p>
+                    <p class="text-xs text-gray-400">Admin</p>
+                </div>
+            </div>
+        </div>
+
+        <nav>
+            <p class="text-xs uppercase font-semibold mb-4 pl-2 text-gray-400">Menu Utama</p>
+            <ul>
+                <li class="mb-2">
+                    <a href="dashboard.html" data-page="dashboard"
+                        class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
+                        <i class="fas fa-tachometer-alt w-6 mr-3"></i> Dashboard
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="artikeladm.html" data-page="articles"
+                        class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
+                        <i class="fas fa-newspaper w-6 mr-3"></i> Kelola Artikel
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="produk.html" data-page="products"
+                        class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200 active">
+                        <i class="fas fa-box w-6 mr-3"></i> Kelola Produk
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="pengguna.html" data-page="users"
+                        class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
+                        <i class="fas fa-users w-6 mr-3"></i> Kelola Pengguna
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="transaksi.html" data-page="transactions"
+                        class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
+                        <i class="fas fa-money-bill-wave w-6 mr-3"></i> Kelola Transaksi
+                    </a>
+                </li>
+            </ul>
+
+            <p class="text-xs uppercase font-semibold mb-4 pl-2 mt-8 text-gray-400">Pengaturan</p>
+            <ul>
+                <li class="mb-2">
+                    <a href="pengaturan.html" data-page="settings"
+                        class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
+                        <i class="fas fa-cog w-6 mr-3"></i> Pengaturan
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" id="logout-btn"
+                        class="sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
+                        <i class="fas fa-sign-out-alt w-6 mr-3"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="md:ml-64 p-6 min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-lg rounded-xl mb-6 p-4 glass-effect">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <button id="toggle-sidebar" class="md:hidden text-gray-800 mr-4 hover:text-[#9B7E46] transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h1 id="page-title" class="text-2xl font-bold text-gray-800">Kelola Produk</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="text-gray-500 hover:text-gray-800 focus:outline-none transition-colors" id="notification-btn">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="badge absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <button id="user-menu-btn" class="flex items-center hover:bg-gray-50 p-2 rounded-lg transition-all duration-200">
+                            <img id="header-profile-image" src="https://cdn-icons-png.flaticon.com/512/9703/9703596.png" alt="Admin"
+ class="w-10 h-10 rounded-full mr-2">
+                            <span id="header-profile-name" class="hidden md:block font-medium">Admin AYUDIA</span>
+                            <i class="fas fa-chevron-down ml-2 text-gray-400"></i>
+                        </button>
+                        <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-[9999] border">
+                            <a href="profil.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Profil</a>
+                            <a href="pengaturan.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Pengaturan</a>
+                            <div class="border-t border-gray-100"></div>
+                            <a href="#" id="dropdown-logout" class="block px-4 py-2 text-sm text-red-500 hover:bg-gray-100 transition-colors">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div id="content">
+            <div class="products">
+                <div class="bg-white rounded-xl shadow-lg mb-6">
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-xl font-semibold text-gray-800">Kelola Produk</h2>
+                        <p class="text-gray-500">Kelola semua produk pada website</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap items-center justify-between mb-4">
+                            <div class="w-full md:w-auto mb-4 md:mb-0">
+                                <button id="add-product-btn" class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg flex items-center transition-colors shadow-lg">
+                                    <i class="fas fa-plus mr-2"></i> Tambah Produk
+                                </button>
+                            </div>
+                            <div class="w-full md:w-auto">
+                                <div class="relative">
+                                    <input type="text" id="product-search" placeholder="Cari produk..."
+                                        class="pl-10 pr-4 py-3 border rounded-lg w-full md:w-64 focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent">
+                                    <i class="fas fa-search absolute left-3 top-4 text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="product-form" class="hidden mb-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                            <h3 id="product-form-title" class="text-lg font-medium mb-4">Tambah Produk Baru</h3>
+                            <input id="product-id" type="hidden">
+                            <div class="mb-4">
+                                <label class="block mb-2 font-medium text-gray-700">Nama Produk</label>
+                                <input type="text" id="product-name" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2 font-medium text-gray-700">Kategori</label>
+                                <select id="product-category" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent">
+                                    <option value="kebaya_encim">Kebaya Encim</option>
+                                    <option value="kebaya_kutubaru">Kebaya Kutubaru</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2 font-medium text-gray-700">Harga (Rp)</label>
+                                <input type="number" id="product-price" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2 font-medium text-gray-700">Stok per Ukuran</label>
+                                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                                    <div>
+                                        <label class="block text-sm">XS</label>
+                                        <input type="number" id="stock-xs" class="stock-input p-2 border rounded-lg" min="0" value="0">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm">S</label>
+                                        <input type="number" id="stock-s" class="stock-input p-2 border rounded-lg" min="0" value="0">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm">M</label>
+                                        <input type="number" id="stock-m" class="stock-input p-2 border rounded-lg" min="0" value="0">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm">L</label>
+                                        <input type="number" id="stock-l" class="stock-input p-2 border rounded-lg" min="0" value="0">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm">XL</label>
+                                        <input type="number" id="stock-xl" class="stock-input p-2 border rounded-lg" min="0" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2 font-medium text-gray-700">Deskripsi</label>
+                                <textarea id="product-description" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent" rows="4"></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2 font-medium text-gray-700">Gambar</label>
+                                <input id="product-image" type="file" accept="image/*"
+                                    class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent">
+                                <img id="product-image-preview" class="image-preview hidden" alt="Image Preview">
+                            </div>
+                            <div class="flex justify-end space-x-3">
+                                <button id="cancel-product" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg">Batal</button>
+                                <button id="save-product" class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg">Simpan</button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border-collapse bg-white rounded-lg shadow">
+                                <thead>
+                                    <tr class="bg-gray-100 text-left">
+                                        <th class="p-4 border-b font-semibold text-gray-700">ID</th>
+                                        <th class="p-4 border-b font-semibold text-gray-700">Gambar</th>
+                                        <th class="p-4 border-b font-semibold text-gray-700">Nama</th>
+                                        <th class="p-4 border-b font-semibold text-gray-700">Kategori</th>
+                                        <th class="p-4 border-b font-semibold text-gray-700">Harga</th>
+                                        <th class="p-4 border-b font-semibold text-gray-700">Stok</th>
+                                        <th class="p-4 border-b font-semibold text-gray-700">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="product-list"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Panel -->
+        <div id="notification-panel" class="fixed inset-0 notification-panel hidden z-50">
+            <div id="notification-sidebar"
+                class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-full">
+                <div class="p-4 border-b flex justify-between items-center bg-[#9B7E46] text-white">
+                    <h3 class="font-medium">Notifikasi</h3>
+                    <button id="close-notification" type="button"
+                        class="text-white hover:text-gray-200 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <div class="mb-4 pb-4 border-b activity-item">
+                        <div class="flex items-center mb-2">
+                            <div class="rounded-full bg-blue-100 p-2 mr-3">
+                                <i class="fas fa-user-plus text-blue-500"></i>
+                            </div>
+                            <p class="font-medium">Pengguna Baru</p>
+                            <div class="notification-dot ml-auto"></div>
+                        </div>
+                        <p class="text-gray-600 text-sm">Ifa telah mendaftar sebagai pengguna baru.</p>
+                        <p class="text-gray-400 text-xs mt-1">10 menit yang lalu</p>
+                    </div>
+                    <div class="mb-4 pb-4 border-b activity-item">
+                        <div class="flex items-center mb-2">
+                            <div class="rounded-full bg-green-100 p-2 mr-3">
+                                <i class="fas fa-shopping-cart text-green-500"></i>
+                            </div>
+                            <p class="font-medium">Transaksi Baru</p>
+                            <div class="notification-dot ml-auto"></div>
+                        </div>
+                        <p class="text-gray-600 text-sm">Transaksi baru dari Dinda senilai Rp 1,599,000.</p>
+                        <p class="text-gray-400 text-xs mt-1">30 menit yang lalu</p>
+                    </div>
+                    <div class="mb-4 activity-item">
+                        <div class="flex items-center mb-2">
+                            <div class="rounded-full bg-red-100 p-2 mr-3">
+                                <i class="fas fa-exclamation-circle text-red-500"></i>
+                            </div>
+                            <p class="font-medium">Stok Menipis</p>
+                        </div>
+                        <p class="text-gray-600 text-sm">Produk "Kebaya Rona Hijau" hampir habis (sisa 2).</p>
+                        <p class="text-gray-400 text-xs mt-1">2 jam yang lalu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logout Modal -->
+        <div id="logout-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl w-96 p-6">
+                <h3 class="text-lg font-medium mb-4 text-gray-800">Konfirmasi Logout</h3>
+                <p class="text-gray-600 mb-6">Apakah Anda yakin ingin keluar?</p>
+                <div class="flex justify-end space-x-3">
+                    <button id="cancel-logout" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg">Batal</button>
+                    <button id="confirm-logout" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg">Ya, Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Sidebar Toggle
+                const toggleSidebar = document.getElementById('toggle-sidebar');
+                const closeSidebar = document.getElementById('close-sidebar');
+                const sidebar = document.getElementById('sidebar');
+
+                if (toggleSidebar) {
+                    toggleSidebar.addEventListener('click', () => {
+                        sidebar.classList.toggle('active');
+                    });
+                }
+
+                if (closeSidebar) {
+                    closeSidebar.addEventListener('click', () => {
+                        sidebar.classList.remove('active');
+                    });
+                }
+
+                // User Dropdown Toggle
+                const userMenuBtn = document.getElementById('user-menu-btn');
+                const userDropdown = document.getElementById('user-dropdown');
+
+                if (userMenuBtn && userDropdown) {
+                    userMenuBtn.addEventListener('click', () => {
+                        userDropdown.classList.toggle('hidden');
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                            userDropdown.classList.add('hidden');
+                        }
+                    });
+                }
+
+                // Notification Panel
+                const notificationBtn = document.getElementById('notification-btn');
+                const notificationPanel = document.getElementById('notification-panel');
+                const notificationSidebar = document.getElementById('notification-sidebar');
+                const closeNotification = document.getElementById('close-notification');
+
+                if (notificationBtn && notificationPanel && notificationSidebar && closeNotification) {
+                    notificationBtn.addEventListener('click', () => {
+                        notificationPanel.classList.remove('hidden');
+                        setTimeout(() => {
+                            notificationSidebar.classList.remove('translate-x-full');
+                        }, 10);
+                    });
+
+                    closeNotification.addEventListener('click', () => {
+                        notificationSidebar.classList.add('translate-x-full');
+                        setTimeout(() => {
+                            notificationPanel.classList.add('hidden');
+                        }, 300);
+                    });
+
+                    notificationPanel.addEventListener('click', (e) => {
+                        if (e.target === notificationPanel) {
+                            notificationSidebar.classList.add('translate-x-full');
+                            setTimeout(() => {
+                                notificationPanel.classList.add('hidden');
+                            }, 300);
+                        }
+                    });
+                }
+
+                // Logout Modal
+                const logoutBtn = document.getElementById('logout-btn');
+                const dropdownLogout = document.getElementById('dropdown-logout');
+                const logoutModal = document.getElementById('logout-modal');
+                const cancelLogout = document.getElementById('cancel-logout');
+                const confirmLogout = document.getElementById('confirm-logout');
+
+                if (logoutBtn && logoutModal && cancelLogout && confirmLogout) {
+                    logoutBtn.addEventListener('click', () => {
+                        logoutModal.classList.remove('hidden');
+                    });
+
+                    if (dropdownLogout) {
+                        dropdownLogout.addEventListener('click', () => {
+                            logoutModal.classList.remove('hidden');
+                        });
+                    }
+
+                    cancelLogout.addEventListener('click', () => {
+                        logoutModal.classList.add('hidden');
+                    });
+
+                    confirmLogout.addEventListener('click', () => {
+                        showNotification('Anda berhasil logout!');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    });
+
+                    logoutModal.addEventListener('click', (e) => {
+                        if (e.target === logoutModal) {
+                            logoutModal.classList.add('hidden');
+                        }
+                    });
+                }
+
+                // Profile Display
+                let adminProfile = JSON.parse(localStorage.getItem('adminProfile')) || {
+                    name: 'Admin AYUDIA',
+                    email: 'admin@ayudia.com',
+                    password: 'admin123',
+                    image: 'https://cdn-icons-png.flaticon.com/512/9703/9703596.png'
+                };
+
+                function updateProfileDisplay() {
+                    document.getElementById('sidebar-profile-name').textContent = adminProfile.name;
+                    document.getElementById('header-profile-name').textContent = adminProfile.name;
+                    document.getElementById('sidebar-profile-image').src = adminProfile.image;
+                    document.getElementById('header-profile-image').src = adminProfile.image;
+                }
+
+                // Product Data
+                let products = JSON.parse(localStorage.getItem('products')) || [
+                    {
+                        id: 1,
+                        name: 'Kebaya Rona Hijau',
+                        description: 'Hijau pastel yang manis dengan bordir lembut, sempurna untuk kesan alami.',
+                        stock: { XS: 5, S: 10, M: 15, L: 10, XL: 5 },
+                        category: 'kebaya_encim',
+                        price: 975000,
+                        image: 'https://i.pinimg.com/736x/d1/d6/1f/d1d61fcd20c9950d83a6240de5d9d677.jpg'
+                    },
+                    {
+                        id: 2,
+                        name: 'Kebaya Coklat Semu',
+                        description: 'Kebaya warna coklat lembut dengan model sederhana, cocok untuk tampilan modern sehari-hari.',
+                        stock: { XS: 0, S: 8, M: 12, L: 8, XL: 3 },
+                        category: 'kebaya_kutubaru',
+                        price: 599000,
+                        image: 'https://i.pinimg.com/736x/c9/8b/1f/c98b1f5028067956a8723ed444fbe024.jpg'
+                    }
+                ];
+
+                function updateProductsList(search = '') {
+                    const productList = document.getElementById('product-list');
+                    productList.innerHTML = '';
+
+                    products.filter(p => 
+                        p.name.toLowerCase().includes(search.toLowerCase()) ||
+                        p.category.toLowerCase().includes(search.toLowerCase())
+                    ).forEach(product => {
+                        const stockDisplay = Object.entries(product.stock)
+                            .filter(([size, qty]) => qty > 0)
+                            .map(([size, qty]) => `${size}: ${qty}`)
+                            .join(', ');
+                        const row = document.createElement('tr');
+                        row.className = 'border-b hover:bg-gray-50';
+                        row.innerHTML = `
+                            <td class="p-4">${product.id}</td>
+                            <td class="p-4"><img src="${product.image || 'https://via.placeholder.com/80'}" class="w-16 h-16 rounded-lg object-cover"></td>
+                            <td class="p-4">${product.name}</td>
+                            <td class="p-4">${product.category.replace('kebaya_', '').charAt(0).toUpperCase() + product.category.replace('kebaya_', '').slice(1)}</td>
+                            <td class="p-4">Rp ${product.price.toLocaleString('id-ID')}</td>
+                            <td class="p-4">${stockDisplay || 'Stok Habis'}</td>
+                            <td class="p-4">
+                                <button class="edit-product-btn px-3 py-2 bg-blue-200 text-blue-600 rounded-lg mr-2 hover:bg-blue-300" data-id="${product.id}">Edit</button>
+                                <button class="delete-product-btn px-3 py-2 bg-red-200 text-red-600 rounded-lg hover:bg-red-300" data-id="${product.id}">Hapus</button>
+                            </td>
+                        `;
+                        productList.appendChild(row);
+                    });
+
+                    document.querySelectorAll('.edit-product-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const product = products.find(p => p.id === parseInt(btn.dataset.id));
+                            document.getElementById('product-id').value = product.id;
+                            document.getElementById('product-name').value = product.name;
+                            document.getElementById('product-category').value = product.category;
+                            document.getElementById('product-price').value = product.price;
+                            document.getElementById('product-description').value = product.description;
+                            document.getElementById('product-image-preview').src = product.image || '';
+                            document.getElementById('product-image-preview').classList.toggle('hidden', !product.image);
+                            document.getElementById('stock-xs').value = product.stock.XS || 0;
+                            document.getElementById('stock-s').value = product.stock.S || 0;
+                            document.getElementById('stock-m').value = product.stock.M || 0;
+                            document.getElementById('stock-l').value = product.stock.L || 0;
+                            document.getElementById('stock-xl').value = product.stock.XL || 0;
+                            document.getElementById('product-form-title').textContent = 'Edit Produk';
+                            document.getElementById('product-form').classList.remove('hidden');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-product-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            if (confirm('Yakin ingin menghapus produk ini?')) {
+                                products = products.filter(p => p.id !== parseInt(btn.dataset.id));
+                                localStorage.setItem('products', JSON.stringify(products));
+                                updateProductsList(search);
+                                showNotification('Produk berhasil dihapus!');
+                            }
+                        });
+                    });
+                }
+
+                function showNotification(message) {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.className = 'fixed bottom-4 right-4 bg-[#9B7E46] text-white px-6 py-3 rounded-lg shadow-lg';
+                    tempDiv.textContent = message;
+                    document.body.appendChild(tempDiv);
+                    setTimeout(() => tempDiv.remove(), 3000);
+                }
+
+                function setupImagePreview(inputId, previewId) {
+                    const input = document.getElementById(inputId);
+                    const preview = document.getElementById(previewId);
+
+                    if (input && preview) {
+                        input.addEventListener('change', () => {
+                            const file = input.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    preview.src = e.target.result;
+                                    preview.classList.remove('hidden');
+                                };
+                                reader.readAsDataURL(file);
+                            } else {
+                                preview.src = '';
+                                preview.classList.add('hidden');
+                            }
+                        });
+                    }
+                }
+
+                const addProductBtn = document.getElementById('add-product-btn');
+                const productForm = document.getElementById('product-form');
+                const cancelProduct = document.getElementById('cancel-product');
+                const saveProduct = document.getElementById('save-product');
+                const productSearch = document.getElementById('product-search');
+
+                if (addProductBtn) {
+                    addProductBtn.addEventListener('click', () => {
+                        productForm.classList.remove('hidden');
+                        document.getElementById('product-form-title').textContent = 'Tambah Produk Baru';
+                        document.getElementById('product-id').value = '';
+                        document.getElementById('product-name').value = '';
+                        document.getElementById('product-category').value = 'kebaya_encim';
+                        document.getElementById('product-price').value = '';
+                        document.getElementById('product-description').value = '';
+                        document.getElementById('product-image').value = '';
+                        document.getElementById('product-image-preview').classList.add('hidden');
+                        document.getElementById('stock-xs').value = 0;
+                        document.getElementById('stock-s').value = 0;
+                        document.getElementById('stock-m').value = 0;
+                        document.getElementById('stock-l').value = 0;
+                        document.getElementById('stock-xl').value = 0;
+                    });
+                }
+
+                if (cancelProduct) {
+                    cancelProduct.addEventListener('click', () => {
+                        productForm.classList.add('hidden');
+                    });
+                }
+
+                if (saveProduct) {
+                    saveProduct.addEventListener('click', () => {
+                        const id = document.getElementById('product-id').value;
+                        const name = document.getElementById('product-name').value;
+                        const category = document.getElementById('product-category').value;
+                        const price = parseInt(document.getElementById('product-price').value);
+                        const description = document.getElementById('product-description').value;
+                        const stock = {
+                            XS: parseInt(document.getElementById('stock-xs').value) || 0,
+                            S: parseInt(document.getElementById('stock-s').value) || 0,
+                            M: parseInt(document.getElementById('stock-m').value) || 0,
+                            L: parseInt(document.getElementById('stock-l').value) || 0,
+                            XL: parseInt(document.getElementById('stock-xl').value) || 0
+                        };
+                        const imagePreview = document.getElementById('product-image-preview');
+
+                        if (!name || !price) {
+                            showNotification('Nama dan harga wajib diisi!');
+                            return;
+                        }
+
+                        const totalStock = Object.values(stock).reduce((sum, qty) => sum + qty, 0);
+                        if (totalStock === 0) {
+                            showNotification('Minimal satu ukuran harus memiliki stok lebih dari 0!');
+                            return;
+                        }
+
+                        const product = {
+                            id: id ? parseInt(id) : products.length ? Math.max(...products.map(p => p.id)) + 1 : 1,
+                            name,
+                            category,
+                            price,
+                            description,
+                            stock,
+                            image: imagePreview.src || ''
+                        };
+
+                        if (id) {
+                            products = products.map(p => p.id === parseInt(id) ? product : p);
+                            showNotification('Produk berhasil diperbarui!');
+                        } else {
+                            products.push(product);
+                            showNotification('Produk berhasil ditambahkan!');
+                        }
+
+                        localStorage.setItem('products', JSON.stringify(products));
+                        productForm.classList.add('hidden');
+                        updateProductsList();
+                    });
+                }
+
+                if (productSearch) {
+                    productSearch.addEventListener('input', () => {
+                        updateProductsList(productSearch.value);
+                    });
+                }
+
+                setupImagePreview('product-image', 'product-image-preview');
+                updateProfileDisplay();
+                updateProductsList();
+            });
+        </script>
+    </body>
+</html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayudia - Koleksi Kebaya</title>
+    <title>Koleksi - Ayudia Kebaya</title>
     <meta name="description" content="Jelajahi koleksi Kebaya elegan dari Ayudia dengan sentuhan klasik dan modern.">
     <meta name="robots" content="all,follow">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,8 +26,9 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Beranda</a></li>
-                <li><a href="koleksi.html">Koleksi</a></li>
+                <li><a href="koleksi.html" class="active">Koleksi</a></li>
                 <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
                 <li><a href="kontak.html">Kontak</a></li>
             </ul>
             <div class="nav-icons">
@@ -44,7 +45,7 @@
 
     <section class="encim-collection">
         <h2 class="section-title">Koleksi Kebaya</h2>
-        <div class="category-buttons">
+        <div class="category-filter">
             <button class="category-btn active" data-category="all">Semua</button>
             <button class="category-btn" data-category="Kebaya Encim">Kebaya Encim</button>
             <button class="category-btn" data-category="Kebaya Kutu Baru">Kebaya Kutu Baru</button>
@@ -467,8 +468,8 @@
                 <ul class="footer-links">
                     <li><a href="index.html">Beranda</a></li>
                     <li><a href="koleksiencim.html">Koleksi</a></li>
-                    <li><a href="tentang.html#artikel">Artikel</a></li>
-                    <li><a href="tentang.html">Tentang Kami</a></li>
+                    <li><a href="tentang.html">Tentang</a></li>
+                    <li><a href="artikel.html">Artikel</a></li>
                     <li><a href="kontak.html">Kontak</a></li>
                 </ul>
             </div>
@@ -511,23 +512,6 @@
             <button class="checkout-btn" onclick="window.location.href='pembayaran.html'">Lanjutkan Pembayaran</button>
             <button class="history-btn" onclick="window.location.href='historitransaksi.html'">Histori Transaksi</button>
         </div>
-    </div>
-
-    <div class="login-modal" id="login-modal">
-        <div class="modal-header">
-            <h3 class="modal-title">Masuk</h3>
-            <span class="close-modal" id="close-modal"><i class="fas fa-times"></i></span>
-        </div>
-        <form class="login-form">
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="Alamat Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="Kata Sandi" required>
-            </div>
-            <button type="submit" class="login-btn">Masuk</button>
-            <p class="register-link">Belum punya akun? <a href="#">Daftar</a></p>
-        </form>
     </div>
 
     <div class="overlay" id="overlay"></div>

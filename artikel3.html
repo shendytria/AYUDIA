@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayudia - Jaga Kebaya Tetap Slay dengan Tips Ini</title>
-    <meta name="description" content="Panduan lengkap untuk mencuci, menyimpan, dan merawat kebaya agar tetap cantik di Ayudia.">
+    <title>Artikel - Ayudia Kebaya</title>
+    <meta name="description"
+        content="Baca artikel menarik tentang kebaya, tips styling, dan inspirasi fashion dari Ayudia.">
     <meta name="robots" content="all,follow">
     <!-- Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400&display=swap"
+        rel="stylesheet">
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/artikel3.css">
 </head>
@@ -20,7 +24,7 @@
     <!-- Header & Navigasi -->
     <header>
         <div class="logo-container">
-            <a href="tentang.html#artikel" id="artikel" class="back-button" title="Kembali ke halaman utama">
+            <a href="artikel.html" id="artikel" class="back-button" title="Kembali ke halaman utama">
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
@@ -75,6 +79,32 @@
                     <a href="#"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
+
+            <!-- Komentar -->
+            <section class="comments-section fade-in delay-3">
+                <h2 class="comments-title">Komentar</h2>
+                <!-- Formulir Komentar -->
+                <form id="comment-form" class="comment-form">
+                    <div class="form-group">
+                        <label for="comment-name">Nama</label>
+                        <input type="text" id="comment-name" name="name" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-email">Email</label>
+                        <input type="email" id="comment-email" name="email" placeholder="Masukkan email Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-text">Komentar</label>
+                        <textarea id="comment-text" name="comment" placeholder="Tulis komentar Anda"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="comment-submit-btn">Kirim Komentar</button>
+                </form>
+                <!-- Daftar Komentar -->
+                <div class="comments-list" id="comments-list">
+                    <!-- Komentar akan ditambahkan secara dinamis oleh JavaScript -->
+                </div>
+            </section>
         </article>
     </div>
 

@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artikel - Ayudia Kebaya</title>
+    <title>Tentang - Ayudia Kebaya</title>
     <meta name="description"
-        content="Baca artikel menarik tentang kebaya, tips styling, dan inspirasi fashion dari Ayudia.">
+        content="Temukan desain kebaya elegan dan modern di Ayudia. Belanja koleksi terbaru dan nikmati keindahan abadi.">
     <meta name="robots" content="all,follow">
     <!-- Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,15 +27,14 @@
             <h1>AYUDIA</h1>
             <span class="logo-tagline">Toko Kebaya</span>
         </div>
-
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="koleksi.html">Koleksi</a></li>
-                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="tentang.html" class="active">Tentang</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
                 <li><a href="kontak.html">Kontak</a></li>
             </ul>
-
             <div class="nav-icons">
                 <div class="search-container">
                     <input type="text" class="search-input" placeholder="Cari...">
@@ -44,7 +43,6 @@
                 <i class="fas fa-shopping-cart cart-icon" id="cart-icon"></i>
                 <i class="fas fa-user login-icon" id="login-icon"></i>
             </div>
-
             <div class="hamburger"><i class="fas fa-bars"></i></div>
         </nav>
     </header>
@@ -62,223 +60,218 @@
                 <span>Rp 0</span>
             </div>
             <button class="checkout-btn" onclick="window.location.href='pembayaran.html'">Lanjutkan Pembayaran</button>
-            <button class="history-btn" onclick="window.location.href='historitransaksi.html'">Histori Transaksi</button>
+            <button class="history-btn" onclick="window.location.href='historitransaksi.html'">Histori
+                Transaksi</button>
         </div>
-    </div>
-
-    <!-- Modal Login -->
-    <div class="login-modal" id="login-modal">
-        <div class="modal-header">
-            <h3 class="modal-title">Masuk</h3>
-            <span class="close-modal" id="close-modal"><i class="fas fa-times"></i></span>
-        </div>
-
-        <form class="login-form">
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="Alamat Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="Kata Sandi" required>
-            </div>
-            <button type="submit" class="login-btn">Masuk</button>
-            <p class="register-link">Belum punya akun? <a href="#">Daftar</a></p>
-        </form>
     </div>
 
     <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Main Content with Sidebar -->
-    <section class="main-content">
-        <!-- Bagian Tentang Ayudia -->
-        <div class="about-ayudia" id="tentang">
-            <div class="about-container">
-                <h2 class="about-title">Tentang Ayudia</h2>
-                <h3 class="about-subtitle">Melestarikan Elegansi Kebaya dengan Inovasi Modern</h3>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Tentang Ayudia</h1>
+                <p class="hero-subtitle">Melestarikan Elegansi Kebaya dengan Inovasi Modern</p>
+                <p class="hero-description">
+                    Kami adalah sekelompok desainer muda yang berdedikasi untuk menghidupkan kembali kebaya sebagai
+                    simbol keindahan budaya Indonesia dengan pendekatan yang segar dan relevan di era modern.
+                </p>
+            </div>
+        </section>
 
-                <div class="about-story">
-                    <p>Ayudia lahir pada tahun 2022 dengan misi untuk menghidupkan kembali kebaya simbol keindahan
-                        budaya
-                        Indonesia dengan pendekatan yang segar dan relevan. Didirikan oleh sekelompok desainer muda yang
-                        berdedikasi, kami percaya bahwa kebaya bukan hanya pakaian tradisional, tetapi juga kanvas untuk
-                        ekspresi pribadi. Setiap desain kami menggabungkan teknik bordir tangan tradisional dengan tren
-                        kontemporer, menciptakan karya yang memadukan nostalgia dan modernitas.</p>
-                    <p>Kami berkomitmen untuk mendukung pengrajin lokal di berbagai daerah Indonesia, memastikan bahwa
-                        setiap helai benang dan setiap jahitan mencerminkan keahlian turun-temurun. Dengan fokus pada
-                        keberlanjutan dan kualitas, Ayudia tidak hanya menawarkan pakaian, tetapi juga cerita budaya
-                        yang
-                        hidup yang dapat Anda kenakan dengan bangga.</p>
-                </div>
-
-                <div class="about-content">
-                    <div class="about-card fade-in">
-                        <div class="about-icon">
-                            <i class="fas fa-gem"></i>
+        <!-- Perjalanan Ayudia -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Perjalanan Ayudia</h2>
+                <p class="section-subtitle">Dari Mimpi Hingga Menjadi Kenyataan</p>
+                <div class="journey-timeline">
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2022</div>
+                            <h3 class="timeline-title">Awal Mula Ayudia</h3>
+                            <p class="timeline-description">
+                                Ayudia lahir dari keprihatinan kami melihat kebaya yang mulai terlupakan oleh generasi
+                                muda. Dengan semangat melestarikan budaya, kami memulai perjalanan untuk menciptakan
+                                kebaya yang modern namun tetap autentik.
+                            </p>
                         </div>
-                        <h4 class="about-card-title">Bahan dan Kualitas Terbaik</h4>
-                        <p>Kami menggunakan kain premium seperti brokat, satin, dan sutra, dipadukan dengan detail
-                            bordir
-                            tangan untuk memberikan keanggunan dan ketahanan yang luar biasa.</p>
                     </div>
-
-                    <div class="about-card fade-in">
-                        <div class="about-icon">
-                            <i class="fas fa-paint-brush"></i>
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2023</div>
+                            <h3 class="timeline-title">Koleksi Perdana & Kemitraan</h3>
+                            <p class="timeline-description">
+                                Meluncurkan koleksi perdana "Heritage Modern" yang langsung mendapat sambutan hangat.
+                                Membangun kemitraan dengan pengrajin tradisional di berbagai daerah untuk memastikan
+                                kualitas dan keaslian setiap produk.
+                            </p>
                         </div>
-                        <h4 class="about-card-title">Desain Kreatif dan Modern</h4>
-                        <p>Desain kami mengintegrasikan elemen tradisional seperti motif bunga dan lilit dengan potongan
-                            modern, cocok untuk berbagai acara, dari santai hingga formal.</p>
                     </div>
-
-                    <div class="about-card fade-in">
-                        <div class="about-icon">
-                            <i class="fas fa-users"></i>
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2024</div>
+                            <h3 class="timeline-title">Ekspansi & Inovasi</h3>
+                            <p class="timeline-description">
+                                Membuka workshop kebaya untuk komunitas, meluncurkan program edukasi budaya, dan
+                                memperkenalkan inovasi bahan ramah lingkungan dalam setiap produk kebaya kami.
+                            </p>
                         </div>
-                        <h4 class="about-card-title">Komunitas Penggemar Kebaya</h4>
-                        <p>Bergabunglah dengan komunitas kami untuk berbagi inspirasi, mengikuti workshop kebaya, dan
-                            merayakan keindahan budaya bersama.</p>
                     </div>
-
-                    <div class="about-card fade-in">
-                        <div class="about-icon">
-                            <i class="fas fa-leaf"></i> <!-- Ikon baru, bisa diganti sesuai kebutuhan -->
-                        </div>
-                        <h4 class="about-card-title">Sustainability dan Inovasi</h4>
-                        <p>Kami berkomitmen pada keberlanjutan dengan menggunakan bahan ramah lingkungan dan inovasi
-                            dalam proses produksi untuk melestarikan tradisi kebaya.</p>
-                    </div>
-                </div>
-
-                <!-- Galeri Dokumentasi -->
-                <div class "gallery-section">
-                    <div class="gallery-grid">
-                        <div class="gallery-item">
-                            <img src="https://i.pinimg.com/736x/a9/c1/31/a9c13100d81212573aa9dbd907dd21d9.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.pinimg.com/736x/81/45/54/814554542a4a599b328ebc92051b827b.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.pinimg.com/736x/07/f9/98/07f9984a9f463dd638c549799819ca5d.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.pinimg.com/736x/81/33/cf/8133cf268ac3db30f7d9cd232f050bfd.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.pinimg.com/736x/19/52/54/19525412d54894f6382856c335abe999.jpg">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.pinimg.com/736x/30/94/de/3094def19fe1b1d60a4a13dacf965dea.jpg">
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2025</div>
+                            <h3 class="timeline-title">Visi Masa Depan</h3>
+                            <p class="timeline-description">
+                                Melanjutkan misi untuk menjadi brand kebaya terdepan di Indonesia, dengan rencana
+                                ekspansi internasional dan program pelestarian budaya yang lebih luas.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Sidebar Artikel Menarik -->
-        <aside class="articles-sidebar" id="artikel">
-            <h2 class="section-title">Artikel Menarik</h2>
-
-            <div class="article-list">
-                <!-- Artikel 1 -->
-                <div class="article-card fade-in">
-                    <div class="article-img">
-                        <img src="https://i.pinimg.com/736x/b4/ab/89/b4ab894c129860d3d94cea2ee3d307b9.jpg"
-                            alt="Evolusi Kebaya">
-                        <div class="article-date">3 Mei 2025</div>
+        <!-- Tim Ayudia -->
+        <section class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">Tim Kreatif Ayudia</h2>
+                <p class="section-subtitle">Orang-Orang Dibalik Keindahan Setiap Kebaya</p>
+                <div class="team-grid">
+                    <div class="team-card fade-in-up">
+                        <div class="team-photo"><img src="assets/shendy.png"></div>
+                        <div class="team-info">
+                            <h3 class="team-name">Shendy Tria</h3>
+                            <p class="team-position">Founder & Creative Director</p>
+                            <p class="team-description">
+                                Lulusan Fashion Design yang memiliki passion mendalam terhadap budaya Indonesia.
+                                Memimpin visi kreatif Ayudia dengan pengalaman 8 tahun di industri fashion.
+                            </p>
+                        </div>
                     </div>
-                    <div class="article-info">
-                        <h3 class="article-title">Perjalanan Kebaya yang Ikonik</h3>
-                        <p class="article-excerpt">Jelajahi bagaimana kebaya bertransformasi dari pakaian tradisional
-                            menjadi simbol gaya Indonesia yang mendunia.</p>
-                        <a href="artikel1.html" class="read-more">Baca Selengkapnya <i
-                                class="fas fa-arrow-right"></i></a>
+                    <div class="team-card fade-in-up">
+                        <div class="team-photo"><img src="assets/adinda.png"></div>
+                        <div class="team-info">
+                            <h3 class="team-name">Adinda Rizki</h3>
+                            <p class="team-position">Head of Design</p>
+                            <p class="team-description">
+                                Desainer berbakat yang mengkhususkan diri dalam menggabungkan motif tradisional dengan
+                                cutting-edge contemporary design. Ahli dalam teknik bordir tangan.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="team-card fade-in-up">
+                        <div class="team-photo"><img src="assets/shely.png"></div>
+                        <div class="team-info">
+                            <h3 class="team-name">Shelyna Riska</h3>
+                            <p class="team-position">Master Craftsman</p>
+                            <p class="team-description">
+                                Pengrajin kebaya generasi ketiga dengan keahlian turun-temurun. Bertanggung jawab
+                                memastikan kualitas dan keaslian setiap detail produk Ayudia.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="team-card fade-in-up">
+                        <div class="team-photo"><img src="assets/fariha.png"></div>
+                        <div class="team-info">
+                            <h3 class="team-name">Noor Fariha</h3>
+                            <p class="team-position">Sustainability Manager</p>
+                            <p class="team-description">
+                                Spesialis dalam pengembangan material ramah lingkungan dan praktik bisnis berkelanjutan.
+                                Memastikan setiap produk Ayudia dibuat dengan prinsip eco-friendly.
+                            </p>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Artikel 2 -->
-                <div class="article-card fade-in">
-                    <div class="article-img">
-                        <img src="https://i.pinimg.com/736x/2c/e6/06/2ce6068cc6f19e13a36aa8351019a15b.jpg"
-                            alt="Styling Kebaya">
-                        <div class="article-date">29 April 2025</div>
-                    </div>
-                    <div class="article-info">
-                        <h3 class="article-title">5 Cara Styling Kebaya untuk Segala Acara</h3>
-                        <p class="article-excerpt">Dari acara santai hingga pernikahan, pelajari cara memadukan kebaya
-                            dengan aksesori modern.</p>
-                        <a href="artikel2.html" class="read-more">Baca Selengkapnya <i
-                                class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Artikel 3 -->
-                <div class="article-card fade-in">
-                    <div class="article-img">
-                        <img src="https://i.pinimg.com/736x/6f/fe/87/6ffe8798a6624efeed617cd6a4087355.jpg"
-                            alt="Merawat Kebaya" />
-                        <div class="article-date">22 April 2025</div>
-                    </div>
-                    <div class="article-info">
-                        <h3 class="article-title">Jaga Kebaya Tetap Slay dengan Tips Ini</h3>
-                        <p class="article-excerpt">Panduan lengkap untuk mencuci, menyimpan, dan merawat kebaya agar
-                            tetap
-                            cantik.</p>
-                        <a href="artikel3.html" class="read-more">Baca Selengkapnya <i
-                                class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Artikel 4 -->
-                <div class="article-card fade-in">
-                    <div class="article-img">
-                        <img src="https://i.pinimg.com/736x/1b/0d/bc/1b0dbca037fe21811d192fc24941b2ab.jpg"
-                            alt="Kebaya Encim">
-                        <div class="article-date">15 April 2025</div>
-                    </div>
-                    <div class="article-info">
-                        <h3 class="article-title">Pesona Kebaya Encim yang Unik</h3>
-                        <p class="article-excerpt">Ketahui sejarah dan keunikan kebaya Encim dari budaya Peranakan
-                            Indonesia.</p>
-                        <a href="artikel4.html" class="read-more">Baca Selengkapnya <i
-                                class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Artikel 5 -->
-                <div class="article-card fade-in">
-                    <div class="article-img">
-                        <img src="https://i.pinimg.com/736x/d1/65/c7/d165c7d301f962268a75bb09a8785fc2.jpg"
-                            alt="Kebaya Modern">
-                        <div class="article-date">10 April 2025</div>
-                    </div>
-                    <div class="article-info">
-                        <h3 class="article-title">Kebaya Modern untuk Generasi Muda</h3>
-                        <p class="article-excerpt">Eksplorasi tren kebaya modern yang disukai Gen Z dengan desain yang
-                            inovatif.</p>
-                        <a href="artikel5.html" class="read-more">Baca Selengkapnya <i
-                                class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Artikel 6 -->
-                <div class="article-card fade-in">
-                    <div class="article-img">
-                        <img src="https://i.pinimg.com/736x/fa/e1/3d/fae13db78f6c2c8348bd98f935628121.jpg"
-                            alt="Kebaya Kutu Baru">
-                        <div class="article-date">5 April 2025</div>
-                    </div>
-                    <div class="article-info">
-                        <h3 class="article-title">Kebaya Kutu Baru: Elegansi Timeless</h3>
-                        <p class="article-excerpt">Pelajari sejarah dan cara memakai kebaya Kutu Baru untuk acara
-                            spesial.
+        <!-- Nilai-Nilai Kami -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Nilai-Nilai Kami</h2>
+                <p class="section-subtitle">Apa yang Mendorong Kami Setiap Hari</p>
+                <div class="values-grid">
+                    <div class="value-card fade-in-up">
+                        <i class="fas fa-heart value-icon"></i>
+                        <h3 class="value-title">Pelestarian Budaya</h3>
+                        <p class="value-description">
+                            Kami berkomitmen untuk menjaga kebaya sebagai warisan budaya Indonesia dengan menghadirkan
+                            desain yang relevan untuk generasi muda.
                         </p>
-                        <a href="artikel6.html" class="read-more">Baca Selengkapnya <i
-                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="value-card fade-in-up">
+                        <i class="fas fa-leaf value-icon"></i>
+                        <h3 class="value-title">Keberlanjutan</h3>
+                        <p class="value-description">
+                            Menggunakan bahan ramah lingkungan dan praktik produksi yang bertanggung jawab untuk
+                            mendukung bumi yang lebih hijau.
+                        </p>
+                    </div>
+                    <div class="value-card fade-in-up">
+                        <i class="fas fa-handshake value-icon"></i>
+                        <h3 class="value-title">Kolaborasi</h3>
+                        <p class="value-description">
+                            Bekerja bersama pengrajin lokal dan komunitas untuk menciptakan produk yang autentik dan
+                            bermakna.
+                        </p>
+                    </div>
+                    <div class="value-card fade-in-up">
+                        <i class="fas fa-star value-icon"></i>
+                        <h3 class="value-title">Kualitas</h3>
+                        <p class="value-description">
+                            Setiap kebaya dibuat dengan perhatian terhadap detail, memastikan kenyamanan dan keindahan
+                            yang tahan lama.
+                        </p>
                     </div>
                 </div>
-        </aside>
-    </section>
+            </div>
+        </section>
+
+        <!-- Statistik -->
+        <section class="stats-section">
+            <div class="container">
+                <h2 class="section-title-pencapaian">Pencapaian Kami</h2>
+                <p class="section-subtitle">Dampak yang Kami Ciptakan</p>
+                <div class="stats-grid">
+                    <div class="stat-item fade-in-up">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Kebaya Terjual</span>
+                    </div>
+                    <div class="stat-item fade-in-up">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Pengrajin Lokal</span>
+                    </div>
+                    <div class="stat-item fade-in-up">
+                        <span class="stat-number">10</span>
+                        <span class="stat-label">Workshop Budaya</span>
+                    </div>
+                    <div class="stat-item fade-in-up">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Kepuasan Pelanggan</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galeri -->
+        <section class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">Galeri Ayudia</h2>
+                <p class="section-subtitle">Momen dan Karya Kami</p>
+                <div class="gallery-grid">
+                    <div class="gallery-item fade-in-up" style="background-image: url('https://i.pinimg.com/736x/53/33/df/5333dfb8a10567755cf3b76177ebf9dc.jpg');"></div>
+                    <div class="gallery-item fade-in-up" style="background-image: url('https://i.pinimg.com/736x/81/45/54/814554542a4a599b328ebc92051b827b.jpg');"></div>
+                    <div class="gallery-item fade-in-up" style="background-image: url('https://i.pinimg.com/736x/a9/c1/31/a9c13100d81212573aa9dbd907dd21d9.jpg');"></div>
+                    <div class="gallery-item fade-in-up" style="background-image: url('https://i.pinimg.com/736x/32/56/84/3256841eb10ce99b4b5537269fb9c583.jpg');"></div>
+                    <div class="gallery-item fade-in-up" style="background-image: url('https://i.pinimg.com/736x/82/8a/97/828a979d740212ed33526a632e1bfb84.jpg');"></div>
+                    <div class="gallery-item fade-in-up" style="background-image: url('https://i.pinimg.com/736x/e3/6c/ba/e36cbafa1f0298691dfd5ab68b7260f3.jpg');"></div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -287,8 +280,7 @@
                 <div class="footer-logo">
                     <h1>AYUDIA</h1>
                 </div>
-                <p>Ayudia hadir untuk menjaga kebaya tetap ikonik dengan desain modern yang penuh gaya
-                    dan budaya.</p>
+                <p>Ayudia hadir untuk menjaga kebaya tetap ikonik dengan desain modern yang penuh gaya dan budaya.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-tiktok"></i></a>
@@ -296,37 +288,32 @@
                     <a href="#"><i class="fab fa-pinterest"></i></a>
                 </div>
             </div>
-
             <div class="footer-links">
                 <h3 class="footer-title">Tautan Cepat</h3>
                 <ul class="footer-links">
                     <li><a href="index.html">Beranda</a></li>
-                    <li><a href="koleksiencim.html">Koleksi</a></li>
-                    <li><a href="tentang.html#artikel">Artikel</a></li>
-                    <li><a href="tentang.html">Tentang Kami</a></li>
+                    <li><a href="koleksi.html">Koleksi</a></li>
+                    <li><a href="tentang.html">Tentang</a></li>
+                    <li><a href="artikel.html">Artikel</a></li>
                     <li><a href="kontak.html">Kontak</a></li>
                 </ul>
             </div>
-
             <div class="footer-links">
                 <h3 class="footer-title">Kategori</h3>
                 <ul class="footer-links">
-                    <li><a href="koleksihtml">Kebaya Encim</a></li>
+                    <li><a href="koleksi.html">Kebaya Encim</a></li>
                     <li><a href="koleksi.html">Kebaya Kutu Baru</a></li>
                 </ul>
             </div>
-
             <div class="footer-newsletter">
                 <h3 class="footer-title">Tetap Terhubung</h3>
                 <p>Dapatkan info terbaru tentang koleksi baru, promo eksklusif, dan tips styling.</p>
-
                 <div class="newsletter-form">
                     <input type="email" class="newsletter-input" placeholder="Email Kamu">
                     <button class="newsletter-btn"><i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>
-
         <div class="copyright">
             <p>© 2025 AYUDIA. Hak Cipta Dilindungi.</p>
         </div>

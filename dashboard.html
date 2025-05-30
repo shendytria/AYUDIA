@@ -12,266 +12,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-            overflow-y: auto;
-            /* Aktifkan scroll vertikal */
-            height: 100vh;
-            /* Batasi tinggi sesuai viewport */
-            -webkit-overflow-scrolling: touch;
-            /* Smooth scrolling di mobile */
-            padding-bottom: 2rem;
-            /* Padding bawah untuk kenyamanan */
-        }
-
-        /* Custom Scrollbar */
-        .sidebar::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background-color: #4B4B4B;
-            border-radius: 3px;
-        }
-
-        .sidebar::-webkit-scrollbar-track {
-            background-color: #2b2b2b;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 80%;
-                /* Lebar lebih kecil di mobile */
-                transform: translateX(-100%);
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-        }
-
-        header {
-            position: sticky;
-            /* Header tetap di atas saat scroll */
-            top: 0;
-            z-index: 10;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            padding: 2px 6px;
-            border-radius: 50%;
-            background-color: #ef4444;
-            color: white;
-            font-size: 0.75rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        .sidebar-link.active {
-            background-color: #9B7E46;
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(155, 126, 70, 0.3);
-        }
-
-        .chart-container {
-            height: 350px;
-            position: relative;
-        }
-
-        .stats-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-
-        .stats-card:hover {
-            border-color: #9B7E46;
-            box-shadow: 0 10px 15px -3px rgba(155, 126, 70, 0.1);
-        }
-
-        .trend-up {
-            color: #10b981;
-        }
-
-        .trend-down {
-            color: #ef4444;
-        }
-
-        .activity-item {
-            transition: all 0.2s ease;
-        }
-
-        .activity-item:hover {
-            background-color: #f8fafc;
-            transform: translateX(4px);
-        }
-
-        .notification-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #ef4444;
-            border-radius: 50%;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            50% {
-                opacity: 1;
-            }
-
-            51%,
-            100% {
-                opacity: 0.3;
-            }
-        }
-
-        .loading-spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #9B7E46;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .chart-legend {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .legend-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 2px;
-        }
-
-        .progress-bar {
-            height: 6px;
-            background-color: #e5e7eb;
-            border-radius: 3px;
-            overflow: visible;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #9B7E46, #d4af37);
-            transition: width 0.5s ease;
-        }
-
-        .metric-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-            border-left: 4px solid #9B7E46;
-        }
-
-        .notification-panel {
-            backdrop-filter: blur(10px);
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        #user-dropdown {
-            z-index: 9999 !important;
-        }
-
-        /* Transisi halaman */
-        .page-content {
-            transition: opacity 0.3s ease;
-        }
-
-        .page-content.hidden {
-            opacity: 0;
-            display: none;
-            /* Pastikan halaman tersembunyi benar-benar tidak terlihat */
-        }
-
-        /* Efek hover pada sidebar link */
-        .sidebar-link {
-            transition: all 0.2s ease;
-        }
-
-        .sidebar-link:hover {
-            transform: translateX(4px);
-        }
-    </style>
+    <link rel="stylesheet" href="css/admin.css">
 </head>
 
 <body class="bg-gray-100 font-sans">
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar fixed inset-y-0 left-0 w-64 text-white p-4 md:transform-none z-50"
-        style="background-color: #2B2B2B;">
+    <div id="sidebar" class="sidebar fixed inset-y-0 left-0 w-64 text-white p-4 md:transform-none z-50 bg-[#2B2B2B]">
         <div class="flex items-center justify-between mb-8">
             <div class="flex items-center">
                 <i class="fas fa-shopping-bag text-2xl text-white mr-2"></i>
@@ -284,11 +30,11 @@
 
         <div class="mb-6">
             <div class="flex items-center mb-4">
-                <img src="https://cdn-icons-png.freepik.com/512/9703/9703596.png" alt="Admin"
-                    class="w-10 h-10 rounded-full mr-3">
+                <img id="sidebar-profile-image" src="https://cdn-icons-png.flaticon.com/512/9703/9703596.png"
+                    alt="Admin" class="w-10 h-10 rounded-full mr-3">
                 <div>
-                    <p class="font-medium">Admin User</p>
-                    <p class="text-xs text-gray-400">Super Admin</p>
+                    <p id="sidebar-profile-name" class="font-medium">Admin AYUDIA</p>
+                    <p class="text-xs text-gray-400">Admin</p>
                 </div>
             </div>
         </div>
@@ -297,31 +43,31 @@
             <p class="text-xs uppercase font-semibold mb-4 pl-2 text-gray-400">Menu Utama</p>
             <ul>
                 <li class="mb-2">
-                    <a href="#" data-page="dashboard"
-                        class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
+                    <a href="dashboard.html" data-page="dashboard"
+                        class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200 active">
                         <i class="fas fa-tachometer-alt w-6 mr-3"></i> Dashboard
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" data-page="articles"
+                    <a href="artikeladm.html" data-page="articles"
                         class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
                         <i class="fas fa-newspaper w-6 mr-3"></i> Kelola Artikel
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" data-page="products"
+                    <a href="produk.html" data-page="products"
                         class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
                         <i class="fas fa-box w-6 mr-3"></i> Kelola Produk
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" data-page="users"
+                    <a href="pengguna.html" data-page="users"
                         class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
                         <i class="fas fa-users w-6 mr-3"></i> Kelola Pengguna
                     </a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" data-page="transactions"
+                    <a href="transaksi.html" data-page="transactions"
                         class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
                         <i class="fas fa-money-bill-wave w-6 mr-3"></i> Kelola Transaksi
                     </a>
@@ -331,7 +77,7 @@
             <p class="text-xs uppercase font-semibold mb-4 pl-2 mt-8 text-gray-400">Pengaturan</p>
             <ul>
                 <li class="mb-2">
-                    <a href="#" data-page="settings"
+                    <a href="pengaturan.html" data-page="settings"
                         class="page-link sidebar-link flex items-center p-3 rounded-lg hover:bg-[#9B7E46] hover:text-white transition-all duration-200">
                         <i class="fas fa-cog w-6 mr-3"></i> Pengaturan
                     </a>
@@ -367,18 +113,18 @@
                         </button>
                     </div>
                     <div class="relative">
-                        <button class="flex items-center hover:bg-gray-50 p-2 rounded-lg transition-colors"
-                            id="user-menu-btn">
-                            <img src="https://cdn-icons-png.freepik.com/512/9703/9703596.png" alt="Admin"
-                                class="w-10 h-10 rounded-full mr-2">
-                            <span class="hidden md:block font-medium">Admin User</span>
+                        <button id="user-menu-btn"
+                            class="flex items-center hover:bg-gray-50 p-2 rounded-lg transition-all duration-200">
+                            <img id="header-profile-image" src="https://cdn-icons-png.flaticon.com/512/9703/9703596.png"
+                                alt="Admin" class="w-10 h-10 rounded-full mr-2">
+                            <span id="header-profile-name" class="hidden md:block font-medium">Admin AYUDIA</span>
                             <i class="fas fa-chevron-down ml-2 text-gray-400"></i>
                         </button>
                         <div id="user-dropdown"
                             class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-[9999] border">
-                            <a href="#"
+                            <a href="profil.html"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Profil</a>
-                            <a href="#"
+                            <a href="pengaturan.html"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">Pengaturan</a>
                             <div class="border-t border-gray-100"></div>
                             <a href="#" id="dropdown-logout"
@@ -391,1937 +137,729 @@
 
         <!-- Content -->
         <div id="content">
-            <!-- Dashboard -->
-            <div id="dashboard" class="page-content">
-                <!-- Summary Cards -->
-                <div class="mb-8">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="stats-card rounded-xl shadow-lg p-6 flex items-center card-hover fade-in">
-                            <div class="rounded-full bg-gradient-to-r from-blue-400 to-blue-600 p-4 mr-4">
-                                <i class="fas fa-newspaper text-white text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-gray-500 text-sm font-medium">Artikel</p>
-                                <h3 id="article-count" class="text-3xl font-bold text-gray-800">0</h3>
-                                <div class="flex items-center mt-1">
-                                    <i class="fas fa-arrow-up text-green-500 text-xs mr-1"></i>
-                                    <span class="text-green-500 text-sm font-medium">+12%</span>
-                                </div>
+            <!-- Summary Cards -->
+            <div class="mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="stats-card rounded-xl shadow-lg p-6 flex items-center card-hover fade-in">
+                        <div class="rounded-full bg-gradient-to-r from-blue-400 to-blue-600 p-4 mr-4">
+                            <i class="fas fa-newspaper text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-500 text-sm font-medium">Artikel</p>
+                            <h3 id="article-count" class="text-3xl font-bold text-gray-800">0</h3>
+                            <div class="flex items-center mt-1">
+                                <i class="fas fa-arrow-up text-green-500 text-xs mr-1"></i>
+                                <span class="text-green-500 text-sm font-medium">+12%</span>
                             </div>
                         </div>
-                        <div class="stats-card rounded-xl shadow-lg p-6 flex items-center card-hover fade-in"
-                            style="animation-delay: 0.1s">
-                            <div class="rounded-full bg-gradient-to-r from-green-400 to-green-600 p-4 mr-4">
-                                <i class="fas fa-box text-white text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-gray-500 text-sm font-medium">Produk</p>
-                                <h3 id="product-count" class="text-3xl font-bold text-gray-800">0</h3>
-                                <div class="flex items-center mt-1">
-                                    <i class="fas fa-arrow-up text-green-500 text-xs mr-1"></i>
-                                    <span class="text-green-500 text-sm font-medium">+8%</span>
-                                </div>
+                    </div>
+                    <div class="stats-card rounded-xl shadow-lg p-6 flex items-center card-hover fade-in"
+                        style="animation-delay: 0.1s">
+                        <div class="rounded-full bg-gradient-to-r from-green-400 to-green-600 p-4 mr-4">
+                            <i class="fas fa-box text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-500 text-sm font-medium">Produk</p>
+                            <h3 id="product-count" class="text-3xl font-bold text-gray-800">0</h3>
+                            <div class="flex items-center mt-1">
+                                <i class="fas fa-arrow-up text-green-500 text-xs mr-1"></i>
+                                <span class="text-green-500 text-sm font-medium">+8%</span>
                             </div>
                         </div>
-                        <div class="stats-card rounded-xl shadow-lg p-6 flex items-center card-hover fade-in"
-                            style="animation-delay: 0.2s">
-                            <div class="rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 p-4 mr-4">
-                                <i class="fas fa-users text-white text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-gray-500 text-sm font-medium">Pengguna</p>
-                                <h3 id="user-count" class="text-3xl font-bold text-gray-800">0</h3>
-                                <div class="flex items-center mt-1">
-                                    <i class="fas fa-arrow-up text-green-500 text-xs mr-1"></i>
-                                    <span class="text-green-500 text-sm font-medium">+23%</span>
-                                </div>
+                    </div>
+                    <div class="stats-card rounded-xl shadow-lg p-6 flex items-center card-hover fade-in"
+                        style="animation-delay: 0.2s">
+                        <div class="rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 p-4 mr-4">
+                            <i class="fas fa-users text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-500 text-sm font-medium">Pengguna</p>
+                            <h3 id="user-count" class="text-3xl font-bold text-gray-800">0</h3>
+                            <div class="flex items-center mt-1">
+                                <i class="fas fa-arrow-up text-green-500 text-xs mr-1"></i>
+                                <span class="text-green-500 text-sm font-medium">+23%</span>
                             </div>
                         </div>
-                        <div class="stats-card rounded-xl shadow-lg p-6 flex items-center card-hover fade-in"
-                            style="animation-delay: 0.3s">
-                            <div class="rounded-full bg-gradient-to-r from-red-400 to-red-600 p-4 mr-4">
-                                <i class="fas fa-money-bill-wave text-white text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-gray-500 text-sm font-medium">Transaksi</p>
-                                <h3 id="transaction-count" class="text-3xl font-bold text-gray-800">0</h3>
-                                <div class="flex items-center mt-1">
-                                    <i class="fas fa-arrow-up text-green-500 text-xs mr-1"></i>
-                                    <span class="text-green-500 text-sm font-medium">+15%</span>
-                                </div>
+                    </div>
+                    <div class="stats-card rounded-xl shadow-lg p-6 flex items-center card-hover fade-in"
+                        style="animation-delay: 0.3s">
+                        <div class="rounded-full bg-gradient-to-r from-red-400 to-red-600 p-4 mr-4">
+                            <i class="fas fa-money-bill-wave text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-500 text-sm font-medium">Transaksi</p>
+                            <h3 id="transaction-count" class="text-3xl font-bold text-gray-800">0</h3>
+                            <div class="flex items-center mt-1">
+                                <i class="fas fa-arrow-up text-green-500 text-xs mr-1"></i>
+                                <span class="text-green-500 text-sm font-medium">+15%</span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Charts Row -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                    <!-- Revenue Chart -->
-                    <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.4s">
-                        <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                                <i class="fas fa-chart-line text-[#9B7E46] mr-2"></i>
-                                Ringkasan Pendapatan
-                            </h2>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-sm text-gray-500">Total:</span>
-                                <span class="text-lg font-bold text-[#9B7E46]" id="total-revenue">Rp 0</span>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="revenueChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Category Distribution -->
-                    <div class="bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.5s">
-                        <h2 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                            <i class="fas fa-chart-pie text-[#9B7E46] mr-2"></i>
-                            Distribusi Kategori
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <!-- Revenue Chart -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.4s">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-semibold text-gray-600 flex items-center">
+                            <i class="fas fa-chart-line text-[#9B7E46] mr-2"></i>
+                            Ringkasan Pendapatan
                         </h2>
-                        <div class="chart-container">
-                            <canvas id="categoryChart"></canvas>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Total:</span>
+                            <span class="total-revenue text-lg font-semibold text-[#9B7E46]" id="total-revenue">Rp
+                                0</span>
                         </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
                     </div>
                 </div>
 
-                <!-- Performance Metrics -->
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
-                    <div class="metric-card bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.6s">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-sm font-medium text-gray-600">Penjualan Hari Ini</h3>
-                            <i class="fas fa-shopping-cart text-[#9B7E46]"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-gray-800">Rp 2.4M</p>
-                        <div class="progress-bar mt-2">
-                            <div class="progress-fill" style="width: 75%"></div>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">75% dari target</p>
-                    </div>
-
-                    <div class="metric-card bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.7s">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-sm font-medium text-gray-600">Pengunjung Aktif</h3>
-                            <i class="fas fa-eye text-[#9B7E46]"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-gray-800">1,234</p>
-                        <div class="progress-bar mt-2">
-                            <div class="progress-fill" style="width: 60%"></div>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">+18% dari kemarin</p>
-                    </div>
-
-                    <div class="metric-card bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.8s">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-sm font-medium text-gray-600">Konversi</h3>
-                            <i class="fas fa-percentage text-[#9B7E46]"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-gray-800">3.2%</p>
-                        <div class="progress-bar mt-2">
-                            <div class="progress-fill" style="width: 32%"></div>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">Rate konversi</p>
-                    </div>
-
-                    <div class="metric-card bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.9s">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-sm font-medium text-gray-600">Rata-rata Order</h3>
-                            <i class="fas fa-calculator text-[#9B7E46]"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-gray-800">Rp 850K</p>
-                        <div class="progress-bar mt-2">
-                            <div class="progress-fill" style="width: 85%"></div>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">Per transaksi</p>
+                <!-- Category Distribution -->
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.5s">
+                    <h2 class="text-lg font-semibold mb-4 text-gray-900 flex items-center">
+                        <i class="fas fa-chart-pie text-[#9B7E46] mr-2"></i>
+                        Distribusi Kategori
+                    </h2>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
                     </div>
                 </div>
+            </div>
 
-                <!-- Activity & Recent Orders -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Recent Activity -->
-                    <div class="bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 1.0s">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                                <i class="fas fa-clock text-[#9B7E46] mr-2"></i>
-                                Aktivitas Terbaru
-                            </h2>
-                            <a href="#" class="text-[#9B7E46] text-sm hover:underline transition-colors">Lihat Semua</a>
-                        </div>
-                        <div id="activity-list" class="space-y-3">
-                            <!-- Activity items will be populated here -->
-                        </div>
+            <!-- Performance Metrics -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+                <div class="metric-card bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.6s">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-sm font-medium text-gray-600">Penjualan Hari Ini</h3>
+                        <i class="fas fa-shopping-cart text-[#9B7E46]"></i>
                     </div>
-
-                    <!-- Recent Orders -->
-                    <div class="bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 1.1s">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                                <i class="fas fa-shopping-cart text-[#9B7E46] mr-2"></i>
-                                Transaksi Terbaru
-                            </h2>
-                            <a href="#" data-page="transactions"
-                                class="text-[#9B7E46] text-sm hover:underline page-link transition-colors">Lihat
-                                Semua</a>
-                        </div>
-                        <div class="space-y-3" id="recent-orders">
-                            <!-- Recent orders will be populated here -->
-                        </div>
+                    <p class="text-2xl font-bold text-gray-800">Rp 2.4M</p>
+                    <div class="progress-bar mt-2">
+                        <div class="progress-fill w-3/4"></div>
                     </div>
+                    <p class="text-xs text-gray-600 mt-1">75% dari target</p>
                 </div>
+                <div class="metric-card bg-white rounded-xl p-6 fade-in" style="animation-delay: 0.7s">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-sm font-medium text-gray-600">Pengunjung Aktif</h3>
+                        <i class="fas fa-eye text-[#9B7E46]"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">1,234</p>
+                    <div class="progress-bar mt-2">
+                        <div class="progress-fill w-3/5"></div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-1">+18% dari kemarin</p>
+                </div>
+                <div class="metric-card bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.8s">
+                    <div class="flex justify-between mb-2 items-center">
+                        <h3 class="text-sm font-medium text-gray-600">Konversi</h3>
+                        <i class="fas fa-percentage text-[#9B7E46]"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">3.2%</p>
+                    <div class="progress-bar mt-2">
+                        <div class="progress-fill w-4/5"></div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-1">Rate konversi</p>
+                </div>
+                <div class="metric-card bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 0.9s">
+                    <div class="flex items-center mb-2 justify-between">
+                        <h3 class="text-sm font-medium text-gray-600">Rata-rata Order</h3>
+                        <i class="fas fa-calculator text-[#9B7E46]"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">Rp 850K</p>
+                    <div class="progress-bar mt-2">
+                        <div class="progress-fill w-17/20"></div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-1">Per transaksi</p>
+                </div>
+            </div>
 
-                <!-- Popular Products -->
-                <div class="mt-6 bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 1.2s">
+            <!-- Activity & Recent Orders -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 1.0s;">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                            <i class="fas fa-star text-[#9B7E46] mr-2"></i>
-                            Produk Populer
+                            <i class="fas fa-clock text-[#9B7E46] mr-2"></i>
+                            Aktivitas Terbaru
                         </h2>
-                        <a href="#" data-page="products"
-                            class="text-[#9B7E46] text-sm hover:underline page-link transition-colors">Lihat Semua</a>
+                        <a href="#" class="text-[#9B7E46] text-sm hover:underline transition-colors">Lihat Semua</a>
                     </div>
-                    <div id="popular-products" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Popular products will be populated here -->
+                    <div id="activity-list" class="space-y-3"></div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="bg-white shadow-lg rounded-xl p-6 fade-in" style="animation-delay: 1.1s">
+                    <div class="flex items-center mb-4 justify-between">
+                        <h2 class="text-lg font-semibold text-[#9B7E46] flex items-center">
+                            <i class="fas fa-shopping-cart text-[#9B7E46] mr-2"></i>
+                            Transaksi Terbaru
+                        </h2>
+                        <a href="transaksi.html" class="text-[#9B7E46] text-sm hover:underline transition-colors">Lihat
+                            Semua</a>
                     </div>
+                    <div class="space-y-3" id="recent-orders"></div>
                 </div>
             </div>
 
-            <!-- Kelola Artikel -->
-            <div id="articles" class="page-content hidden">
-                <div class="bg-white rounded-xl shadow-lg mb-6">
-                    <div class="p-6 border-b border-gray-200">
-                        <h2 class="text-xl font-semibold text-gray-800">Kelola Artikel</h2>
-                        <p class="text-gray-500">Kelola semua artikel pada website</p>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex flex-wrap items-center justify-between mb-4">
-                            <div class="w-full md:w-auto mb-4 md:mb-0">
-                                <button id="add-article-btn"
-                                    class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg flex items-center transition-colors shadow-lg">
-                                    <i class="fas fa-plus mr-2"></i> Tambah Artikel
-                                </button>
-                            </div>
-                            <div class="w-full md:w-auto">
-                                <div class="relative">
-                                    <input type="text" id="article-search" placeholder="Cari artikel..."
-                                        class="pl-10 pr-4 py-3 border border-gray-300 rounded-lg w-full md:w-64 focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    <i class="fas fa-search absolute left-3 top-4 text-gray-400"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="article-form" class="hidden mb-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
-                            <h3 class="text-lg font-medium mb-4" id="article-form-title">Tambah Artikel Baru</h3>
-                            <input id="article-id" type="hidden">
-                            <div class="mb-4">
-                                <label class="block mb-2 font-medium text-gray-700">Judul</label>
-                                <input id="article-title" type="text"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                            </div>
-                            <div class="mb-4">
-                                <label class="block mb-2 font-medium text-gray-700">Kategori</label>
-                                <select id="article-category"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    <option value="berita">Berita</option>
-                                    <option value="tutorial">Tutorial</option>
-                                    <option value="review">Review</option>
-                                </select>
-                            </div>
-                            <div class="mb-4">
-                                <label class="block mb-2 font-medium text-gray-700">Konten</label>
-                                <textarea id="article-content"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all"
-                                    rows="6"></textarea>
-                            </div>
-                            <div class="flex justify-end space-x-3">
-                                <button id="cancel-article"
-                                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg transition-colors">Batal</button>
-                                <button id="save-article"
-                                    class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg transition-colors">Simpan</button>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow">
-                                <thead>
-                                    <tr class="bg-gray-100 text-left">
-                                        <th class="p-4 border-b font-semibold text-gray-700">ID</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Judul</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Kategori</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Konten</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="article-list">
-                                    <!-- Articles will be populated here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <!-- Popular Products -->
+            <div class="mt-6 bg-white rounded-xl shadow-lg p-6 fade-in" style="animation-delay: 1.2s;">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                        <i class="fas fa-star text-[#9B7E46] mr-2"></i>
+                        Produk Populer
+                    </h2>
+                    <a href="produk.html" class="text-[#9B7E46] text-sm hover:underline transition-colors">Lihat
+                        Semua</a>
                 </div>
+                <div id="popular-products" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
             </div>
+        </div>
 
-            <!-- Kelola Produk -->
-            <div id="products" class="page-content hidden">
-                <div class="bg-white rounded-xl shadow-lg mb-6">
-                    <div class="p-6 border-b border-gray-200">
-                        <h2 class="text-xl font-semibold text-gray-800">Kelola Produk</h2>
-                        <p class="text-gray-500">Kelola semua produk pada website</p>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex flex-wrap items-center justify-between mb-4">
-                            <div class="w-full md:w-auto mb-4 md:mb-0">
-                                <button id="add-product-btn"
-                                    class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg flex items-center transition-colors shadow-lg">
-                                    <i class="fas fa-plus mr-2"></i> Tambah Produk
-                                </button>
-                            </div>
-                            <div class="w-full md:w-auto">
-                                <div class="relative">
-                                    <input type="text" id="product-search" placeholder="Cari produk..."
-                                        class="pl-10 pr-4 py-3 border border-gray-300 rounded-lg w-full md:w-64 focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    <i class="fas fa-search absolute left-3 top-4 text-gray-400"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="product-form" class="hidden mb-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
-                            <h3 class="text-lg font-medium mb-4" id="product-form-title">Tambah Produk Baru</h3>
-                            <input id="product-id" type="hidden">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-medium text-gray-700">Nama Produk</label>
-                                    <input id="product-name" type="text"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-medium text-gray-700">Kategori</label>
-                                    <select id="product-category"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                        <option value="kebaya">Kebaya</option>
-                                        <option value="batik">Batik</option>
-                                        <option value="aksesoris">Aksesoris</option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-medium text-gray-700">Harga</label>
-                                    <input id="product-price" type="number"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-medium text-gray-700">Stok</label>
-                                    <input id="product-stock" type="number"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                </div>
-                                <div class="mb-4 col-span-2">
-                                    <label class="block mb-2 font-medium text-gray-700">Deskripsi</label>
-                                    <textarea id="product-description"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all"
-                                        rows="3"></textarea>
-                                </div>
-                                <div class="mb-4 col-span-2">
-                                    <label class="block mb-2 font-medium text-gray-700">Gambar (URL)</label>
-                                    <input id="product-image" type="text"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                </div>
-                            </div>
-                            <div class="flex justify-end space-x-3">
-                                <button id="cancel-product"
-                                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg transition-colors">Batal</button>
-                                <button id="save-product"
-                                    class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg transition-colors">Simpan</button>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow">
-                                <thead>
-                                    <tr class="bg-gray-100 text-left">
-                                        <th class="p-4 border-b font-semibold text-gray-700">ID</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Gambar</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Nama</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Kategori</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Harga</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Stok</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="product-list">
-                                    <!-- Products will be populated here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        <!-- Notification Panel -->
+        <div id="notification-panel" class="fixed inset-0 notification-panel hidden z-50">
+            <div id="notification-sidebar"
+                class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-full">
+                <div class="p-4 border-b flex justify-between items-center bg-[#9B7E46] text-white">
+                    <h3 class="font-medium">Notifikasi</h3>
+                    <button id="close-notification" type="button"
+                        class="text-white hover:text-gray-200 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-            </div>
-
-            <!-- Kelola Pengguna -->
-            <div id="users" class="page-content hidden">
-                <div class="bg-white rounded-xl shadow-lg mb-6">
-                    <div class="p-6 border-b border-gray-200">
-                        <h2 class="text-xl font-semibold text-gray-800">Kelola Pengguna</h2>
-                        <p class="text-gray-500">Kelola semua pengguna pada website</p>
+                <div class="p-4">
+                    <div class="mb-4 pb-4 border-b activity-item">
+                        <div class="flex items-center mb-2">
+                            <div class="rounded-full bg-blue-100 p-2 mr-3">
+                                <i class="fas fa-user-plus text-blue-500"></i>
+                            </div>
+                            <p class="font-medium">Pengguna Baru</p>
+                            <div class="notification-dot ml-auto"></div>
+                        </div>
+                        <p class="text-gray-600 text-sm">Ifa telah mendaftar sebagai pengguna baru.</p>
+                        <p class="text-gray-400 text-xs mt-1">10 menit yang lalu</p>
                     </div>
-                    <div class="p-6">
-                        <div class="flex flex-wrap items-center justify-between mb-4">
-                            <div class="w-full md:w-auto mb-4 md:mb-0">
-                                <button id="add-user-btn"
-                                    class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg flex items-center transition-colors shadow-lg">
-                                    <i class="fas fa-plus mr-2"></i> Tambah Pengguna
-                                </button>
+                    <div class="mb-4 pb-4 border-b activity-item">
+                        <div class="flex items-center mb-2">
+                            <div class="rounded-full bg-green-100 p-2 mr-3">
+                                <i class="fas fa-shopping-cart text-green-500"></i>
                             </div>
-                            <div class="w-full md:w-auto">
-                                <div class="relative">
-                                    <input type="text" id="user-search" placeholder="Cari pengguna..."
-                                        class="pl-10 pr-4 py-3 border border-gray-300 rounded-lg w-full md:w-64 focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    <i class="fas fa-search absolute left-3 top-4 text-gray-400"></i>
-                                </div>
-                            </div>
+                            <p class="font-medium">Transaksi Baru</p>
+                            <div class="notification-dot ml-auto"></div>
                         </div>
-                        <div id="user-form" class="hidden mb-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
-                            <h3 class="text-lg font-medium mb-4" id="user-form-title">Tambah Pengguna Baru</h3>
-                            <input id="user-id" type="hidden">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-medium text-gray-700">Nama</label>
-                                    <input id="user-name" type="text"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-medium text-gray-700">Email</label>
-                                    <input id="user-email" type="email"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-medium text-gray-700">Password</label>
-                                    <input id="user-password" type="password"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block mb-2 font-medium text-gray-700">Role</label>
-                                    <select id="user-role"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                        <option value="user">User</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="flex justify-end space-x-3">
-                                <button id="cancel-user"
-                                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg transition-colors">Batal</button>
-                                <button id="save-user"
-                                    class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg transition-colors">Simpan</button>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow">
-                                <thead>
-                                    <tr class="bg-gray-100 text-left">
-                                        <th class="p-4 border-b font-semibold text-gray-700">ID</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Nama</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Email</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Role</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="user-list">
-                                    <!-- Users will be populated here -->
-                                </tbody>
-                            </table>
-                        </div>
+                        <p class="text-gray-600 text-sm">Transaksi baru dari Dinda senilai Rp 1,599,000.</p>
+                        <p class="text-gray-400 text-xs mt-1">30 menit yang lalu</p>
                     </div>
-                </div>
-            </div>
-
-            <!-- Kelola Transaksi -->
-            <div id="transactions" class="page-content hidden">
-                <div class="bg-white rounded-xl shadow-lg mb-6">
-                    <div class="p-6 border-b border-gray-200">
-                        <h2 class="text-xl font-semibold text-gray-800">Kelola Transaksi</h2>
-                        <p class="text-gray-500">Kelola semua transaksi pada website</p>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex flex-wrap items-center justify-between mb-4">
-                            <div class="w-full md:w-auto mb-4 md:mb-0">
-                                <div class="flex space-x-3">
-                                    <select id="transaction-filter"
-                                        class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                        <option value="all">Semua Status</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    </select>
-                                    <button id="filter-btn"
-                                        class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg transition-colors">Filter</button>
-                                </div>
+                    <div class="mb-4 activity-item">
+                        <div class="flex items-center mb-2">
+                            <div class="rounded-full bg-red-100 p-2 mr-3">
+                                <i class="fas fa-exclamation-circle text-red-500"></i>
                             </div>
-                            <div class="w-full md:w-auto">
-                                <div class="relative">
-                                    <input type="text" id="transaction-search" placeholder="Cari transaksi..."
-                                        class="pl-10 pr-4 py-3 border border-gray-300 rounded-lg w-full md:w-64 focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    <i class="fas fa-search absolute left-3 top-4 text-gray-400"></i>
-                                </div>
-                            </div>
+                            <p class="font-medium">Stok Menipis</p>
                         </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow">
-                                <thead>
-                                    <tr class="bg-gray-100 text-left">
-                                        <th class="p-4 border-b font-semibold text-gray-700">ID</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Tanggal</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Pengguna</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Total</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Status</th>
-                                        <th class="p-4 border-b font-semibold text-gray-700">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="transaction-list">
-                                    <!-- Transactions will be populated here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pengaturan -->
-            <div id="settings" class="page-content hidden">
-                <div class="space-y-6">
-                    <!-- Profile Settings -->
-                    <div class="bg-white rounded-xl shadow-lg">
-                        <div class="p-6 border-b border-gray-200">
-                            <h2 class="text-xl font-semibold text-gray-800 flex items-center">
-                                <i class="fas fa-user text-[#9B7E46] mr-2"></i>
-                                Pengaturan Profil
-                            </h2>
-                        </div>
-                        <div class="p-6">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div class="md:col-span-1">
-                                    <div
-                                        class="flex flex-col items-center bg-gray-50 p-6 rounded-lg border border-gray-200">
-                                        <img src="https://cdn-icons-png.freepik.com/512/9703/9703596.png"
-                                            alt="Admin Profile" class="w-32 h-32 rounded-full mb-4 shadow-lg">
-                                        <h4 class="text-lg font-medium text-gray-800">Admin User</h4>
-                                        <p class="text-gray-500 mb-4">Super Admin</p>
-                                        <button
-                                            class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg w-full mb-2 transition-colors">Ubah
-                                            Foto</button>
-                                    </div>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                                        <div class="space-y-4">
-                                            <div>
-                                                <label class="block mb-2 font-medium text-gray-700">Nama</label>
-                                                <input type="text" value="Admin User"
-                                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                            </div>
-                                            <div>
-                                                <label class="block mb-2 font-medium text-gray-700">Email</label>
-                                                <input type="email" value="admin@example.com"
-                                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                            </div>
-                                            <div>
-                                                <label class="block mb-2 font-medium text-gray-700">Nomor
-                                                    Telepon</label>
-                                                <input type="text" value="+62 812 3456 7890"
-                                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                            </div>
-                                            <div class="flex justify-end">
-                                                <button
-                                                    class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg transition-colors">Update
-                                                    Profil</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Security Settings -->
-                    <div class="bg-white rounded-xl shadow-lg">
-                        <div class="p-6 border-b border-gray-200">
-                            <h2 class="text-xl font-semibold text-gray-800 flex items-center">
-                                <i class="fas fa-shield-alt text-[#9B7E46] mr-2"></i>
-                                Pengaturan Keamanan
-                            </h2>
-                        </div>
-                        <div class="p-6">
-                            <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                                <h4 class="font-medium mb-4 text-gray-800">Ubah Password</h4>
-                                <div class="space-y-4">
-                                    <div>
-                                        <label class="block mb-2 font-medium text-gray-700">Password Lama</label>
-                                        <input type="password" placeholder="Masukkan password lama"
-                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    </div>
-                                    <div>
-                                        <label class="block mb-2 font-medium text-gray-700">Password Baru</label>
-                                        <input type="password" placeholder="Masukkan password baru"
-                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    </div>
-                                    <div>
-                                        <label class="block mb-2 font-medium text-gray-700">Konfirmasi Password
-                                            Baru</label>
-                                        <input type="password" placeholder="Konfirmasi password baru"
-                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    </div>
-                                    <div class="flex justify-end">
-                                        <button
-                                            class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg transition-colors">Update
-                                            Password</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Website Settings -->
-                    <div class="bg-white rounded-xl shadow-lg">
-                        <div class="p-6 border-b border-gray-200">
-                            <h2 class="text-xl font-semibold text-gray-800 flex items-center">
-                                <i class="fas fa-globe text-[#9B7E46] mr-2"></i>
-                                Pengaturan Website
-                            </h2>
-                        </div>
-                        <div class="p-6">
-                            <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                                <div class="space-y-4">
-                                    <div>
-                                        <label class="block mb-2 font-medium text-gray-700">Nama Website</label>
-                                        <input type="text" value="AYUDIA"
-                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    </div>
-                                    <div>
-                                        <label class="block mb-2 font-medium text-gray-700">Deskripsi Website</label>
-                                        <textarea
-                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all"
-                                            rows="3">Toko online untuk berbagai macam kerajinan tradisional Indonesia</textarea>
-                                    </div>
-                                    <div>
-                                        <label class="block mb-2 font-medium text-gray-700">Logo (URL)</label>
-                                        <input type="text" value="https://example.com/logo.png"
-                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    </div>
-                                    <div>
-                                        <label class="block mb-2 font-medium text-gray-700">Email Kontak</label>
-                                        <input type="email" value="contact@ayudia.com"
-                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9B7E46] focus:border-transparent transition-all">
-                                    </div>
-                                    <div class="flex justify-end">
-                                        <button
-                                            class="bg-[#9B7E46] hover:bg-[#8a6d3e] text-white px-6 py-3 rounded-lg transition-colors">Simpan
-                                            Pengaturan</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="text-gray-600 text-sm">Produk "Kebaya Rona Hijau" hampir habis (sisa 2).</p>
+                        <p class="text-gray-400 text-xs mt-1">2 jam yang lalu</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Notification Panel -->
-    <div id="notification-panel" class="fixed inset-0 notification-panel z-50 hidden">
-        <div class="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-full"
-            id="notification-sidebar">
-            <div class="p-4 border-b flex justify-between items-center bg-[#9B7E46] text-white">
-                <h3 class="font-medium">Notifikasi</h3>
-                <button id="close-notification" class="text-white hover:text-gray-200 transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-4">
-                <div class="mb-4 pb-4 border-b activity-item">
-                    <div class="flex items-center mb-2">
-                        <div class="rounded-full bg-blue-100 p-2 mr-3">
-                            <i class="fas fa-user-plus text-blue-500"></i>
-                        </div>
-                        <p class="font-medium">Pengguna Baru</p>
-                        <div class="notification-dot ml-auto"></div>
-                    </div>
-                    <p class="text-gray-600 text-sm">John Doe telah mendaftar sebagai pengguna baru.</p>
-                    <p class="text-gray-400 text-xs mt-1">10 menit yang lalu</p>
-                </div>
-                <div class="mb-4 pb-4 border-b activity-item">
-                    <div class="flex items-center mb-2">
-                        <div class="rounded-full bg-green-100 p-2 mr-3">
-                            <i class="fas fa-shopping-cart text-green-500"></i>
-                        </div>
-                        <p class="font-medium">Transaksi Baru</p>
-                        <div class="notification-dot ml-auto"></div>
-                    </div>
-                    <p class="text-gray-600 text-sm">Transaksi baru dari Jane Smith senilai Rp 1,599,000.</p>
-                    <p class="text-gray-400 text-xs mt-1">30 menit yang lalu</p>
-                </div>
-                <div class="mb-4 activity-item">
-                    <div class="flex items-center mb-2">
-                        <div class="rounded-full bg-red-100 p-2 mr-3">
-                            <i class="fas fa-exclamation-circle text-red-500"></i>
-                        </div>
-                        <p class="font-medium">Stok Menipis</p>
-                    </div>
-                    <p class="text-gray-600 text-sm">Produk "Kebaya Putih" hampir habis (sisa 2).</p>
-                    <p class="text-gray-400 text-xs mt-1">2 jam yang lalu</p>
+        <!-- Logout Confirmation Modal -->
+        <div id="logout-modal"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-xl w-96 p-6 shadow-2xl">
+                <h3 class="text-lg font-medium mb-4 text-gray-800">Konfirmasi Logout</h3>
+                <p class="text-gray-600 mb-6">Apakah Anda yakin ingin keluar dari dashboard admin?</p>
+                <div class="flex justify-end space-x-3">
+                    <button id="cancel-logout"
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg transition-colors">Batal</button>
+                    <button id="confirm-logout"
+                        class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg transition-colors">Ya,
+                        Logout</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Logout Confirmation Modal -->
-    <div id="logout-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-xl w-96 p-6 shadow-2xl">
-            <h3 class="text-lg font-medium mb-4 text-gray-800">Konfirmasi Logout</h3>
-            <p class="text-gray-600 mb-6">Apakah Anda yakin ingin keluar dari dashboard admin?</p>
-            <div class="flex justify-end space-x-3">
-                <button id="cancel-logout"
-                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg transition-colors">Batal</button>
-                <button id="confirm-logout"
-                    class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg transition-colors"
-                    onclick="window.location.href='index.html'">Ya, Logout</button>
-            </div>
-        </div>
-    </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Sidebar Toggle
+                const toggleSidebar = document.getElementById('toggle-sidebar');
+                const closeSidebar = document.getElementById('close-sidebar');
+                const sidebar = document.getElementById('sidebar');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Sidebar Toggle
-            const toggleSidebar = document.getElementById('toggle-sidebar');
-            const closeSidebar = document.getElementById('close-sidebar');
-            const sidebar = document.getElementById('sidebar');
+                if (toggleSidebar) {
+                    toggleSidebar.addEventListener('click', () => {
+                        sidebar.classList.toggle('active');
+                    });
+                }
+                if (closeSidebar) {
+                    closeSidebar.addEventListener('click', () => {
+                        sidebar.classList.remove('active');
+                    });
+                }
 
-            if (toggleSidebar) {
-                toggleSidebar.addEventListener('click', () => {
-                    sidebar.classList.toggle('active');
-                });
-            }
+                // User Dropdown
+                const userMenuBtn = document.getElementById('user-menu-btn');
+                const userDropdown = document.getElementById('user-dropdown');
+                if (userMenuBtn && userDropdown) {
+                    userMenuBtn.addEventListener('click', () => {
+                        userDropdown.classList.toggle('hidden');
+                    });
+                    userDropdown.addEventListener('click', (e) => {
+                        if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                            userMenuBtn.classList.add('hidden');
+                        }
+                    });
+                }
 
-            if (closeSidebar) {
-                closeSidebar.addEventListener('click', () => {
-                    sidebar.classList.remove('active');
-                });
-            }
+                // Notification Panel
+                const notificationBtn = document.getElementById('notification-btn');
+                const notificationPanel = document.getElementById('notification-panel');
+                const notificationSidebar = document.getElementById('notification-sidebar');
+                const closeNotification = document.getElementById('close-notification');
 
-            // User Dropdown Toggle
-            const userMenuBtn = document.getElementById('user-menu-btn');
-            const userDropdown = document.getElementById('user-dropdown');
+                if (notificationBtn && notificationPanel && notificationSidebar && closeNotification) {
+                    notificationBtn.addEventListener('click', () => {
+                        notificationPanel.classList.remove('hidden');
+                        setTimeout(() => {
+                            notificationSidebar.classList.remove('translate-x-full');
+                        }, 10);
+                    });
 
-            if (userMenuBtn && userDropdown) {
-                userMenuBtn.addEventListener('click', () => {
-                    userDropdown.classList.toggle('hidden');
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                        userDropdown.classList.add('hidden');
-                    }
-                });
-            }
-
-            // Notification Panel Toggle
-            const notificationBtn = document.getElementById('notification-btn');
-            const notificationPanel = document.getElementById('notification-panel');
-            const notificationSidebar = document.getElementById('notification-sidebar');
-            const closeNotification = document.getElementById('close-notification');
-
-            if (notificationBtn && notificationPanel && notificationSidebar && closeNotification) {
-                notificationBtn.addEventListener('click', () => {
-                    notificationPanel.classList.remove('hidden');
-                    setTimeout(() => {
-                        notificationSidebar.classList.remove('translate-x-full');
-                    }, 10);
-                });
-
-                closeNotification.addEventListener('click', () => {
-                    notificationSidebar.classList.add('translate-x-full');
-                    setTimeout(() => {
-                        notificationPanel.classList.add('hidden');
-                    }, 300);
-                });
-
-                notificationPanel.addEventListener('click', (e) => {
-                    if (e.target === notificationPanel) {
+                    closeNotification.addEventListener('click', () => {
                         notificationSidebar.classList.add('translate-x-full');
                         setTimeout(() => {
                             notificationPanel.classList.add('hidden');
                         }, 300);
-                    }
-                });
-            }
+                    });
 
-            // Logout Modal
-            const logoutBtn = document.getElementById('logout-btn');
-            const dropdownLogout = document.getElementById('dropdown-logout');
-            const logoutModal = document.getElementById('logout-modal');
-            const cancelLogout = document.getElementById('cancel-logout');
-            const confirmLogout = document.getElementById('confirm-logout');
+                    notificationPanel.addEventListener('click', (e) => {
+                        if (e.target === notificationPanel) {
+                            notificationSidebar.classList.add('translate-x-full');
+                            setTimeout(() => {
+                                notificationPanel.classList.add('hidden');
+                            }, 300);
+                        }
+                    });
+                }
 
-            if (logoutBtn && logoutModal && cancelLogout && confirmLogout) {
-                logoutBtn.addEventListener('click', () => {
-                    logoutModal.classList.remove('hidden');
-                });
+                // Logout Modal
+                const logoutBtn = document.getElementById('logout-btn');
+                const dropdownLogout = document.getElementById('dropdown-logout');
+                const logoutModal = document.getElementById('logout-modal');
+                const cancelLogout = document.getElementById('cancel-logout');
+                const confirmLogout = document.getElementById('confirm-logout');
 
-                if (dropdownLogout) {
-                    dropdownLogout.addEventListener('click', () => {
+                if (logoutBtn && logoutModal && cancelLogout && confirmLogout) {
+                    logoutBtn.addEventListener('click', () => {
                         logoutModal.classList.remove('hidden');
                     });
-                }
-
-                cancelLogout.addEventListener('click', () => {
-                    logoutModal.classList.add('hidden');
-                });
-
-                confirmLogout.addEventListener('click', () => {
-                    showNotification('Anda berhasil logout!');
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1000);
-                });
-
-                logoutModal.addEventListener('click', (e) => {
-                    if (e.target === logoutModal) {
+                    if (dropdownLogout) {
+                        dropdownLogout.addEventListener('click', () => {
+                            logoutModal.classList.remove('hidden');
+                        });
+                    }
+                    cancelLogout.addEventListener('click', () => {
                         logoutModal.classList.add('hidden');
-                    }
-                });
-            }
-
-            // Data Initialization
-            let articles = JSON.parse(localStorage.getItem('articles')) || [
-                { id: 1, title: 'Keindahan Batik Nusantara', content: 'Batik merupakan salah satu warisan budaya Indonesia yang telah diakui oleh UNESCO sebagai Masterpiece of Oral and Intangible Heritage of Humanity. Keindahan motif batik mencerminkan kekayaan budaya dan filosofi hidup masyarakat Indonesia.', category: 'berita' },
-                { id: 2, title: 'Cara Merawat Kebaya Agar Tetap Awet', content: 'Kebaya merupakan pakaian tradisional yang perlu perawatan khusus agar tetap awet dan indah. Berikut adalah tips merawat kebaya dengan benar agar dapat digunakan dalam jangka waktu yang lama.', category: 'tutorial' },
-                { id: 3, title: 'Tren Batik Modern 2025', content: 'Perkembangan fashion batik terus mengalami evolusi dengan desain-desain kontemporer yang memadukan tradisi dan modernitas. Tahun 2025 menampilkan tren batik yang lebih beragam dan inovatif.', category: 'review' }
-            ];
-
-            let products = JSON.parse(localStorage.getItem('products')) || [
-                { id: 1, name: 'Kebaya Putih Elegant', price: 1599000, stock: 10, image: 'https://images.unsplash.com/photo-1617896692597-6dc2b636f650?w=400', category: 'kebaya', description: 'Kebaya putih dengan detail bordir yang elegan, cocok untuk acara formal' },
-                { id: 2, name: 'Batik Pekalongan Premium', price: 850000, stock: 15, image: 'https://images.unsplash.com/photo-1550527890-c18fcdf3a6f1?w=400', category: 'batik', description: 'Batik Pekalongan dengan motif klasik dan kualitas premium' },
-                { id: 3, name: 'Kalung Etnik Perak', price: 450000, stock: 20, image: 'https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=400', category: 'aksesoris', description: 'Kalung etnik dengan bahan perak dan detail ukiran tradisional' },
-                { id: 4, name: 'Batik Solo Heritage', price: 950000, stock: 8, image: 'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400', category: 'batik', description: 'Batik Solo dengan motif heritage yang memukau' },
-                { id: 5, name: 'Kebaya Brokat Gold', price: 2100000, stock: 5, image: 'https://images.unsplash.com/photo-1566479179817-c0b5b4b8b1c5?w=400', category: 'kebaya', description: 'Kebaya brokat dengan aksen gold yang mewah' }
-            ];
-
-            let users = JSON.parse(localStorage.getItem('users')) || [
-                { id: 1, name: 'John Doe', email: 'john@example.com', role: 'user' },
-                { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'user' },
-                { id: 3, name: 'Admin User', email: 'admin@example.com', role: 'admin' },
-                { id: 4, name: 'Sarah Wilson', email: 'sarah@example.com', role: 'user' },
-                { id: 5, name: 'Mike Johnson', email: 'mike@example.com', role: 'user' }
-            ];
-
-            let transactions = JSON.parse(localStorage.getItem('transactions')) || [
-                { id: 1, userId: 1, date: '2025-05-10', total: 1599000, status: 'Completed' },
-                { id: 2, userId: 2, date: '2025-05-11', total: 850000, status: 'Pending' },
-                { id: 3, userId: 1, date: '2025-05-12', total: 450000, status: 'Cancelled' },
-                { id: 4, userId: 4, date: '2025-05-13', total: 2100000, status: 'Completed' },
-                { id: 5, userId: 5, date: '2025-05-14', total: 950000, status: 'Pending' }
-            ];
-
-            // Activity data
-            const activities = [
-                { type: 'user', message: 'Jane Smith mendaftar sebagai pengguna baru', time: '10 menit yang lalu', icon: 'fas fa-user-plus', color: 'bg-blue-100 text-blue-500' },
-                { type: 'transaction', message: 'Transaksi baru senilai Rp 1,599,000', time: '30 menit yang lalu', icon: 'fas fa-shopping-cart', color: 'bg-green-100 text-green-500' },
-                { type: 'product', message: 'Produk baru "Batik Pekalongan" ditambahkan', time: '1 jam yang lalu', icon: 'fas fa-box', color: 'bg-yellow-100 text-yellow-500' },
-                { type: 'article', message: 'Artikel baru "Tren Batik Modern 2025" dipublikasikan', time: '2 jam yang lalu', icon: 'fas fa-newspaper', color: 'bg-purple-100 text-purple-500' }
-            ];
-
-            // Navigation
-            const pageLinks = document.querySelectorAll('.page-link');
-            const pageContents = document.querySelectorAll('.page-content');
-            const pageTitle = document.getElementById('page-title');
-            const sidebarLinks = document.querySelectorAll('.sidebar-link');
-
-            if (pageLinks.length > 0) {
-                pageLinks.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const page = link.dataset.page;
-                        pageContents.forEach(content => content.classList.add('hidden'));
-                        document.getElementById(page).classList.remove('hidden');
-                        if (pageTitle) pageTitle.textContent = link.textContent.trim();
-                        if (sidebar) sidebar.classList.remove('active');
-
-                        // Update active link in sidebar
-                        sidebarLinks.forEach(sideLink => sideLink.classList.remove('active'));
-                        document.querySelector(`.sidebar-link[data-page="${page}"]`)?.classList.add('active');
-
-                        if (page === 'dashboard') updateDashboard();
-                        if (page === 'articles') updateArticleList();
-                        if (page === 'products') updateProductList();
-                        if (page === 'users') updateUserList();
-                        if (page === 'transactions') updateTransactionList();
                     });
-                });
-
-                // Set initial active link
-                document.querySelector('.sidebar-link[data-page="dashboard"]')?.classList.add('active');
-            }
-
-            // Enhanced Charts
-            let revenueChart = null;
-            let categoryChart = null;
-
-            function createRevenueChart() {
-                const ctx = document.getElementById('revenueChart');
-                if (!ctx) return;
-
-                if (revenueChart) {
-                    revenueChart.destroy();
+                    confirmLogout.addEventListener('click', () => {
+                        showNotification('Anda berhasil logout!');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    });
+                    logoutModal.addEventListener('click', (e) => {
+                        if (e.target === logoutModal) {
+                            logoutModal.classList.add('hidden');
+                        }
+                    });
                 }
 
-                const data = [
-                    { month: 'Jan', revenue: 5000000, target: 4500000 },
-                    { month: 'Feb', revenue: 6500000, target: 6000000 },
-                    { month: 'Mar', revenue: 4800000, target: 5500000 },
-                    { month: 'Apr', revenue: 7200000, target: 6500000 },
-                    { month: 'Mei', revenue: 8900000, target: 7500000 },
-                    { month: 'Jun', revenue: 7500000, target: 8000000 },
-                    { month: 'Jul', revenue: 9200000, target: 8500000 },
-                    { month: 'Agu', revenue: 8100000, target: 8800000 },
-                    { month: 'Sep', revenue: 9500000, target: 9000000 },
-                    { month: 'Okt', revenue: 10200000, target: 9500000 },
-                    { month: 'Nov', revenue: 9800000, target: 10000000 },
-                    { month: 'Des', revenue: 11500000, target: 11000000 }
+                // Notification Helper
+                function showNotification(message) {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.className = 'fixed bottom-4 right-4 bg-[#9B7E46] text-white px-6 py-3 rounded-lg shadow-lg';
+                    tempDiv.textContent = message;
+                    document.body.appendChild(tempDiv);
+                    setTimeout(() => tempDiv.remove(), 3000);
+                }
+
+                // Format Date
+                function formatDate(isoString) {
+                    try {
+                        const date = new Date(isoString);
+                        if (isNaN(date.getTime())) return 'Baru saja';
+                        return date.toLocaleString('id-ID', {
+                            day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                        });
+                    } catch {
+                        return 'Baru saja';
+                    }
+                }
+
+                // Data Initialization (Dummy Data)
+                let articles = JSON.parse(localStorage.getItem('articles')) || [
+                    { id: 1, title: 'Keindahan Batik Nusantara', content: '<p>Batik adalah warisan budaya...</p>', category: 'berita', image: '' },
+                    { id: 2, title: 'Tutorial Membuat Kebaya', content: '<p>Langkah-langkah membuat kebaya...</p>', category: 'tutorial', image: '' }
                 ];
+                let products = JSON.parse(localStorage.getItem('products')) || [
+                    { id: 1, name: 'Kebaya Coklat Semu', description: 'Kebaya warna coklat lembut dengan model sederhana, cocok untuk tampilan modern sehari-hari.', sizes: ['S', 'M', 'L', 'XL'], category: 'kebaya_kutubaru', price: 599000, image: 'https://i.pinimg.com/736x/c9/8b/1f/c98b1f5028067956a8723ed444fbe024.jpg' },
+                    { id: 2, name: 'Kebaya Rona Hijau', description: 'Hijau pastel yang manis dengan bordir lembut, sempurna untuk kesan alami.', sizes: ['XS', 'S', 'M', 'L', 'XL'], category: 'kebaya_encim', price: 975000, image: 'https://i.pinimg.com/736x/d1/d6/1f/d1d61fcd20c9950d83a6240de5d9d677.jpg' },
+                ];
+                let users = JSON.parse(localStorage.getItem('users')) || [
+                    { id: 1, name: 'Amel', email: 'amel@gmail.com', role: 'user' },
+                    { id: 2, name: 'Tria', email: 'tria@gmail.com', role: 'user' },
+                    { id: 3, name: 'Fara', email: 'fara@gmail.com', role: 'user' },
+                    { id: 4, name: 'Ifa', email: 'ifa@gmail.com', role: 'user' }
+                ];
+                let transactions = JSON.parse(localStorage.getItem('transactions')) || [
+                    { id: 1, userId: 1, productId: 1, date: '2025-05-10T14:30:00Z', total: 1599000, status: 'Berhasil' },
+                    { id: 2, userId: 2, productId: 2, date: '2025-05-15T09:15:00Z', total: 1299000, status: 'Menunggu' }
+                ];
+                let adminProfile = JSON.parse(localStorage.getItem('adminProfile')) || {
+                    name: 'Admin AYUDIA',
+                    email: 'admin@ayudia.com',
+                    password: 'admin123',
+                    image: 'https://cdn-icons-png.flaticon.com/512/9703/9703596.png'
+                };
 
-                const totalRevenue = data.reduce((sum, item) => sum + item.revenue, 0);
-                document.getElementById('total-revenue').textContent = `Rp ${(totalRevenue / 1000000).toFixed(1)} juta`;
+                // Update Profile
+                function updateProfileDisplay() {
+                    const sidebarName = document.getElementById('sidebar-profile-name');
+                    const headerName = document.getElementById('header-profile-name');
+                    const sidebarImage = document.getElementById('sidebar-profile-image');
+                    const headerImage = document.getElementById('header-profile-image');
+                    if (sidebarName) sidebarName.textContent = adminProfile.name;
+                    if (headerName) headerName.textContent = adminProfile.name;
+                    if (sidebarImage) sidebarImage.src = adminProfile.image || 'https://via.placeholder.com/40';
+                    if (headerImage) headerImage.src = adminProfile.image || 'https://via.placeholder.com/40';
+                }
 
-                revenueChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: data.map(item => item.month),
-                        datasets: [{
-                            label: 'Pendapatan Aktual',
-                            data: data.map(item => item.revenue),
-                            borderColor: '#9B7E46',
-                            backgroundColor: 'rgba(155, 126, 70, 0.1)',
-                            tension: 0.4,
-                            fill: true,
-                            pointBackgroundColor: '#9B7E46',
-                            pointBorderColor: '#ffffff',
-                            pointBorderWidth: 2,
-                            pointRadius: 6,
-                            pointHoverRadius: 8
-                        }, {
-                            label: 'Target',
-                            data: data.map(item => item.target),
-                            borderColor: '#e5e7eb',
-                            backgroundColor: 'transparent',
-                            borderDash: [5, 5],
-                            tension: 0.4,
-                            pointBackgroundColor: '#e5e7eb',
-                            pointBorderColor: '#ffffff',
-                            pointBorderWidth: 2,
-                            pointRadius: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: true,
-                                position: 'top',
-                                labels: {
-                                    usePointStyle: true,
-                                    padding: 20
-                                }
-                            },
-                            tooltip: {
-                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                titleColor: '#ffffff',
-                                bodyColor: '#ffffff',
-                                borderColor: '#9B7E46',
-                                borderWidth: 1,
-                                callbacks: {
-                                    label: function (context) {
-                                        return context.dataset.label + ': Rp ' + (context.parsed.y / 1000000).toFixed(1) + ' juta';
-                                    }
-                                }
+                // Update Notifications
+                function updateNotifications() {
+                    const notificationList = document.getElementById('notification-list');
+                    if (!notificationList) return;
+                    notificationList.innerHTML = '';
+                    const notifications = [
+                        ...transactions.map(t => ({
+                            title: 'Transaksi Baru',
+                            message: `Transaksi #${t.id} senilai Rp ${t.total.toLocaleString('id-ID')}.`,
+                            time: formatDate(t.date),
+                            icon: 'fas fa-shopping-cart',
+                            color: 'bg-green-100 text-green-500'
+                        })),
+                        ...users.slice(0, 2).map(u => ({
+                            title: 'Pengguna Baru',
+                            message: `${u.name} mendaftar sebagai pengguna baru.`,
+                            time: 'Baru saja',
+                            icon: 'fas fa-user-plus',
+                            color: 'bg-blue-100 text-blue-500'
+                        }))
+                    ].slice(0, 3);
+                    notifications.forEach(n => {
+                        const item = document.createElement('div');
+                        item.className = 'mb-4 pb-4 border-b';
+                        item.innerHTML = `
+                <div class="flex items-center mb-2">
+                    <div class="rounded-full ${n.color} p-2 mr-3">
+                        <i class="${n.icon}"></i>
+                    </div>
+                    <p class="font-medium">${n.title}</p>
+                    <div class="notification-dot ml-auto"></div>
+                </div>
+                <p class="text-gray-600 text-sm">${n.message}</p>
+                <p class="text-gray-400 text-xs mt-1">${n.time}</p>
+            `;
+                        notificationList.appendChild(item);
+                    });
+                    const badge = document.getElementById('notification-badge');
+                    if (badge) badge.textContent = notifications.length;
+                }
+
+                // Dashboard Update
+                let revenueChart = null;
+                let categoryChart = null;
+
+                function updateDashboard() {
+                    // Validate Data
+                    articles = Array.isArray(articles) ? articles : [];
+                    products = Array.isArray(products) ? products : [];
+                    users = Array.isArray(users) ? users : [];
+                    transactions = Array.isArray(transactions) ? transactions : [];
+
+                    // Summary Cards
+                    const articleCount = document.getElementById('article-count');
+                    const productCount = document.getElementById('product-count');
+                    const userCount = document.getElementById('user-count');
+                    const transactionCount = document.getElementById('transaction-count');
+                    if (articleCount) articleCount.textContent = articles.length;
+                    if (productCount) productCount.textContent = products.length;
+                    if (userCount) userCount.textContent = users.length;
+                    if (transactionCount) transactionCount.textContent = transactions.length;
+
+                    // Performance Metrics
+                    const today = new Date().toISOString().split('T')[0];
+                    const dailySales = transactions
+                        .filter(t => t.date.startsWith(today))
+                        .reduce((sum, t) => sum + t.total, 0);
+                    const dailySalesEl = document.getElementById('daily-sales');
+                    const dailySalesProgress = document.getElementById('daily-sales-progress');
+                    if (dailySalesEl) dailySalesEl.textContent = `Rp ${dailySales.toLocaleString('id-ID')}`;
+                    if (dailySalesProgress) dailySalesProgress.style.width = `${(dailySales / 5000000) * 100}%`;
+
+                    const activeVisitors = Math.floor(Math.random() * 500) + 1000;
+                    const activeVisitorsEl = document.getElementById('active-visitors');
+                    const activeVisitorsProgress = document.getElementById('active-visitors-progress');
+                    if (activeVisitorsEl) activeVisitorsEl.textContent = activeVisitors.toLocaleString('id-ID');
+                    if (activeVisitorsProgress) activeVisitorsProgress.style.width = `${(activeVisitors / 2000) * 100}%`;
+
+                    const conversionRate = transactions.length ? ((transactions.length / activeVisitors) * 100).toFixed(1) : 0;
+                    const conversionRateEl = document.getElementById('conversion-rate');
+                    const conversionRateProgress = document.getElementById('conversion-rate-progress');
+                    if (conversionRateEl) conversionRateEl.textContent = `${conversionRate}%`;
+                    if (conversionRateProgress) conversionRateProgress.style.width = `${conversionRate * 10}%`;
+
+                    const averageOrder = transactions.length ? (transactions.reduce((sum, t) => sum + t.total, 0) / transactions.length).toFixed(0) : 0;
+                    const averageOrderEl = document.getElementById('average-order');
+                    const averageOrderProgress = document.getElementById('average-order-progress');
+                    if (averageOrderEl) averageOrderEl.textContent = `Rp ${parseInt(averageOrder).toLocaleString('id-ID')}`;
+                    if (averageOrderProgress) averageOrderProgress.style.width = `${(averageOrder / 2000000) * 100}%`;
+
+                    // Recent Orders
+                    const recentOrders = document.getElementById('recent-orders');
+                    if (recentOrders) {
+                        recentOrders.innerHTML = '';
+                        transactions
+                            .sort((a, b) => new Date(b.date) - new Date(a.date))
+                            .slice(0, 5)
+                            .forEach(transaction => {
+                                const user = users.find(u => u.id === transaction.userId) || { name: 'Tidak diketahui' };
+                                const statusColor = transaction.status === 'Berhasil' ? 'bg-green-100 text-green-600' :
+                                    transaction.status === 'Menunggu' ? 'bg-yellow-100 text-yellow-600' :
+                                        'bg-red-100 text-red-600';
+                                const item = document.createElement('div');
+                                item.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100';
+                                item.innerHTML = `
+                        <div>
+                            <p class="font-semibold text-sm text-gray-800">ID: #${transaction.id}</p>
+                            <p class="text-gray-600 text-xs">${user.name}</p>
+                            <p class="text-gray-500 text-xs">${formatDate(transaction.date)}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-sm">Rp ${transaction.total.toLocaleString('id-ID')}</p>
+                            <span class="px-2 py-1 rounded-full text-xs ${statusColor}">${transaction.status}</span>
+                        </div>
+                    `;
+                                recentOrders.appendChild(item);
+                            });
+                    }
+
+                    // Popular Products
+                    const popularProducts = document.getElementById('popular-products');
+                    if (popularProducts) {
+                        popularProducts.innerHTML = '';
+                        const productSales = products.map(product => ({
+                            ...product,
+                            salesCount: transactions.filter(t => t.productId === product.id).length
+                        }));
+                        productSales
+                            .sort((a, b) => b.salesCount - a.salesCount || b.price - a.price)
+                            .slice(0, 2)
+                            .forEach(product => {
+                                const item = document.createElement('div');
+                                item.className = 'flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100';
+                                item.innerHTML = `
+                        <img src="${product.image || 'https://via.placeholder.com/80'}" alt="${product.name}" class="w-20 h-20 rounded-lg mr-4 object-cover">
+                        <div class="flex-1">
+                            <p class="font-semibold text-gray-800">${product.name}</p>
+                            <p class="text-gray-600 text-sm">${product.category.replace('kebaya_', '').charAt(0).toUpperCase() + product.category.replace('kebaya_', '').slice(1)}</p>
+                            <p class="text-gray-600 text-sm mt-1">Rp ${product.price.toLocaleString('id-ID')}</p>
+                        </div>
+                    `;
+                                popularProducts.appendChild(item);
+                            });
+                    }
+
+                    // Activity
+                    const activityList = document.getElementById('activity-list');
+                    if (activityList) {
+                        activityList.innerHTML = '';
+                        const activities = [
+                            ...transactions.map(t => ({
+                                type: 'transaction',
+                                message: `Transaksi baru #${t.id} senilai Rp ${t.total.toLocaleString('id-ID')}`,
+                                time: formatDate(t.date),
+                                icon: 'fas fa-shopping-cart',
+                                color: 'bg-green-100 text-green-500'
+                            })),
+                            ...users.slice(0, 2).map(u => ({
+                                type: 'user',
+                                message: `${u.name} mendaftar sebagai pengguna baru`,
+                                time: 'Baru saja',
+                                icon: 'fas fa-user-plus',
+                                color: 'bg-blue-100 text-blue-500'
+                            })),
+                            {
+                                type: 'stock',
+                                message: 'Stok Kebaya Encim tinggal 5 unit',
+                                time: '1 jam yang lalu',
+                                icon: 'fas fa-exclamation-circle',
+                                color: 'bg-red-100 text-red-500'
                             }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: 'rgba(0, 0, 0, 0.1)'
+                        ].sort((a, b) => {
+                            const aTime = a.time === 'Baru saja' ? new Date() : new Date(a.time);
+                            const bTime = b.time === 'Baru saja' ? new Date() : new Date(b.time);
+                            return bTime - aTime;
+                        }).slice(0, 4);
+                        activities.forEach(activity => {
+                            const item = document.createElement('div');
+                            item.className = 'flex items-start p-3 rounded-lg hover:bg-gray-50';
+                            item.innerHTML = `
+                    <div class="rounded-full ${activity.color} p-2 mr-3 mt-1">
+                        <i class="${activity.icon} text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-gray-600 text-sm font-medium">${activity.message}</p>
+                        <p class="text-gray-400 text-xs mt-1">${activity.time}</p>
+                    </div>
+                `;
+                            activityList.appendChild(item);
+                        });
+                    }
+
+                    // Revenue Chart (Dummy Data)
+                    const ctxRevenue = document.getElementById('revenueChart');
+                    if (ctxRevenue) {
+                        if (revenueChart) {
+                            try {
+                                revenueChart.destroy();
+                            } catch (e) {
+                                console.warn('Failed to destroy revenueChart:', e);
+                            }
+                        }
+                        const dummyRevenue = [
+                            { month: 'Jan 2025', revenue: 3000000 },
+                            { month: 'Feb 2025', revenue: 4500000 },
+                            { month: 'Mar 2025', revenue: 5000000 },
+                            { month: 'Apr 2025', revenue: 4000000 },
+                            { month: 'Mei 2025', revenue: 2898900 } // Dari transactions
+                        ];
+                        const totalRevenue = dummyRevenue.reduce((sum, item) => sum + item.revenue, 0);
+                        const totalRevenueEl = document.getElementById('total-revenue');
+                        if (totalRevenueEl) totalRevenueEl.textContent = `Rp ${totalRevenue.toLocaleString('id-ID')}`;
+                        try {
+                            revenueChart = new Chart(ctxRevenue, {
+                                type: 'line',
+                                data: {
+                                    labels: dummyRevenue.map(item => item.month),
+                                    datasets: [{
+                                        label: 'Pendapatan',
+                                        data: dummyRevenue.map(item => item.revenue),
+                                        borderColor: '#9B7E46',
+                                        backgroundColor: 'rgba(155, 126, 70, 0.1)',
+                                        tension: 0.4,
+                                        fill: true
+                                    }]
                                 },
-                                ticks: {
-                                    callback: function (value) {
-                                        return 'Rp ' + (value / 1000000) + 'M';
-                                    }
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false
-                                }
-                            }
-                        },
-                        interaction: {
-                            intersect: false,
-                            mode: 'index'
-                        }
-                    }
-                });
-            }
-
-            function createCategoryChart() {
-                const ctx = document.getElementById('categoryChart');
-                if (!ctx) return;
-
-                if (categoryChart) {
-                    categoryChart.destroy();
-                }
-
-                const categoryData = products.reduce((acc, product) => {
-                    const category = product.category;
-                    if (acc[category]) {
-                        acc[category]++;
-                    } else {
-                        acc[category] = 1;
-                    }
-                    return acc;
-                }, {});
-
-                const labels = Object.keys(categoryData);
-                const data = Object.values(categoryData);
-                const colors = ['#9B7E46', '#d4af37', '#8b7355', '#c9a96e'];
-
-                categoryChart = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labels.map(label => label.charAt(0).toUpperCase() + label.slice(1)),
-                        datasets: [{
-                            data: data,
-                            backgroundColor: colors,
-                            borderColor: '#ffffff',
-                            borderWidth: 3,
-                            hoverBorderWidth: 5
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    usePointStyle: true,
-                                    padding: 20,
-                                    generateLabels: function (chart) {
-                                        const data = chart.data;
-                                        if (data.labels.length && data.datasets.length) {
-                                            return data.labels.map((label, i) => {
-                                                const dataset = data.datasets[0];
-                                                const value = dataset.data[i];
-                                                const total = dataset.data.reduce((a, b) => a + b, 0);
-                                                const percentage = ((value / total) * 100).toFixed(1);
-                                                return {
-                                                    text: `${label} (${percentage}%)`,
-                                                    fillStyle: dataset.backgroundColor[i],
-                                                    strokeStyle: dataset.borderColor,
-                                                    lineWidth: dataset.borderWidth,
-                                                    pointStyle: 'circle',
-                                                    hidden: false,
-                                                    index: i
-                                                };
-                                            });
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            ticks: {
+                                                callback: value => `Rp ${value.toLocaleString('id-ID')}`
+                                            }
                                         }
-                                        return [];
+                                    },
+                                    plugins: {
+                                        tooltip: {
+                                            callbacks: {
+                                                label: context => `Rp ${context.raw.toLocaleString('id-ID')}`
+                                            }
+                                        }
                                     }
                                 }
-                            },
-                            tooltip: {
-                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                titleColor: '#ffffff',
-                                bodyColor: '#ffffff',
-                                borderColor: '#9B7E46',
-                                borderWidth: 1,
-                                callbacks: {
-                                    label: function (context) {
-                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        const percentage = ((context.parsed / total) * 100).toFixed(1);
-                                        return `${context.label}: ${context.parsed} produk (${percentage}%)`;
-                                    }
-                                }
+                            });
+                        } catch (e) {
+                            console.error('Failed to create revenueChart:', e);
+                        }
+                    }
+
+                    // Category Chart
+                    const ctxCategory = document.getElementById('categoryChart');
+                    if (ctxCategory) {
+                        if (categoryChart) {
+                            try {
+                                categoryChart.destroy();
+                            } catch (e) {
+                                console.warn('Failed to destroy categoryChart:', e);
                             }
-                        },
-                        cutout: '60%'
-                    }
-                });
-            }
-
-            // Dashboard Update
-            function updateDashboard() {
-                const articleCount = document.getElementById('article-count');
-                const productCount = document.getElementById('product-count');
-                const userCount = document.getElementById('user-count');
-                const transactionCount = document.getElementById('transaction-count');
-
-                if (articleCount) articleCount.textContent = articles.length;
-                if (productCount) productCount.textContent = products.length;
-                if (userCount) userCount.textContent = users.length;
-                if (transactionCount) transactionCount.textContent = transactions.length;
-
-                // Update activity list
-                const activityList = document.getElementById('activity-list');
-                if (activityList) {
-                    activityList.innerHTML = '';
-                    activities.forEach(activity => {
-                        const item = document.createElement('div');
-                        item.className = 'activity-item flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors';
-                        item.innerHTML = `
-                            <div class="rounded-full ${activity.color} p-2 mr-3 mt-1">
-                                <i class="${activity.icon} text-sm"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-gray-600 text-sm font-medium">${activity.message}</p>
-                                <p class="text-gray-400 text-xs mt-1">${activity.time}</p>
-                            </div>
-                        `;
-                        activityList.appendChild(item);
-                    });
-                }
-
-                // Update recent orders
-                const recentOrders = document.getElementById('recent-orders');
-                if (recentOrders) {
-                    recentOrders.innerHTML = '';
-                    transactions.slice(0, 5).forEach(transaction => {
-                        const user = users.find(u => u.id === transaction.userId) || { name: 'Unknown' };
-                        const statusColor = getStatusColor(transaction.status);
-                        const item = document.createElement('div');
-                        item.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors';
-                        item.innerHTML = `
-                            <div>
-                                <p class="font-medium text-sm text-gray-800">#${transaction.id}</p>
-                                <p class="text-gray-500 text-xs">${user.name}</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-medium text-sm text-gray-800">Rp ${transaction.total.toLocaleString('id-ID')}</p>
-                                <span class="px-2 py-1 rounded-full text-xs ${statusColor}">${transaction.status}</span>
-                            </div>
-                        `;
-                        recentOrders.appendChild(item);
-                    });
-                }
-
-                // Update popular products
-                const popularProducts = document.getElementById('popular-products');
-                if (popularProducts) {
-                    popularProducts.innerHTML = '';
-                    products.slice(0, 3).forEach(product => {
-                        const item = document.createElement('div');
-                        item.className = 'flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors card-hover';
-                        item.innerHTML = `
-                            <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded-lg mr-4 shadow-sm">
-                            <div class="flex-1">
-                                <h4 class="font-medium text-sm text-gray-800 mb-1">${product.name}</h4>
-                                <p class="text-gray-500 text-xs mb-1">Rp ${product.price.toLocaleString('id-ID')}</p>
-                                <div class="flex items-center">
-                                    <span class="text-xs text-gray-400">Stok: ${product.stock}</span>
-                                    <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">${product.category}</span>
-                                </div>
-                            </div>
-                        `;
-                        popularProducts.appendChild(item);
-                    });
-                }
-
-                // Create charts
-                setTimeout(() => {
-                    createRevenueChart();
-                    createCategoryChart();
-                }, 100);
-            }
-
-            function getStatusColor(status) {
-                switch (status) {
-                    case 'Pending': return 'bg-yellow-100 text-yellow-700';
-                    case 'Completed': return 'bg-green-100 text-green-700';
-                    case 'Cancelled': return 'bg-red-100 text-red-700';
-                    default: return 'bg-gray-100 text-gray-700';
-                }
-            }
-
-            // Articles Management
-            const addArticleBtn = document.getElementById('add-article-btn');
-            const articleForm = document.getElementById('article-form');
-            const saveArticleBtn = document.getElementById('save-article');
-            const cancelArticleBtn = document.getElementById('cancel-article');
-            const articleFormTitle = document.getElementById('article-form-title');
-
-            if (addArticleBtn && articleForm) {
-                addArticleBtn.addEventListener('click', () => {
-                    articleForm.classList.remove('hidden');
-                    articleFormTitle.textContent = 'Tambah Artikel Baru';
-                    document.getElementById('article-id').value = '';
-                    document.getElementById('article-title').value = '';
-                    document.getElementById('article-category').value = 'berita';
-                    document.getElementById('article-content').value = '';
-                });
-            }
-
-            if (cancelArticleBtn) {
-                cancelArticleBtn.addEventListener('click', () => {
-                    articleForm.classList.add('hidden');
-                });
-            }
-
-            if (saveArticleBtn) {
-                saveArticleBtn.addEventListener('click', () => {
-                    const id = document.getElementById('article-id').value;
-                    const title = document.getElementById('article-title').value;
-                    const category = document.getElementById('article-category').value;
-                    const content = document.getElementById('article-content').value;
-
-                    if (title && content) {
-                        if (id) {
-                            const article = articles.find(a => a.id == id);
-                            article.title = title;
-                            article.category = category;
-                            article.content = content;
-                        } else {
-                            articles.push({
-                                id: articles.length ? Math.max(...articles.map(a => a.id)) + 1 : 1,
-                                title,
-                                category,
-                                content
+                        }
+                        const categoryData = products.reduce((acc, product) => {
+                            acc[product.category] = (acc[product.category] || 0) + 1;
+                            return acc;
+                        }, {});
+                        try {
+                            categoryChart = new Chart(ctxCategory, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: Object.keys(categoryData).map(label => label.replace('kebaya_', '').toUpperCase()),
+                                    datasets: [{
+                                        data: Object.values(categoryData),
+                                        backgroundColor: ['#9B7E46', '#d4af37'],
+                                        borderColor: '#ffffff',
+                                        borderWidth: 2
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: { position: 'bottom' }
+                                    },
+                                    cutout: '60%'
+                                }
                             });
+                        } catch (e) {
+                            console.error('Failed to create categoryChart:', e);
                         }
-                        localStorage.setItem('articles', JSON.stringify(articles));
-                        updateArticleList();
-                        articleForm.classList.add('hidden');
-                        showNotification('Artikel berhasil disimpan!');
-                    } else {
-                        showNotification('Judul dan konten harus diisi!', 'error');
+                        const totalProductsEl = document.getElementById('total-products');
+                        if (totalProductsEl) totalProductsEl.textContent = `Total: ${products.length} produk`;
+                    }
+
+                    updateNotifications();
+                }
+
+                // Real-time Update
+                window.addEventListener('storage', (e) => {
+                    if (['articles', 'products', 'users', 'transactions', 'adminProfile'].includes(e.key)) {
+                        try {
+                            articles = JSON.parse(localStorage.getItem('articles')) || articles;
+                            products = JSON.parse(localStorage.getItem('products')) || products;
+                            users = JSON.parse(localStorage.getItem('users')) || users;
+                            transactions = JSON.parse(localStorage.getItem('transactions')) || transactions;
+                            adminProfile = JSON.parse(localStorage.getItem('adminProfile')) || adminProfile;
+                            updateProfileDisplay();
+                            updateDashboard();
+                        } catch (e) {
+                            console.error('Failed to parse localStorage:', e);
+                        }
                     }
                 });
-            }
 
-            function updateArticleList() {
-                const articleList = document.getElementById('article-list');
-                if (!articleList) return;
-
-                articleList.innerHTML = '';
-                articles.forEach(article => {
-                    const row = document.createElement('tr');
-                    row.className = 'border-b hover:bg-gray-50 transition-colors';
-                    row.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">#${article.id}</td>
-                        <td class="p-4 font-medium text-gray-800">${article.title}</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">${article.category}</span>
-                        </td>
-                        <td class="p-4 text-gray-600 max-w-xs truncate">${article.content.substring(0, 50)}...</td>
-                        <td class="p-4">
-                            <div class="flex space-x-2">
-                                <button class="edit-article bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${article.id}">
-                                    <i class="fas fa-edit mr-1"></i> Edit
-                                </button>
-                                <button class="delete-article bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${article.id}">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    articleList.appendChild(row);
-                });
-
-                document.querySelectorAll('.edit-article').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const article = articles.find(a => a.id == btn.dataset.id);
-                        document.getElementById('article-id').value = article.id;
-                        document.getElementById('article-title').value = article.title;
-                        document.getElementById('article-category').value = article.category || 'berita';
-                        document.getElementById('article-content').value = article.content;
-                        articleFormTitle.textContent = 'Edit Artikel';
-                        articleForm.classList.remove('hidden');
-                    });
-                });
-
-                document.querySelectorAll('.delete-article').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('Apakah Anda yakin ingin menghapus artikel ini?')) {
-                            articles = articles.filter(a => a.id != btn.dataset.id);
-                            localStorage.setItem('articles', JSON.stringify(articles));
-                            updateArticleList();
-                            showNotification('Artikel berhasil dihapus!');
-                        }
-                    });
-                });
-            }
-
-            // Article Search
-            const articleSearch = document.getElementById('article-search');
-            if (articleSearch) {
-                articleSearch.addEventListener('input', (e) => {
-                    const searchTerm = e.target.value.toLowerCase();
-                    const filteredArticles = articles.filter(article =>
-                        article.title.toLowerCase().includes(searchTerm) ||
-                        article.category.toLowerCase().includes(searchTerm) ||
-                        article.content.toLowerCase().includes(searchTerm)
-                    );
-                    renderArticleList(filteredArticles);
-                });
-            }
-
-            function renderArticleList(filteredArticles) {
-                const articleList = document.getElementById('article-list');
-                if (!articleList) return;
-
-                articleList.innerHTML = '';
-                filteredArticles.forEach(article => {
-                    const row = document.createElement('tr');
-                    row.className = 'border-b hover:bg-gray-50 transition-colors';
-                    row.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">#${article.id}</td>
-                        <td class="p-4 font-medium text-gray-800">${article.title}</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">${article.category}</span>
-                        </td>
-                        <td class="p-4 text-gray-600 max-w-xs truncate">${article.content.substring(0, 50)}...</td>
-                        <td class="p-4">
-                            <div class="flex space-x-2">
-                                <button class="edit-article bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${article.id}">
-                                    <i class="fas fa-edit mr-1"></i> Edit
-                                </button>
-                                <button class="delete-article bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${article.id}">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    articleList.appendChild(row);
-                });
-
-                // Re-attach event listeners
-                document.querySelectorAll('.edit-article').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const article = articles.find(a => a.id == btn.dataset.id);
-                        document.getElementById('article-id').value = article.id;
-                        document.getElementById('article-title').value = article.title;
-                        document.getElementById('article-category').value = article.category || 'berita';
-                        document.getElementById('article-content').value = article.content;
-                        articleFormTitle.textContent = 'Edit Artikel';
-                        articleForm.classList.remove('hidden');
-                    });
-                });
-
-                document.querySelectorAll('.delete-article').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('Apakah Anda yakin ingin menghapus artikel ini?')) {
-                            articles = articles.filter(a => a.id != btn.dataset.id);
-                            localStorage.setItem('articles', JSON.stringify(articles));
-                            updateArticleList();
-                            showNotification('Artikel berhasil dihapus!');
-                        }
-                    });
-                });
-            }
-
-            // Products Management
-            const addProductBtn = document.getElementById('add-product-btn');
-            const productForm = document.getElementById('product-form');
-            const saveProductBtn = document.getElementById('save-product');
-            const cancelProductBtn = document.getElementById('cancel-product');
-            const productFormTitle = document.getElementById('product-form-title');
-
-            if (addProductBtn && productForm) {
-                addProductBtn.addEventListener('click', () => {
-                    productForm.classList.remove('hidden');
-                    productFormTitle.textContent = 'Tambah Produk Baru';
-                    document.getElementById('product-id').value = '';
-                    document.getElementById('product-name').value = '';
-                    document.getElementById('product-category').value = 'kebaya';
-                    document.getElementById('product-price').value = '';
-                    document.getElementById('product-stock').value = '';
-                    document.getElementById('product-description').value = '';
-                    document.getElementById('product-image').value = '';
-                });
-            }
-
-            if (cancelProductBtn) {
-                cancelProductBtn.addEventListener('click', () => {
-                    productForm.classList.add('hidden');
-                });
-            }
-
-            if (saveProductBtn) {
-                saveProductBtn.addEventListener('click', () => {
-                    const id = document.getElementById('product-id').value;
-                    const name = document.getElementById('product-name').value;
-                    const category = document.getElementById('product-category').value;
-                    const price = parseFloat(document.getElementById('product-price').value);
-                    const stock = parseInt(document.getElementById('product-stock').value);
-                    const description = document.getElementById('product-description').value;
-                    const image = document.getElementById('product-image').value;
-
-                    if (name && price && stock && image) {
-                        if (id) {
-                            const product = products.find(p => p.id == id);
-                            product.name = name;
-                            product.category = category;
-                            product.price = price;
-                            product.stock = stock;
-                            product.description = description;
-                            product.image = image;
-                        } else {
-                            products.push({
-                                id: products.length ? Math.max(...products.map(p => p.id)) + 1 : 1,
-                                name,
-                                category,
-                                price,
-                                stock,
-                                description,
-                                image
-                            });
-                        }
-                        localStorage.setItem('products', JSON.stringify(products));
-                        updateProductList();
-                        productForm.classList.add('hidden');
-                        showNotification('Produk berhasil disimpan!');
-                    } else {
-                        showNotification('Semua field wajib diisi!', 'error');
-                    }
-                });
-            }
-
-            function updateProductList() {
-                const productList = document.getElementById('product-list');
-                if (!productList) return;
-
-                productList.innerHTML = '';
-                products.forEach(product => {
-                    const row = document.createElement('tr');
-                    row.className = 'border-b hover:bg-gray-50 transition-colors';
-                    row.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">#${product.id}</td>
-                        <td class="p-4">
-                            <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded-lg shadow-sm">
-                        </td>
-                        <td class="p-4 font-medium text-gray-800">${product.name}</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">${product.category}</span>
-                        </td>
-                        <td class="p-4 font-medium text-gray-800">Rp ${product.price.toLocaleString('id-ID')}</td>
-                        <td class="p-4 text-gray-600">${product.stock}</td>
-                        <td class="p-4">
-                            <div class="flex space-x-2">
-                                <button class="edit-product bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${product.id}">
-                                    <i class="fas fa-edit mr-1"></i> Edit
-                                </button>
-                                <button class="delete-product bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${product.id}">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    productList.appendChild(row);
-                });
-
-                document.querySelectorAll('.edit-product').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const product = products.find(p => p.id == btn.dataset.id);
-                        document.getElementById('product-id').value = product.id;
-                        document.getElementById('product-name').value = product.name;
-                        document.getElementById('product-category').value = product.category || 'kebaya';
-                        document.getElementById('product-price').value = product.price;
-                        document.getElementById('product-stock').value = product.stock;
-                        document.getElementById('product-description').value = product.description;
-                        document.getElementById('product-image').value = product.image;
-                        productFormTitle.textContent = 'Edit Produk';
-                        productForm.classList.remove('hidden');
-                    });
-                });
-
-                document.querySelectorAll('.delete-product').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
-                            products = products.filter(p => p.id != btn.dataset.id);
-                            localStorage.setItem('products', JSON.stringify(products));
-                            updateProductList();
-                            showNotification('Produk berhasil dihapus!');
-                        }
-                    });
-                });
-            }
-
-            // Product Search
-            const productSearch = document.getElementById('product-search');
-            if (productSearch) {
-                productSearch.addEventListener('input', (e) => {
-                    const searchTerm = e.target.value.toLowerCase();
-                    const filteredProducts = products.filter(product =>
-                        product.name.toLowerCase().includes(searchTerm) ||
-                        product.category.toLowerCase().includes(searchTerm)
-                    );
-                    renderProductList(filteredProducts);
-                });
-            }
-
-            function renderProductList(filteredProducts) {
-                const productList = document.getElementById('product-list');
-                if (!productList) return;
-
-                productList.innerHTML = '';
-                filteredProducts.forEach(product => {
-                    const row = document.createElement('tr');
-                    row.className = 'border-b hover:bg-gray-50 transition-colors';
-                    row.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">#${product.id}</td>
-                        <td class="p-4">
-                            <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded-lg shadow-sm">
-                        </td>
-                        <td class="p-4 font-medium text-gray-800">${product.name}</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">${product.category}</span>
-                        </td>
-                        <td class="p-4 font-medium text-gray-800">Rp ${product.price.toLocaleString('id-ID')}</td>
-                        <td class="p-4 text-gray-600">${product.stock}</td>
-                        <td class="p-4">
-                            <div class="flex space-x-2">
-                                <button class="edit-product bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${product.id}">
-                                    <i class="fas fa-edit mr-1"></i> Edit
-                                </button>
-                                <button class="delete-product bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${product.id}">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    productList.appendChild(row);
-                });
-
-                // Re-attach event listeners
-                document.querySelectorAll('.edit-product').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const product = products.find(p => p.id == btn.dataset.id);
-                        document.getElementById('product-id').value = product.id;
-                        document.getElementById('product-name').value = product.name;
-                        document.getElementById('product-category').value = product.category || 'kebaya';
-                        document.getElementById('product-price').value = product.price;
-                        document.getElementById('product-stock').value = product.stock;
-                        document.getElementById('product-description').value = product.description;
-                        document.getElementById('product-image').value = product.image;
-                        productFormTitle.textContent = 'Edit Produk';
-                        productForm.classList.remove('hidden');
-                    });
-                });
-
-                document.querySelectorAll('.delete-product').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
-                            products = products.filter(p => p.id != btn.dataset.id);
-                            localStorage.setItem('products', JSON.stringify(products));
-                            updateProductList();
-                            showNotification('Produk berhasil dihapus!');
-                        }
-                    });
-                });
-            }
-
-            // Users Management
-            const addUserBtn = document.getElementById('add-user-btn');
-            const userForm = document.getElementById('user-form');
-            const saveUserBtn = document.getElementById('save-user');
-            const cancelUserBtn = document.getElementById('cancel-user');
-            const userFormTitle = document.getElementById('user-form-title');
-
-            if (addUserBtn && userForm) {
-                addUserBtn.addEventListener('click', () => {
-                    userForm.classList.remove('hidden');
-                    userFormTitle.textContent = 'Tambah Pengguna Baru';
-                    document.getElementById('user-id').value = '';
-                    document.getElementById('user-name').value = '';
-                    document.getElementById('user-email').value = '';
-                    document.getElementById('user-role').value = 'user';
-                });
-            }
-
-            if (cancelUserBtn) {
-                cancelUserBtn.addEventListener('click', () => {
-                    userForm.classList.add('hidden');
-                });
-            }
-
-            if (saveUserBtn) {
-                saveUserBtn.addEventListener('click', () => {
-                    const id = document.getElementById('user-id').value;
-                    const name = document.getElementById('user-name').value;
-                    const email = document.getElementById('user-email').value;
-                    const role = document.getElementById('user-role').value;
-
-                    if (name && email) {
-                        if (id) {
-                            const user = users.find(u => u.id == id);
-                            user.name = name;
-                            user.email = email;
-                            user.role = role;
-                        } else {
-                            users.push({
-                                id: users.length ? Math.max(...users.map(u => u.id)) + 1 : 1,
-                                name,
-                                email,
-                                role
-                            });
-                        }
-                        localStorage.setItem('users', JSON.stringify(users));
-                        updateUserList();
-                        userForm.classList.add('hidden');
-                        showNotification('Pengguna berhasil disimpan!');
-                    } else {
-                        showNotification('Nama dan email harus diisi!', 'error');
-                    }
-                });
-            }
-
-            function updateUserList() {
-                const userList = document.getElementById('user-list');
-                if (!userList) return;
-
-                userList.innerHTML = '';
-                users.forEach(user => {
-                    const row = document.createElement('tr');
-                    row.className = 'border-b hover:bg-gray-50 transition-colors';
-                    const roleClass = user.role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700';
-                    row.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">#${user.id}</td>
-                        <td class="p-4 font-medium text-gray-800">${user.name}</td>
-                        <td class="p-4 text-gray-600">${user.email}</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 ${roleClass} rounded-full text-xs font-medium">${user.role}</span>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex space-x-2">
-                                <button class="edit-user bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${user.id}">
-                                    <i class="fas fa-edit mr-1"></i> Edit
-                                </button>
-                                <button class="delete-user bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${user.id}">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    userList.appendChild(row);
-                });
-
-                document.querySelectorAll('.edit-user').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const user = users.find(u => u.id == btn.dataset.id);
-                        document.getElementById('user-id').value = user.id;
-                        document.getElementById('user-name').value = user.name;
-                        document.getElementById('user-email').value = user.email;
-                        document.getElementById('user-role').value = user.role;
-                        userFormTitle.textContent = 'Edit Pengguna';
-                        userForm.classList.remove('hidden');
-                    });
-                });
-
-                document.querySelectorAll('.delete-user').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
-                            users = users.filter(u => u.id != btn.dataset.id);
-                            localStorage.setItem('users', JSON.stringify(users));
-                            updateUserList();
-                            showNotification('Pengguna berhasil dihapus!');
-                        }
-                    });
-                });
-            }
-
-            // User Search
-            const userSearch = document.getElementById('user-search');
-            if (userSearch) {
-                userSearch.addEventListener('input', (e) => {
-                    const searchTerm = e.target.value.toLowerCase();
-                    const filteredUsers = users.filter(user =>
-                        user.name.toLowerCase().includes(searchTerm) ||
-                        user.email.toLowerCase().includes(searchTerm) ||
-                        user.role.toLowerCase().includes(searchTerm)
-                    );
-                    renderUserList(filteredUsers);
-                });
-            }
-
-            function renderUserList(filteredUsers) {
-                const userList = document.getElementById('user-list');
-                if (!userList) return;
-
-                userList.innerHTML = '';
-                filteredUsers.forEach(user => {
-                    const row = document.createElement('tr');
-                    row.className = 'border-b hover:bg-gray-50 transition-colors';
-                    const roleClass = user.role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700';
-                    row.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">#${user.id}</td>
-                        <td class="p-4 font-medium text-gray-800">${user.name}</td>
-                        <td class="p-4 text-gray-600">${user.email}</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 ${roleClass} rounded-full text-xs font-medium">${user.role}</span>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex space-x-2">
-                                <button class="edit-user bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${user.id}">
-                                    <i class="fas fa-edit mr-1"></i> Edit
-                                </button>
-                                <button class="delete-user bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${user.id}">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    userList.appendChild(row);
-                });
-
-                // Re-attach event listeners
-                document.querySelectorAll('.edit-user').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const user = users.find(u => u.id == btn.dataset.id);
-                        document.getElementById('user-id').value = user.id;
-                        document.getElementById('user-name').value = user.name;
-                        document.getElementById('user-email').value = user.email;
-                        document.getElementById('user-role').value = user.role;
-                        userFormTitle.textContent = 'Edit Pengguna';
-                        userForm.classList.remove('hidden');
-                    });
-                });
-
-                document.querySelectorAll('.delete-user').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
-                            users = users.filter(u => u.id != btn.dataset.id);
-                            localStorage.setItem('users', JSON.stringify(users));
-                            updateUserList();
-                            showNotification('Pengguna berhasil dihapus!');
-                        }
-                    });
-                });
-            }
-
-            // Transactions Management
-            function updateTransactionList() {
-                const transactionList = document.getElementById('transaction-list');
-                if (!transactionList) return;
-
-                transactionList.innerHTML = '';
-                transactions.forEach(transaction => {
-                    const user = users.find(u => u.id === transaction.userId) || { name: 'Unknown' };
-                    const statusColor = getStatusColor(transaction.status);
-                    const row = document.createElement('tr');
-                    row.className = 'border-b hover:bg-gray-50 transition-colors';
-                    row.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">#${transaction.id}</td>
-                        <td class="p-4 text-gray-600">${transaction.date}</td>
-                        <td class="p-4 font-medium text-gray-800">${user.name}</td>
-                        <td class="p-4 font-medium text-gray-800">Rp ${transaction.total.toLocaleString('id-ID')}</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-medium ${statusColor}">${transaction.status}</span>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex space-x-2">
-                                <button class="view-transaction bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${transaction.id}">
-                                    <i class="fas fa-eye mr-1"></i> Detail
-                                </button>
-                                <button class="delete-transaction bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${transaction.id}">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    transactionList.appendChild(row);
-                });
-
-                document.querySelectorAll('.view-transaction').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const transaction = transactions.find(t => t.id == btn.dataset.id);
-                        const user = users.find(u => u.id === transaction.userId) || { name: 'Unknown', email: 'Unknown' };
-                        showTransactionModal(transaction, user);
-                    });
-                });
-
-                document.querySelectorAll('.delete-transaction').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
-                            transactions = transactions.filter(t => t.id != btn.dataset.id);
-                            localStorage.setItem('transactions', JSON.stringify(transactions));
-                            updateTransactionList();
-                            showNotification('Transaksi berhasil dihapus!');
-                        }
-                    });
-                });
-            }
-
-            function showTransactionModal(transaction, user) {
-                const modal = document.createElement('div');
-                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-                modal.innerHTML = `
-                    <div class="bg-white rounded-xl w-96 p-6 shadow-2xl">
-                        <h3 class="text-lg font-medium mb-4 text-gray-800">Detail Transaksi #${transaction.id}</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Pelanggan:</span>
-                                <span class="font-medium">${user.name}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Email:</span>
-                                <span class="font-medium">${user.email}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Tanggal:</span>
-                                <span class="font-medium">${transaction.date}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Total:</span>
-                                <span class="font-medium text-[#9B7E46]">Rp ${transaction.total.toLocaleString('id-ID')}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Status:</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(transaction.status)}">${transaction.status}</span>
-                            </div>
-                        </div>
-                        <div class="flex justify-end mt-6">
-                            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg transition-colors" onclick="this.closest('.fixed').remove()">Tutup</button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(modal);
-
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.remove();
-                    }
-                });
-            }
-
-            // Transaction Search and Filter
-            const transactionSearch = document.getElementById('transaction-search');
-            const transactionFilter = document.getElementById('transaction-filter');
-            const filterBtn = document.getElementById('filter-btn');
-
-            if (transactionSearch) {
-                transactionSearch.addEventListener('input', (e) => {
-                    filterTransactions();
-                });
-            }
-
-            if (filterBtn) {
-                filterBtn.addEventListener('click', () => {
-                    filterTransactions();
-                });
-            }
-
-            function filterTransactions() {
-                const searchTerm = transactionSearch ? transactionSearch.value.toLowerCase() : '';
-                const statusFilter = transactionFilter ? transactionFilter.value : 'all';
-
-                const filteredTransactions = transactions.filter(transaction => {
-                    const user = users.find(u => u.id === transaction.userId) || { name: 'Unknown' };
-                    const matchesSearch = user.name.toLowerCase().includes(searchTerm) ||
-                        transaction.date.toLowerCase().includes(searchTerm) ||
-                        transaction.status.toLowerCase().includes(searchTerm);
-                    const matchesStatus = statusFilter === 'all' || transaction.status === statusFilter;
-                    return matchesSearch && matchesStatus;
-                });
-
-                renderTransactionList(filteredTransactions);
-            }
-
-            function renderTransactionList(filteredTransactions) {
-                const transactionList = document.getElementById('transaction-list');
-                if (!transactionList) return;
-
-                transactionList.innerHTML = '';
-                filteredTransactions.forEach(transaction => {
-                    const user = users.find(u => u.id === transaction.userId) || { name: 'Unknown' };
-                    const statusColor = getStatusColor(transaction.status);
-                    const row = document.createElement('tr');
-                    row.className = 'border-b hover:bg-gray-50 transition-colors';
-                    row.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">#${transaction.id}</td>
-                        <td class="p-4 text-gray-600">${transaction.date}</td>
-                        <td class="p-4 font-medium text-gray-800">${user.name}</td>
-                        <td class="p-4 font-medium text-gray-800">Rp ${transaction.total.toLocaleString('id-ID')}</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-medium ${statusColor}">${transaction.status}</span>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex space-x-2">
-                                <button class="view-transaction bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${transaction.id}">
-                                    <i class="fas fa-eye mr-1"></i> Detail
-                                </button>
-                                <button class="delete-transaction bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition-colors" data-id="${transaction.id}">
-                                    <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    transactionList.appendChild(row);
-                });
-
-                // Re-attach event listeners
-                document.querySelectorAll('.view-transaction').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const transaction = transactions.find(t => t.id == btn.dataset.id);
-                        const user = users.find(u => u.id === transaction.userId) || { name: 'Unknown', email: 'Unknown' };
-                        showTransactionModal(transaction, user);
-                    });
-                });
-
-                document.querySelectorAll('.delete-transaction').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
-                            transactions = transactions.filter(t => t.id != btn.dataset.id);
-                            localStorage.setItem('transactions', JSON.stringify(transactions));
-                            updateTransactionList();
-                            showNotification('Transaksi berhasil dihapus!');
-                        }
-                    });
-                });
-            }
-
-            // Show notification
-            function showNotification(message, type = 'success') {
-                const notification = document.createElement('div');
-                const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
-                notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full`;
-                notification.innerHTML = `
-                    <div class="flex items-center">
-                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} mr-2"></i>
-                        <span>${message}</span>
-                    </div>
-                `;
-                document.body.appendChild(notification);
-
-                // Animate in
-                setTimeout(() => {
-                    notification.classList.remove('translate-x-full');
-                }, 10);
-
-                // Animate out and remove
-                setTimeout(() => {
-                    notification.classList.add('translate-x-full');
-                    setTimeout(() => {
-                        if (notification.parentNode) {
-                            notification.parentNode.removeChild(notification);
-                        }
-                    }, 300);
-                }, 3000);
-            }
-
-            // Initialize on load
-            updateDashboard();
-            updateArticleList();
-            updateProductList();
-            updateUserList();
-            updateTransactionList();
-
-            // Add fade-in animation to elements
-            const fadeElements = document.querySelectorAll('.fade-in');
-            fadeElements.forEach((element, index) => {
-                element.style.animationDelay = `${index * 0.1}s`;
+                // Initial Render
+                try {
+                    updateProfileDisplay();
+                    updateDashboard();
+                } catch (e) {
+                    console.error('Initial dashboard render failed:', e);
+                }
             });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
