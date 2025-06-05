@@ -346,6 +346,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <button class="size-btn" data-size="XL">XL</button>
                         </div>
                     </div>
+                    <a href="assets/size-chart.jpg" target="_blank" class="size-chart-link">Cek Detail Size</a>
                     <div class="quick-view-actions">
                         <button class="add-to-cart-quick" data-id="${product.id}">Tambah ke Keranjang</button>
                     </div>

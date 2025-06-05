@@ -2056,3 +2056,17 @@ footer {
         font-size: 13px;
     }
 }
+
+.size-chart-link {
+    display: block;
+    margin-top: 10px;
+    color: #2B2B2B;
+    text-decoration: underline;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.size-chart-link:hover {
+    color: #6B6B6B;
+}
