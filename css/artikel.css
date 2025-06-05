@@ -443,15 +443,15 @@ nav {
 }
 
 .read-more {
-    font-size: 14px;
-    color: #9B7E46;
-    font-weight: 500;
+    font-size: 13px;
+    color: #2B2B2B;
+    font-weight: 600;
     display: flex;
     align-items: center;
 }
 
 .read-more i {
-    margin-left: 6px;
+    margin-left: 4px;
     transition: all 0.3s ease;
 }
 

@@ -13,34 +13,34 @@ document.addEventListener('DOMContentLoaded', function () {
     const products = [
         {
             id: 1,
-            name: 'Kebaya Coklat Semu',
-            price: 599000,
-            image: 'https://i.pinimg.com/736x/c9/8b/1f/c98b1f5028067956a8723ed444fbe024.jpg',
-            description: 'Kebaya warna coklat lembut dengan model sederhana, cocok untuk tampilan modern sehari-hari.',
+            name: 'Kebaya Encim Bordir Biru',
+            price: 749000,
+            image: 'https://dynamic.zacdn.com/MbHhIGJgvN2qQF74MCglismMM_Q=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/soraya-kebaya-4554-1212203-1.jpg',
+            description: 'Kebaya modern dengan motif bordir bunga biru yang anggun, dipadukan dengan rok lilit navy. Cocok untuk acara formal maupun semi-formal.',
             category: 'Kebaya Kutubaru'
         },
         {
             id: 2,
-            name: 'Kebaya Biru',
-            price: 759000,
-            image: 'https://i.pinimg.com/736x/17/d1/19/17d1193b4d574803a8878cef83c3317c.jpg',
-            description: 'Kebaya biru langit dengan motif floral halus, tampil segar dan elegan.',
+            name: 'Kebaya Pink Bordir Mawar',
+            price: 875000,
+            image: 'https://dynamic.zacdn.com/dfDKfU4zE6y0qph0s92V15Adzzo=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/maslea-5885-2210264-1.jpg',
+            description: 'Kebaya encim berwarna pink lembut dengan detail bordir bunga mawar di bagian lengan dan kerah, memberikan kesan feminin dan elegan.',
             category: 'Kebaya Kutubaru'
         },
         {
             id: 3,
-            name: 'Kebaya Hijau Semu',
-            price: 589000,
-            image: 'https://i.pinimg.com/736x/b7/d0/9b/b7d09b15e212a5f9b21cd01249706d32.jpg',
-            description: 'Kebaya hijau muda dengan sentuhan elegan, pas untuk gaya simpel dan berkelas.',
+            name: 'Kebaya Brokat Putih Lengan Pendek',
+            price: 695000,
+            image: 'https://i.pinimg.com/736x/29/83/03/2983036f793885b33421cb13ad672cd2.jpg',
+            description: 'Kebaya brokat transparan lengan pendek dengan motif bunga besar kontras, cocok untuk gaya kasual etnik yang chic.',
             category: 'Kebaya Kutubaru'
         },
         {
             id: 4,
-            name: 'Kebaya Orange',
-            price: 899000,
-            image: 'https://i.pinimg.com/736x/55/6a/85/556a85935d020ed9cb809f2a8cc8c58a.jpg',
-            description: 'Kebaya warna oranye dengan detail tradisional, tampil hangat dan energik.',
+            name: 'Kebaya Organza Motif Bunga Soft Beige',
+            price: 920000,
+            image: 'https://i.pinimg.com/736x/d2/6c/12/d26c12d483da10d5f4b0a2d7ce327f02.jpg',
+            description: 'Kebaya organza semi-transparan dengan warna beige dan motif floral lembut. Model lengan balon ¾ menambah kesan anggun.',
             category: 'Kebaya Kutubaru'
         }
     ];
@@ -662,4 +662,41 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("login-icon").addEventListener("click", function () {
         window.location.href = "login.html";
     });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    // Fungsi untuk mengatur slider
+    function setupSlider(sliderSelector, dotSelector) {
+        const sliderImages = document.querySelectorAll(`${sliderSelector} .slider-image`);
+        const dots = document.querySelectorAll(`${dotSelector} .dot`);
+        let currentIndex = 0;
+
+        function showImage(index) {
+            sliderImages.forEach(img => img.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            sliderImages[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % sliderImages.length;
+            showImage(currentIndex);
+        }
+
+        // Jalankan slider otomatis setiap 3 detik
+        setInterval(nextImage, 3000);
+
+        // Tambahkan event listener untuk klik dot
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                showImage(currentIndex);
+            });
+        });
+    }
+
+    // Inisialisasi slider untuk Kebaya Encim
+    setupSlider('.comparison-card:nth-child(1) .comparison-slider', '.comparison-card:nth-child(1) .slider-dots');
+
+    // Inisialisasi slider untuk Kebaya Kutu Baru
+    setupSlider('.comparison-card:nth-child(2) .comparison-slider', '.comparison-card:nth-child(2) .slider-dots');
 });
