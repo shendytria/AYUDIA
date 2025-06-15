@@ -62,19 +62,71 @@
                         <input type="tel" id="phone" required>
                     </div>
                     <div class="form-group">
+                        <label for="courier">Kurir Pengiriman</label>
+                        <select id="courier" required>
+                            <option value="">Pilih Kurir</option>
+                            <option value="jne" data-cost="25000">JNE - Rp 25.000</option>
+                            <option value="tiki" data-cost="28000">TIKI - Rp 28.000</option>
+                            <option value="sicepat" data-cost="30000">SiCepat - Rp 30.000</option>
+                            <option value="jnt" data-cost="27000">J&T - Rp 27.000</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="payment-method">Metode Pembayaran</label>
                         <select id="payment-method" required>
                             <option value="">Pilih Metode</option>
-                            <option value="bank-transfer">bank-transfer</option>
-                            <option value="credit-card">credit-card</option>
-                            <option value="e-wallet">e-wallet</option>
+                            <option value="bank-transfer">Transfer Bank</option>
+                            <option value="credit-card">Kartu Kredit</option>
+                            <option value="e-wallet">E-Wallet</option>
                         </select>
+                    </div>
+                    <div class="form-group payment-details" id="bank-transfer-details" style="display: none;">
+                        <label>Detail Transfer Bank</label>
+                        <p>Bank: BCA</p>
+                        <p>No. Rekening: 1234-5678-9012-3456</p>
+                        <p>Atas Nama: Ayudia Collection</p>
+                        <p>Silakan transfer dalam 24 jam dan unggah bukti transfer.</p>
+                        <input type="file" id="bank-transfer-proof" accept="image/*">
+                    </div>
+                    <div class="form-group payment-details" id="credit-card-details" style="display: none;">
+                        <label for="card-number">Nomor Kartu</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                        <div style="display: flex; gap: 12px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="card-expiry">Tanggal Kadaluarsa</label>
+                                <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="card-cvc">CVC</label>
+                                <input type="text" id="card-cvc" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group payment-details" id="e-wallet-details" style="display: none;">
+                        <label>Detail E-Wallet</label>
+                        <p>Scan kode QR berikut untuk pembayaran:</p>
+                        <div id="qr-code-placeholder"
+                            style="width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; border-radius: 4px; background: #fff; border: 1px solid #ccc;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=dummy"
+                                alt="QR Code Dummy"
+                                style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px;">
+                        </div>
+                        <p>Nomor Virtual Account: 0812-3456-7890</p>
+                        <p>Atas Nama: Ayudia Collection</p>
                     </div>
                 </form>
             </div>
             <div class="checkout-items">
                 <h3>Ringkasan Pesanan</h3>
                 <div class="cart-items"></div>
+                <div class="checkout-total">
+                    <span>Subtotal:</span>
+                    <span id="checkout-subtotal">Rp 0</span>
+                </div>
+                <div class="checkout-total">
+                    <span>Biaya Pengiriman:</span>
+                    <span id="checkout-shipping">Rp 0</span>
+                </div>
                 <div class="checkout-total">
                     <span>Total:</span>
                     <span id="checkout-total">Rp 0</span>
@@ -114,7 +166,7 @@
             <div class="footer-links">
                 <h3 class="footer-title">Kategori</h3>
                 <ul class="footer-links">
-                    <li><a href="koleksihtml">Kebaya Encim</a></li>
+                    <li><a href="koleksi.html">Kebaya Encim</a></li>
                     <li><a href="koleksi.html">Kebaya Kutu Baru</a></li>
                 </ul>
             </div>
@@ -135,7 +187,6 @@
         </div>
     </footer>
 
-    <!-- Sidebar Keranjang -->
     <div class="cart-sidebar" id="cart-sidebar">
         <div class="cart-header">
             <h3 class="cart-title">Keranjang Belanja</h3>
@@ -143,7 +194,6 @@
         </div>
 
         <div class="cart-items">
-            <!-- Contoh Item Keranjang -->
             <div class="cart-item" data-id="1">
                 <div class="cart-item-img">
                     <img src="https://images.unsplash.com/photo-1617896692597-6dc2b636f650?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&q=80"
@@ -173,7 +223,6 @@
         </div>
     </div>
 
-    <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
     <script src="js/pembayaran.js"></script>

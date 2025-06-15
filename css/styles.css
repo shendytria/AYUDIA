@@ -2127,3 +2127,143 @@ footer {
         height: 7px;
     }
 }
+
+.quick-view-rating {
+    margin-bottom: 12px;
+    color: #9B7E46;
+}
+
+.quick-view-rating i {
+    font-size: 16px;
+    margin-right: 2px;
+}
+
+.quick-view-reviews {
+    margin-top: 12px;
+}
+
+.quick-view-reviews h4 {
+    font-size: 16px;
+    color: #2B2B2B;
+    margin-bottom: 8px;
+}
+
+.review-text {
+    font-size: 14px;
+    color: #6B6B6B;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 991px) {
+    .nav-links.show {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #FFFFFF;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        z-index: 1000;
+    }
+
+    .nav-links.show li {
+        margin: 8px 0;
+    }
+}
+
+.size-btn {
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1px solid #D3D3D3;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.size-btn.selected {
+    background-color: #9B7E46;
+    color: #FFFFFF;
+    border-color: #9B7E46;
+}
+
+.quick-view-content {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    max-height: 70vh;
+    /* Set maximum height to enable scrolling */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+}
+
+.quick-view-img img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+}
+
+.quick-view-info {
+    flex: 1;
+}
+
+.quick-view-title {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.quick-view-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B2B2B;
+    margin-bottom: 8px;
+}
+
+.quick-view-description {
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.quick-view-category {
+    font-size: 14px;
+    color: #6B6B6B;
+    margin-bottom: 12px;
+}
+
+.quick-view-sizes label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.quick-view-actions {
+    margin-top: 16px;
+}
+
+.add-to-cart-quick {
+    width: 100%;
+    padding: 12px;
+    background-color: #2B2B2B;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.add-to-cart-quick:hover {
+    background-color: #9B7E46;
+}

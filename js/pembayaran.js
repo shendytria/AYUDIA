@@ -8,9 +8,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeCart = document.getElementById('close-cart');
     const cartSidebar = document.getElementById('cart-sidebar');
     const overlay = document.getElementById('overlay');
+    const courierSelect = document.getElementById('courier');
+    const paymentMethodSelect = document.getElementById('payment-method');
+    const bankTransferDetails = document.getElementById('bank-transfer-details');
+    const creditCardDetails = document.getElementById('credit-card-details');
+    const eWalletDetails = document.getElementById('e-wallet-details');
 
     // Muat keranjang dari localStorage
-    let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
+    let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0, shippingCost: 0 };
 
     // Tampilkan Notifikasi
     function showNotification(message) {
@@ -60,8 +65,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Perbarui UI keranjang
     function updateCartUI() {
         const cartItemsContainers = document.querySelectorAll('.cart-items');
+        const checkoutSubtotalElement = document.getElementById('checkout-subtotal');
+        const checkoutShippingElement = document.getElementById('checkout-shipping');
         const checkoutTotalElement = document.getElementById('checkout-total');
-        const cartTotalElement = document.getElementById('cart-total');
+        const cartTotalElement = document.querySelector('.cart-total span:last-child');
         cartItemsContainers.forEach(container => container.innerHTML = '');
         cart.total = 0;
 
@@ -93,8 +100,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 cartItemsContainers.forEach(container => container.innerHTML += cartItemHTML);
             });
         }
+        if (checkoutSubtotalElement) {
+            checkoutSubtotalElement.textContent = `Rp ${formatPrice(cart.total)}`;
+        }
+        if (checkoutShippingElement) {
+            checkoutShippingElement.textContent = `Rp ${formatPrice(cart.shippingCost)}`;
+        }
         if (checkoutTotalElement) {
-            checkoutTotalElement.textContent = `Rp ${formatPrice(cart.total)}`;
+            checkoutTotalElement.textContent = `Rp ${formatPrice(cart.total + cart.shippingCost)}`;
         }
         if (cartTotalElement) {
             cartTotalElement.textContent = `Rp ${formatPrice(cart.total)}`;
@@ -169,9 +182,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Perbarui jumlah item di keranjang
-    function updateCartItemQuantity(productId, productSize, quantity) {
-        const item = cart.items.find(item => item.id === productId && item.size === productSize);
+    // Perbarui jumlah item keranjang
+    function updateCartItemQuantity(productId, size, quantity) {
+        const item = cart.items.find(item => item.id === productId && item.size === size);
         if (item) {
             item.quantity = quantity;
             updateCartUI();
@@ -212,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     showNotification('Keranjang kosong! Silakan tambahkan produk terlebih dahulu.');
                     return;
                 }
-                window.location.href = 'checkout.html';
+                window.location.href = 'pembayaran.html';
                 cartSidebar.classList.remove('active');
                 overlay.style.display = 'none';
                 document.body.style.overflow = 'auto';
@@ -337,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.head.appendChild(style);
 
     // Simpan transaksi ke histori
-    function saveTransactionToHistory(fullName, address, phone, paymentMethod) {
+    function saveTransactionToHistory(fullName, address, phone, paymentMethod, courier) {
         const transactionHistory = JSON.parse(localStorage.getItem('transactionHistory')) || [];
         const transactionId = `TRX-${String(transactionHistory.length + 1).padStart(3, '0')}-2025`;
         const transactionDate = new Date().toISOString().split('T')[0];
@@ -353,7 +366,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 price: item.price,
                 image: item.image
             })),
-            total: cart.total,
+            total: cart.total + cart.shippingCost,
+            shippingCost: cart.shippingCost,
+            courier: courier,
             paymentMethod: paymentMethod,
             customerInfo: {
                 name: fullName,
@@ -364,6 +379,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
         transactionHistory.unshift(transaction);
         localStorage.setItem('transactionHistory', JSON.stringify(transactionHistory));
+    }
+
+    // Tangani perubahan kurir
+    if (courierSelect) {
+        courierSelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            cart.shippingCost = parseInt(selectedOption.dataset.cost || 0);
+            updateCartUI();
+        });
+    }
+
+    // Tangani perubahan metode pembayaran
+    if (paymentMethodSelect) {
+        paymentMethodSelect.addEventListener('change', function () {
+            bankTransferDetails.style.display = 'none';
+            creditCardDetails.style.display = 'none';
+            eWalletDetails.style.display = 'none';
+
+            if (this.value === 'bank-transfer') {
+                bankTransferDetails.style.display = 'block';
+            } else if (this.value === 'credit-card') {
+                creditCardDetails.style.display = 'block';
+            } else if (this.value === 'e-wallet') {
+                eWalletDetails.style.display = 'block';
+            }
+        });
+    }
+
+    // Validasi input kartu kredit
+    function validateCreditCard() {
+        const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+        const cardExpiry = document.getElementById('card-expiry').value;
+        const cardCvc = document.getElementById('card-cvc').value;
+
+        if (!/^\d{16}$/.test(cardNumber)) {
+            showNotification('Nomor kartu kredit harus 16 digit.');
+            return false;
+        }
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(cardExpiry)) {
+            showNotification('Tanggal kadaluarsa harus dalam format MM/YY.');
+            return false;
+        }
+        if (!/^\d{3}$/.test(cardCvc)) {
+            showNotification('CVC harus 3 digit.');
+            return false;
+        }
+        return true;
     }
 
     // Tangani pengiriman formulir pembayaran
@@ -378,21 +440,38 @@ document.addEventListener('DOMContentLoaded', function () {
             const fullName = document.getElementById('full-name').value;
             const address = document.getElementById('address').value;
             const phone = document.getElementById('phone').value;
+            const courier = document.getElementById('courier').value;
             const paymentMethod = document.getElementById('payment-method').value;
 
-            if (fullName && address && phone && paymentMethod) {
-                saveTransactionToHistory(fullName, address, phone, paymentMethod);
-                showNotification('Pembayaran berhasil dikonfirmasi!');
-                cart = { items: [], total: 0 };
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartUI();
-                checkoutForm.reset();
-                setTimeout(() => {
-                    window.location.href = 'historitransaksi.html';
-                }, 2000);
-            } else {
+            if (!fullName || !address || !phone || !courier || !paymentMethod) {
                 showNotification('Harap lengkapi semua kolom!');
+                return;
             }
+
+            if (paymentMethod === 'credit-card' && !validateCreditCard()) {
+                return;
+            }
+
+            if (paymentMethod === 'bank-transfer') {
+                const proof = document.getElementById('bank-transfer-proof').files.length;
+                if (proof === 0) {
+                    showNotification('Harap unggah bukti transfer.');
+                    return;
+                }
+            }
+
+            saveTransactionToHistory(fullName, address, phone, paymentMethod, courier);
+            showNotification('Pembayaran berhasil dikonfirmasi!');
+            cart = { items: [], total: 0, shippingCost: 0 };
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+            checkoutForm.reset();
+            bankTransferDetails.style.display = 'none';
+            creditCardDetails.style.display = 'none';
+            eWalletDetails.style.display = 'none';
+            setTimeout(() => {
+                window.location.href = 'historitransaksi.html';
+            }, 2000);
         });
 
         confirmBtn.addEventListener('click', function () {
@@ -419,7 +498,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Inisialisasi UI keranjang
     updateCartUI();
+
+    // Format input kartu kredit
+    const cardNumberInput = document.getElementById('card-number');
+    if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            e.target.value = value;
+        });
+    }
+
+    // Format input tanggal kadaluarsa
+    const cardExpiryInput = document.getElementById('card-expiry');
+    if (cardExpiryInput) {
+        cardExpiryInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2);
+            }
+            e.target.value = value.slice(0, 5);
+        });
+    }
 });
+
 document.getElementById("login-icon").addEventListener("click", function () {
     window.location.href = "login.html";
 });

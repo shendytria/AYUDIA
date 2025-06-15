@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Muat data dari localStorage
     let transactionHistory = JSON.parse(localStorage.getItem('transactionHistory')) || [];
     let filteredTransactions = [...transactionHistory];
-    let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
+    let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0, shippingCost: 0 };
 
     // Format harga
     function formatPrice(price) {
@@ -138,24 +138,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Format tanggal dan waktu
     function formatDate(dateString) {
-        const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            timeZone: 'Asia/Jakarta',
-            timeZoneName: 'short'
-        };
+        const options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Jakarta' };
         return new Date(dateString).toLocaleDateString('id-ID', options);
     }
 
     // Dapatkan waktu WIB
     function getCurrentWIBTime() {
-        const now = new Date();
-        const wibString = now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' });
-        return new Date(wibString).toISOString();
+        return new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' });
     }
 
     // Tampilkan notifikasi
@@ -254,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 `;
             });
         }
-        cartTotalElement.textContent = `Rp ${formatPrice(cart.total)}`;
+        cartTotalElement.textContent = `Rp ${formatPrice(cart.total + cart.shippingCost)}`;
         updateCartIndicator();
         localStorage.setItem('cart', JSON.stringify(cart));
         attachCartEventListeners();
@@ -350,24 +339,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.body.style.overflow = 'auto';
             });
         }
-    } else {
-        console.error('Cart sidebar elements not found:', { cartIcon, cartSidebar, closeCart, overlay });
     }
 
     // Tambahkan transaksi baru
     function addTransaction(transactionData) {
         const currentTime = getCurrentWIBTime();
         const timestamp = Date.now();
-
         const newTransaction = {
-            id: `TRX-${timestamp}-${new Date().getFullYear()}`,
+            id: `TRX-${String(timestamp).slice(-6)}-${new Date().getFullYear()}`,
             date: currentTime,
             createdAt: currentTime,
-            status: transactionData.status || 'pending',
+            status: transactionData.status || 'Pending',
             items: transactionData.items,
             total: transactionData.total,
+            shippingCost: transactionData.shippingCost || 0,
+            courier: transactionData.courier || 'JNE',
             paymentMethod: transactionData.paymentMethod,
-            customerInfo: transactionData.customerInfo || {}
+            customerInfo: transactionData.customerInfo || {},
+            shippingStatus: { stage: 'Pending', updatedAt: currentTime }
         };
 
         transactionHistory.unshift(newTransaction);
@@ -383,22 +372,41 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateTransactionStatus(transactionId, newStatus) {
         const index = transactionHistory.findIndex(t => t.id === transactionId);
         if (index !== -1) {
-            transactionHistory[index].status = newStatus;
-            transactionHistory[index].updatedAt = getCurrentWIBTime();
-            localStorage.setItem('transactionHistory', JSON.stringify(transactionHistory));
-            filteredTransactions = [...transactionHistory];
-            renderTransactions();
-            showNotification(`Status transaksi ${transactionId} diubah menjadi ${newStatus === 'success' ? 'Berhasil' : 'Menunggu'}`);
+            const currentStatus = transactionHistory[index].status;
+            const validTransitions = {
+                'Pending': ['Processing', 'Cancelled'],
+                'Processing': ['Shipped', 'Cancelled'],
+                'Shipped': ['Delivered', 'Cancelled'],
+                'Delivered': [],
+                'Cancelled': []
+            };
+            if (validTransitions[currentStatus].includes(newStatus)) {
+                transactionHistory[index].status = newStatus;
+                transactionHistory[index].shippingStatus.stage = newStatus === 'Shipped' ? 'In Transit' : newStatus;
+                transactionHistory[index].shippingStatus.updatedAt = getCurrentWIBTime();
+                transactionHistory[index].updatedAt = getCurrentWIBTime();
+                localStorage.setItem('transactionHistory', JSON.stringify(transactionHistory));
+                filteredTransactions = [...transactionHistory];
+                renderTransactions();
+                showNotification(`Status transaksi ${transactionId} diubah menjadi ${newStatus}`);
+            } else {
+                showNotification(`Tidak dapat mengubah status dari ${currentStatus} ke ${newStatus}`);
+            }
         }
     }
 
     // Buat badge status
     function getStatusBadge(status) {
-        const statusClass = status === 'success' ? 'status-success' : 'status-pending';
-        const statusText = status === 'success' ? 'Berhasil' : 'Menunggu';
-        const statusIcon = status === 'success' ? 'fa-check-circle' : 'fa-clock';
+        const statusMap = {
+            'Pending': { class: 'status-pending', text: 'Menunggu', icon: 'fa-clock' },
+            'Processing': { class: 'status-pending', text: 'Diproses', icon: 'fa-spinner' },
+            'Shipped': { class: 'status-shipped', text: 'Dikirim', icon: 'fa-truck' },
+            'Delivered': { class: 'status-success', text: 'Sampai', icon: 'fa-check-circle' },
+            'Cancelled': { class: 'status-cancelled', text: 'Dibatalkan', icon: 'fa-times-circle' }
+        };
+        const { class: statusClass, text: statusText, icon } = statusMap[status] || statusMap['Pending'];
         return `<span class="transaction-status ${statusClass}">
-            <i class="fas ${statusIcon}"></i> ${statusText}
+            <i class="fas ${icon}"></i> ${statusText}
         </span>`;
     }
 
@@ -407,10 +415,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const itemsHTML = transaction.items.map(item => `
             <div class="transaction-item">
                 <div class="item-image">
-                    ${item.image ?
-                `<img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                         <i class="fas fa-tshirt" style="display:none;"></i>` :
-                `<i class="fas fa-tshirt"></i>`}
+                    ${item.image ? `<img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"> <i class="fas fa-tshirt" style="display:none;"></i>` : `<i class="fas fa-tshirt"></i>`}
                 </div>
                 <div class="item-info">
                     <div class="item-name">${item.name}</div>
@@ -419,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <span><i class="fas fa-sort-numeric-up"></i> Qty: ${item.quantity}</span>
                     </div>
                 </div>
-                <div class="item-price">Rp ${formatPrice(item.price)}</div>
+                <div class="item-price">Rp ${formatPrice(item.price * item.quantity)}</div>
             </div>
         `).join('');
 
@@ -444,12 +449,28 @@ document.addEventListener('DOMContentLoaded', function () {
                             <span>Rp ${formatPrice(transaction.total)}</span>
                         </div>
                         <div class="summary-row">
-                            <span>Metode Pembayaran:</span>
-                            <span>${transaction.paymentMethod}</span>
+                            <span>Ongkos Kirim:</span>
+                            <span>Rp ${formatPrice(transaction.shippingCost)}</span>
                         </div>
                         <div class="summary-row">
                             <span>Total:</span>
-                            <span>Rp ${formatPrice(transaction.total)}</span>
+                            <span>Rp ${formatPrice(transaction.total + transaction.shippingCost)}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Kurir:</span>
+                            <span>${transaction.courier}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Metode Pembayaran:</span>
+                            <span>${transaction.paymentMethod}</span>
+                        </div>
+                        <div class="summary-row action-buttons">
+                            <button class="track-btn" data-transaction-id="${transaction.id}">
+                                <i class="fas fa-truck"></i> Lacak Pesanan
+                            </button>
+                            <button class="print-btn" data-transaction-id="${transaction.id}">
+                                <i class="fas fa-print"></i> Print Invoice
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -481,6 +502,73 @@ document.addEventListener('DOMContentLoaded', function () {
         const transactionsHTML = transactions.map(generateTransactionCard).join('');
         transactionsContainer.innerHTML = transactionsHTML;
 
+        // Event listener untuk tombol lacak
+        document.querySelectorAll('.track-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const transactionId = this.dataset.transactionId;
+                const transaction = transactionHistory.find(t => t.id === transactionId);
+                if (transaction) {
+                    const statusHistory = [
+                        { stage: 'Diterima di Gudang', time: transaction.createdAt },
+                        ...(transaction.status === 'Shipped' ? [{ stage: 'Dalam Pengiriman', time: getCurrentWIBTime() }] : []),
+                        ...(transaction.status === 'Delivered' ? [{ stage: 'Terkirim', time: getCurrentWIBTime() }] : [])
+                    ];
+                    showNotification(`Status Pengiriman ${transactionId}: ${statusHistory.map(s => `${s.stage} (${formatDate(s.time)})`).join(', ')}`);
+                }
+            });
+        });
+
+        // Event listener untuk tombol print
+        document.querySelectorAll('.print-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const transactionId = this.dataset.transactionId;
+                const transaction = transactionHistory.find(t => t.id === transactionId);
+                if (transaction) {
+                    const invoiceHTML = `
+                        <div style="font-family: Arial, sans-serif; padding: 20mm; width: 210mm; margin: 0 auto; border: 1px solid #000;">
+                            <h1 style="text-align: center; margin-bottom: 20px;">Invoice - ${transaction.id}</h1>
+                            <p><strong>Tanggal:</strong> ${formatDate(transaction.date)}</p>
+                            <p><strong>Pelanggan:</strong> ${transaction.customerInfo.name || 'N/A'}</p>
+                            <p><strong>Alamat:</strong> ${transaction.customerInfo.address || 'N/A'}</p>
+                            <p><strong>Metode Pembayaran:</strong> ${transaction.paymentMethod}</p>
+                            <p><strong>Kurir:</strong> ${transaction.courier}</p>
+                            <h3 style="margin-top: 20px;">Detail Pesanan</h3>
+                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                                <thead>
+                                    <tr style="background-color: #f5f5f5;">
+                                        <th style="border: 1px solid #ddd; padding: 8px;">Nama Produk</th>
+                                        <th style="border: 1px solid #ddd; padding: 8px;">Ukuran</th>
+                                        <th style="border: 1px solid #ddd; padding: 8px;">Qty</th>
+                                        <th style="border: 1px solid #ddd; padding: 8px;">Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${transaction.items.map(item => `
+                                        <tr>
+                                            <td style="border: 1px solid #ddd; padding: 8px;">${item.name}</td>
+                                            <td style="border: 1px solid #ddd; padding: 8px;">${item.size}</td>
+                                            <td style="border: 1px solid #ddd; padding: 8px;">${item.quantity}</td>
+                                            <td style="border: 1px solid #ddd; padding: 8px;">Rp ${formatPrice(item.price * item.quantity)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                            <p><strong>Subtotal:</strong> Rp ${formatPrice(transaction.total)}</p>
+                            <p><strong>Ongkos Kirim:</strong> Rp ${formatPrice(transaction.shippingCost)}</p>
+                            <p><strong>Total:</strong> Rp ${formatPrice(transaction.total + transaction.shippingCost)}</p>
+                            <p style="text-align: center; margin-top: 20px;">Terima kasih telah berbelanja di Ayudia!</p>
+                        </div>
+                    `;
+                    const printWindow = window.open('', '', 'height=600,width=800');
+                    printWindow.document.write('<html><head><title>Invoice</title></head><body>');
+                    printWindow.document.write(invoiceHTML);
+                    printWindow.document.write('</body></html>');
+                    printWindow.document.close();
+                    printWindow.print();
+                }
+            });
+        });
+
         setTimeout(() => {
             const cards = document.querySelectorAll('.transaction-card');
             cards.forEach((card, i) => {
@@ -490,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 setTimeout(() => {
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
-                }, 50);
+                }, i * 50);
             });
         }, 50);
     }
@@ -568,45 +656,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Hamburger menu
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function () {
-            navLinks.classList.toggle('active');
-            const icon = hamburger.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        });
-    }
-
-    // Dapatkan tanggal WIB
-    function getWIBDateString(date) {
-        return date.toLocaleDateString('sv-SE', { timeZone: 'Asia/Jakarta' });
-    }
-
-    // Inisialisasi halaman
-    function initializePage() {
-        const now = new Date();
-        const todayWIB = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
-        dateToInput.value = getWIBDateString(todayWIB);
-        renderTransactions();
-        window.addTransaction = addTransaction;
-        updateCartUI();
-    }
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
     // Sticky header
     const header = document.querySelector('header');
     if (header) {
@@ -624,9 +673,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Inisialisasi
+    // Inisialisasi halaman
+    function initializePage() {
+        const now = new Date();
+        const todayWIB = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
+        dateToInput.value = todayWIB.toISOString().split('T')[0];
+        renderTransactions();
+        window.addTransaction = addTransaction;
+        updateCartUI();
+    }
+
     initializePage();
 });
+
 document.getElementById("login-icon").addEventListener("click", function () {
     window.location.href = "login.html";
 });

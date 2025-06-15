@@ -11,39 +11,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Data Produk
     const products = [
-        {
-            id: 1,
-            name: 'Kebaya Encim Bordir Biru',
-            price: 749000,
-            image: 'https://dynamic.zacdn.com/MbHhIGJgvN2qQF74MCglismMM_Q=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/soraya-kebaya-4554-1212203-1.jpg',
-            description: 'Kebaya modern dengan motif bordir bunga biru yang anggun, dipadukan dengan rok lilit navy. Cocok untuk acara formal maupun semi-formal.',
-            category: 'Kebaya Kutubaru'
-        },
-        {
-            id: 2,
-            name: 'Kebaya Pink Bordir Mawar',
-            price: 875000,
-            image: 'https://dynamic.zacdn.com/dfDKfU4zE6y0qph0s92V15Adzzo=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/maslea-5885-2210264-1.jpg',
-            description: 'Kebaya encim berwarna pink lembut dengan detail bordir bunga mawar di bagian lengan dan kerah, memberikan kesan feminin dan elegan.',
-            category: 'Kebaya Kutubaru'
-        },
-        {
-            id: 3,
-            name: 'Kebaya Brokat Putih Lengan Pendek',
-            price: 695000,
-            image: 'https://i.pinimg.com/736x/29/83/03/2983036f793885b33421cb13ad672cd2.jpg',
-            description: 'Kebaya brokat transparan lengan pendek dengan motif bunga besar kontras, cocok untuk gaya kasual etnik yang chic.',
-            category: 'Kebaya Kutubaru'
-        },
-        {
-            id: 4,
-            name: 'Kebaya Organza Motif Bunga Soft Beige',
-            price: 920000,
-            image: 'https://i.pinimg.com/736x/d2/6c/12/d26c12d483da10d5f4b0a2d7ce327f02.jpg',
-            description: 'Kebaya organza semi-transparan dengan warna beige dan motif floral lembut. Model lengan balon ¾ menambah kesan anggun.',
-            category: 'Kebaya Kutubaru'
-        }
+        { id: 1, category: "Kebaya Encim", name: "Kebaya Encim Bordir Biru", price: 749000, image: "https://dynamic.zacdn.com/MbHhIGJgvN2qQF74MCglismMM_Q=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/soraya-kebaya-4554-1212203-1.jpg", description: "Kebaya modern dengan motif bordir bunga biru yang anggun, dipadukan dengan rok lilit navy. Cocok untuk acara formal maupun semi-formal.", rating: 4.5, reviews: ["Sangat elegan!", "Kualitas bagus, pas di badan."] },
+        { id: 2, category: "Kebaya Encim", name: "Kebaya Pink Bordir Mawar", price: 875000, image: "https://dynamic.zacdn.com/dfDKfU4zE6y0qph0s92V15Adzzo=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/maslea-5885-2210264-1.jpg", description: "Kebaya encim berwarna pink lembut dengan detail bordir bunga mawar di bagian lengan dan kerah, memberikan kesan feminin dan elegan.", rating: 4.6, reviews: ["Sangat feminin!", "Bahan lembut."] },
+        { id: 3, category: "Kebaya Kutu Baru", name: "Kebaya Brokat Putih Lengan Pendek", price: 695000, image: "https://i.pinimg.com/736x/29/83/03/2983036f793885b33421cb13ad672cd2.jpg", description: "Kebaya brokat transparan lengan pendek dengan motif bunga besar kontras, cocok untuk gaya kasual etnik yang chic.", rating: 4.0, reviews: ["Nyaman dipakai.", "Harga worth it."] },
+        { id: 4, category: "Kebaya Kutu Baru", name: "Kebaya Organza Motif Bunga Soft Beige", price: 920000, image: "https://i.pinimg.com/736x/d2/6c/12/d26c12d483da10d5f4b0a2d7ce327f02.jpg", description: "Kebaya organza semi-transparan dengan warna beige dan motif floral lembut. Model lengan balon ¾ menambah kesan anggun.", rating: 4.7, reviews: ["Sangat cantik!", "Bahan premium."] }
     ];
+
+    // Fungsi untuk menampilkan bintang rating
+    function renderStars(rating) {
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+        const emptyStars = 5 - fullStars - halfStar;
+        let stars = '';
+        for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+        if (halfStar) stars += '<i class="fas fa-star-half-alt"></i>';
+        for (let i = 0; i < emptyStars; i++) stars += '<i class="far fa-star"></i>';
+        return stars;
+    }
 
     // Data Keranjang
     let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
@@ -384,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Tampilkan Modal Lihat Cepat
+    // Tampilkan Modal Quick View
     function showQuickView(product) {
         let quickViewModal = document.getElementById('quick-view-modal');
         if (!quickViewModal) {
@@ -408,8 +392,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="quick-view-info">
                     <h3 class="quick-view-title">${product.name}</h3>
                     <p class="quick-view-price">Rp ${formatPrice(product.price)}</p>
+                    <div class="quick-view-rating">${renderStars(product.rating)}</div>
                     <p class="quick-view-description">${product.description}</p>
                     <p class="quick-view-category">Kategori: ${product.category}</p>
+                    <div class="quick-view-reviews">
+                        <h4>Ulasan (${product.reviews.length})</h4>
+                        ${product.reviews.map(review => `<p class="review-text">${review}</p>`).join('')}
+                    </div>
                     <div class="quick-view-sizes">
                         <label>Pilih Ukuran:</label>
                         <div class="size-options">
@@ -434,7 +423,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.style.overflow = 'hidden';
         }
 
-        // Size selection logic
         const sizeButtons = quickViewModal.querySelectorAll('.size-btn');
         let selectedSize = null;
         sizeButtons.forEach(button => {
@@ -445,7 +433,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // Close modal
         const closeQuickView = quickViewModal.querySelector('#close-quick-view');
         if (closeQuickView) {
             closeQuickView.addEventListener('click', function () {
@@ -457,7 +444,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // Add to cart
         const addToCartQuick = quickViewModal.querySelector('.add-to-cart-quick');
         if (addToCartQuick) {
             addToCartQuick.addEventListener('click', function () {
